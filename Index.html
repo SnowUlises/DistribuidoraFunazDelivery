@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Distribuidora Funaz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f7fbf7;
+      color: #333;
+    }
+    header {
+      background: #7ED957;
+      padding: 20px;
+      text-align: center;
+    }
+    header img {
+      max-height: 120px;
+      width: auto;
+    }
+    main {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #eaeaea;
+    }
+    .card-content {
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .nombre {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .precio {
+      color: #388E3C;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .error {
+      text-align: center;
+      margin-top: 40px;
+      color: #c00;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="imagenes/logo.png" alt="Distribuidora Funaz">
+  </header>
+  <main id="productos"></main>
+  <div id="error" class="error"></div>
+
+  <script>
+    async function cargarProductos() {
+      try {
+        const res = await fetch('productos.json');
+        if (!res.ok) throw new Error('No se pudo cargar productos.json');
+        const data = await res.json();
+        mostrarProductos(data);
+      } catch (err) {
+        document.getElementById('error').textContent = 'Error al cargar productos.';
+      }
+    }
+
+    function mostrarProductos(productos) {
+      const cont = document.getElementById('productos');
+      cont.innerHTML = '';
+      productos.forEach(prod => {
+        const precioPublico = (prod.precio * 1.10).toFixed(2);
+        const imgSrc = prod.imagen && prod.imagen.trim() !== '' ? prod.imagen : 'imagenes/placeholder.png';
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${imgSrc}" alt="${prod.nombre}" onerror="this.src='imagenes/placeholder.png'">
+          <div class="card-content">
+            <div class="nombre">${prod.nombre}</div>
+            <div class="precio">$${precioPublico}</div>
+          </div>
+        `;
+        cont.appendChild(card);
+      });
+    }
+
+    cargarProductos();
+  </script>
+</body>
+</html>
