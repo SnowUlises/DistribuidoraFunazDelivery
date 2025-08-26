@@ -16,41 +16,24 @@
     *{box-sizing:border-box}
     body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;background:linear-gradient(180deg,var(--bg),#eef7ee);color:#0b2a12}
 
-    header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px 0;
-  background: linear-gradient(90deg, rgba(255,255,255,0.6), transparent);
-  backdrop-filter: blur(4px);
-}
+    header{
+      display:flex;align-items:center;justify-content:center;padding:30px 0;background:linear-gradient(90deg,rgba(255,255,255,0.6),transparent);backdrop-filter: blur(4px);
+    }
     .brand{display:flex;align-items:center;gap:18px}
-    .logo {
-  width: 100%;
-  max-width: 500px; /* Ajusta este valor según el tamaño que quieras */
-  height: auto;
-  border-radius: 0; /* Sin bordes redondeados si es horizontal */
-  overflow: hidden;
-  flex-shrink: 0;
-  background: none;
-  box-shadow: none;
-}
-    .logo img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-}
-    .logoText{font-weight:800;color:#08330f;font-size:28px;line-height:1;text-transform:uppercase}
-
-    .title{line-height:1}
-    .title h1{font-size:34px;margin:0;color:#08330f}
-    .title p{margin:6px 0 0;font-size:14px;color:var(--muted)}
+    .logo{width:100%;max-width:520px;height:auto;border-radius:0;overflow:hidden;flex-shrink:0;background:none;box-shadow:none}
+    .logo img{width:100%;height:auto;object-fit:contain;display:block}
 
     .wrap{max-width:1200px;margin:28px auto;padding:0 20px}
-    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-    .search{display:flex;gap:10px;align-items:center}
-    .search input{padding:12px 14px;border-radius:10px;border:1px solid #dfeede;background:transparent;min-width:240px}
+    .topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px}
+    .search{display:flex;gap:10px;align-items:center;flex:1;min-width:220px}
+    .search input{padding:12px 14px;border-radius:10px;border:1px solid #dfeede;background:transparent;min-width:220px}
+
+    /* categories */
+    .categories{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .cat-btn{background:transparent;border:1px solid transparent;padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:600}
+    .cat-btn:hover{transform:translateY(-2px)}
+    .cat-btn.active{background:var(--green-apple);color:#05310b;border-color:rgba(0,0,0,0.04)}
+    .cat-wrapper{display:flex;align-items:center;gap:12px}
 
     .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
     @media (max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
@@ -61,31 +44,31 @@
     .thumb{height:150px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,rgba(126,217,87,0.12),rgba(126,217,87,0.04));display:flex;align-items:center;justify-content:center}
     .thumb img{width:100%;height:100%;object-fit:cover;display:block}
     .name{font-weight:700;color:#08330f;margin:0;font-size:16px}
-    .meta{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}
     .price{font-weight:800;color:#063b11;font-size:18px}
     .muted{color:var(--muted);font-size:13px}
 
     footer{margin:36px 0 80px;text-align:center;color:var(--muted)}
-
     .empty{padding:40px;border-radius:12px;background:#fff;text-align:center;color:var(--muted);box-shadow:0 6px 18px rgba(18,64,22,0.04)}
   </style>
 </head>
 <body>
   <header>
-  <div class="brand" style="justify-content:center;width:100%">
-    <div class="logo logo-wide">
-      <img src="imagenes/logo.png" alt="Logo" onerror="this.src='imagenes/placeholder.png'">
+    <div class="brand" style="justify-content:center;width:100%">
+      <div class="logo logo-wide">
+        <img src="imagenes/logo.png" alt="Logo" onerror="this.src='imagenes/placeholder.png'">
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
   <main class="wrap">
     <div class="topbar">
       <div class="search">
         <input id="search" placeholder="Buscar producto..." />
       </div>
-      <div style="text-align:right;color:var(--muted)">
-        <div style="font-weight:600">Contactos y consultas</div>
+
+      <div class="cat-wrapper">
+        <div class="categories" id="categories"></div>
       </div>
     </div>
 
@@ -95,11 +78,14 @@
     </section>
 
     <footer>
-      © Distribuidora Funaz — Precios al público. Pedidos: 2645583761  Consultas: 2645583761.
+      © Distribuidora Funaz — Pedidos: 2645583761 · Consultas: 2645583761
     </footer>
   </main>
 
   <script>
+    // categorías fijas (las que solicitaste). Cualquier producto con otra categoria irá a "Otros".
+    const FIXED_CATEGORIES = ['Todas','Limpieza','Alimentos','Accesorios','Higiene y Perfumería','Otros'];
+
     const sampleData = [
       { "id": 8, "nombre": "BICARBONATO AROMA X10 U", "precio": 1436.97, "categoria": null, "stock": true, "imagen": "imagenes/8.jpg" },
       { "id": 9, "nombre": "CHIMICHURRI X 1KG", "precio": 8168.05, "categoria": null, "stock": true, "imagen": "imagenes/9.jpg" }
@@ -108,10 +94,21 @@
     const grid = document.getElementById('grid');
     const empty = document.getElementById('empty');
     const search = document.getElementById('search');
+    const categoriesEl = document.getElementById('categories');
+
+    let PRODUCTS = [];
+    let currentCategory = 'Todas';
 
     function formatMoney(n){
       try{ return new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(n); }
       catch(e){ return '$' + Number(n).toFixed(2); }
+    }
+
+    function normalizeCategory(c){
+      if(!c) return 'Otros';
+      c = String(c).trim();
+      // Si querés mapear categorías específicas, hacelo acá. Por defecto devolvemos la que venga.
+      return c;
     }
 
     function createCard(p){
@@ -161,17 +158,48 @@
       list.forEach(p => grid.appendChild(createCard(p)));
     }
 
-    // intenta parsear JSON de forma tolerante (quita comas iniciales, envuelve en array si hace falta, etc.)
+    function buildCategoryButtons(){
+      categoriesEl.innerHTML = '';
+      FIXED_CATEGORIES.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'cat-btn' + (cat === currentCategory ? ' active' : '');
+        btn.textContent = cat;
+        btn.addEventListener('click', ()=>{
+          currentCategory = cat;
+          document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+          btn.classList.add('active');
+          applyFilters();
+        });
+        categoriesEl.appendChild(btn);
+      });
+    }
+
+    function applyFilters(){
+      const q = search.value.trim().toLowerCase();
+      let list = PRODUCTS.slice();
+      // category filter
+      if(currentCategory && currentCategory !== 'Todas'){
+        list = list.filter(p => {
+          const cat = normalizeCategory(p.categoria);
+          return cat.toLowerCase() === currentCategory.toLowerCase();
+        });
+      }
+      // search filter
+      if(q){
+        list = list.filter(p => (p.nombre || '').toLowerCase().includes(q));
+      }
+      renderProducts(list);
+    }
+
+    // intenta parsear JSON de forma tolerante
     function tryParseFlexible(text){
       let t = text.trim();
       try{ return JSON.parse(t); }catch(e){}
-
-      t = t.replace(/^[,\s]+/, '');
+      t = t.replace(/^[,\\s]+/, '');
       if(!t.startsWith('[')) t = '[' + t;
       if(!t.endsWith(']')) t = t + ']';
-      t = t.replace(/,\s*\]$/, ']');
-      t = t.replace(/,\s*,/g, ',');
-
+      t = t.replace(/,\\s*\\]$/, ']');
+      t = t.replace(/,\\s*,/g, ',');
       try{ return JSON.parse(t); }catch(e){
         const objs = Array.from(t.matchAll(/{[^}]*}/g)).map(m => m[0]);
         if(objs.length){
@@ -188,25 +216,24 @@
         const txt = await r.text();
         const data = tryParseFlexible(txt);
         if(!Array.isArray(data)) throw new Error('Formato inválido después del parseo');
-        renderProducts(data);
+        // normalizar categorías
+        PRODUCTS = data.map(p => ({...p, categoria: normalizeCategory(p.categoria)}));
+        buildCategoryButtons();
+        applyFilters();
       }catch(e){
         console.warn('No se pudo cargar productos.json — usando datos de ejemplo:', e.message);
-        renderProducts(sampleData);
+        PRODUCTS = sampleData.map(p=> ({...p, categoria: normalizeCategory(p.categoria)}));
+        buildCategoryButtons();
+        applyFilters();
       }
     }
 
     search.addEventListener('input', ()=>{
-      const q = search.value.trim().toLowerCase();
-      Array.from(grid.children).forEach(card => {
-        const name = card.querySelector('.name').textContent.toLowerCase();
-        card.style.display = name.includes(q) ? '' : 'none';
-      });
-      const anyVisible = Array.from(grid.children).some(c => c.style.display !== 'none');
-      empty.style.display = anyVisible ? 'none' : '';
+      applyFilters();
     });
 
+    // iniciar
     load();
   </script>
 </body>
 </html>
-
