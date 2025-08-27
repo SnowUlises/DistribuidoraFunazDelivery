@@ -49,17 +49,12 @@
     <footer>© Distribuidora Funaz — Pedidos: 2645583761 · Consultas: 2645583761</footer>
   </main>
 
-  <!-- Cargar Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
     // ---------- CONFIG ----------
     const SUPABASE_URL = 'https://slroycxifwezthdomkny.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8';
     const FIXED_CATEGORIES = ["Todas", "Limpieza", "Higiene", "Perfumería", "Alimentos", "Accesorios"];
-    // ----------------------------
-
-    // ✅ Cliente global
     const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // DOM refs
@@ -68,17 +63,14 @@
     const search = document.getElementById('search');
     const categoriesEl = document.getElementById('categories');
 
-    // state
     let PRODUCTS = [];
     let currentCategory = 'Todas';
 
-    // helpers
     function formatMoney(n){
       return isNaN(n) ? '$0.00' : new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(n);
     }
     function normalizeCategory(c){ return c ? String(c).trim() : 'Otros'; }
 
-    // card builder
     function createCard(p){
       const card = document.createElement('article'); card.className = 'card';
       const thumb = document.createElement('div'); thumb.className = 'thumb';
@@ -91,14 +83,12 @@
       thumb.appendChild(img);
 
       const name = document.createElement('h3'); name.className='name'; name.textContent=p.nombre || 'Sin nombre';
-
       const meta = document.createElement('div'); meta.className='meta';
       const priceEl = document.createElement('div'); priceEl.className='price';
       const valor = Number(p.precio);
       priceEl.textContent = formatMoney((isNaN(valor) ? 0 : valor) * 1.10);
       const catEl = document.createElement('div'); catEl.className='muted'; catEl.textContent = p.categoria || '';
       meta.append(priceEl, catEl);
-
       card.append(thumb, name, meta);
       return card;
     }
@@ -138,61 +128,29 @@
       renderProducts(list);
     }
 
-    // load productos
     async function load(){
-      console.log('🔎 Intentando cargar productos desde Supabase...');
-      try {
-        const { data, error } = await supa.from('productos').select('*').order('id', { ascending: true });
-        if (error) throw error;
-        if (data && data.length > 0) {
-          console.log(`✅ Supabase devolvió ${data.length} productos`);
-          PRODUCTS = data.map(p => ({
-            ...p,
-            precio: (p.precio === null || p.precio === undefined) ? 0 : (isNaN(Number(p.precio)) ? parseFloat(String(p.precio).replace(',', '.')) || 0 : Number(p.precio)),
-            categoria: normalizeCategory(p.categoria)
-          }));
-          buildCategoryButtons();
-          applyFilters();
-          return;
-        } else {
-          console.warn('⚠️ Supabase devolvió array vacío.');
-        }
-      } catch (e) {
-        console.error('❌ Error al consultar Supabase:', e.message || e);
+      console.log('🔎 Cargando productos desde Supabase...');
+      const { data, error } = await supa
+        .from('productos')
+        .select('*')
+        .order('id', { ascending: true });
+
+      if (error) {
+        console.error('❌ Error al consultar Supabase:', error.message || error);
+        empty.style.display = 'block';
+        return;
       }
 
-      // fallback productos.json
-      console.log('🔎 Intentando cargar productos desde productos.json...');
-      try {
-        const r = await fetch('productos.json', { cache: 'no-store' });
-        if (r.ok) {
-          const txt = await r.text();
-          let parsed;
-          try { parsed = JSON.parse(txt); }
-          catch {
-            let t = txt.trim().replace(/^[,\s]+/, '');
-            if(!t.startsWith('[')) t = '[' + t;
-            if(!t.endsWith(']')) t = t + ']';
-            t = t.replace(/,\s*\]$/, ']');
-            parsed = JSON.parse(t);
-          }
-          PRODUCTS = (Array.isArray(parsed) ? parsed : [parsed]).map(p => ({
-            ...p,
-            precio: (p.precio === null || p.precio === undefined) ? 0 : (isNaN(Number(p.precio)) ? parseFloat(String(p.precio).replace(',', '.')) || 0 : Number(p.precio)),
-            categoria: normalizeCategory(p.categoria)
-          }));
-          console.log(`✅ productos.json cargado (${PRODUCTS.length})`);
-          buildCategoryButtons();
-          applyFilters();
-          return;
-        } else {
-          console.error('❌ productos.json no encontrado');
-        }
-      } catch (e) {
-        console.error('Error cargando productos.json:', e.message || e);
-      }
+      PRODUCTS = data.map(p => ({
+        ...p,
+        precio: (p.precio === null || p.precio === undefined) ? 0 : 
+                (isNaN(Number(p.precio)) ? parseFloat(String(p.precio).replace(',', '.')) || 0 : Number(p.precio)),
+        categoria: normalizeCategory(p.categoria)
+      }));
 
-      console.error('❌ No hay datos disponibles');
+      console.log(`✅ ${PRODUCTS.length} productos cargados`);
+      buildCategoryButtons();
+      applyFilters();
     }
 
     search.addEventListener('input', applyFilters);
