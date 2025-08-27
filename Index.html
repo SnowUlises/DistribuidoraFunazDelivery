@@ -6,7 +6,6 @@
   <title>Distribuidora Funaz</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* 🎨 Tu CSS intacto */
     :root{--green-apple:#7ED957;--bg:#f7fbf7;--card:#fff;--muted:#6b6b6b;--radius:12px}
     *{box-sizing:border-box}body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;background:linear-gradient(180deg,var(--bg),#eef7ee);color:#0b2a12}
     header{display:flex;align-items:center;justify-content:center;padding:30px 0;background:linear-gradient(90deg,rgba(255,255,255,0.6),transparent);backdrop-filter: blur(4px)}
@@ -50,12 +49,11 @@
     <footer>© Distribuidora Funaz — Pedidos: 2645583761 · Consultas: 2645583761</footer>
   </main>
 
-  <!-- 🔹 Cargar Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    const SUPABASE_URL = 'https://slroycxifwezthdomkny.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // 🔹 Simulación de productos JSON (puedes reemplazarlo con fetch a tu API)
+    const PRODUCTOS = [
+      {"idx":0,"id":1,"nombre":"TOALLAS FEMENINAS DONCELLA POCKET","precio":"488.99","categoria":"Higiene","stock":400,"imagen":"/imagenes/1.jpg"}
+    ];
 
     const FIXED_CATEGORIES = ['Todas','Limpieza','Alimentos','Accesorios','Higiene','Perfumería','Otros'];
 
@@ -64,24 +62,28 @@
     const search = document.getElementById('search');
     const categoriesEl = document.getElementById('categories');
 
-    let PRODUCTS = [];
+    let PRODUCTS = PRODUCTOS.map(p => ({
+      ...p,
+      precio: parseFloat(p.precio), // 🔹 Convertir precio a número
+      categoria: p.categoria?.trim() || 'Otros'
+    }));
+
     let currentCategory = 'Todas';
 
     function formatMoney(n){
-      try{ return new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(n); }
-      catch(e){ return '$' + Number(n).toFixed(2); }
+      return isNaN(n) ? '$0.00' : new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(n);
     }
-    function normalizeCategory(c){ return c ? String(c).trim() : 'Otros'; }
 
     function createCard(p){
       const card = document.createElement('article'); card.className = 'card';
       const thumb = document.createElement('div'); thumb.className = 'thumb';
       const img = document.createElement('img');
       img.src = p.imagen || 'imagenes/placeholder.png'; img.alt = p.nombre || 'Producto';
-      img.onerror = ()=> img.src='imagenes/placeholder.png'; thumb.appendChild(img);
+      img.onerror = ()=> img.src='imagenes/placeholder.png';
+      thumb.appendChild(img);
       const name = document.createElement('h3'); name.className='name'; name.textContent=p.nombre||'Sin nombre';
       const meta = document.createElement('div'); meta.className='meta';
-      const priceEl = document.createElement('div'); priceEl.className='price'; priceEl.textContent=formatMoney(Number(p.precio)*1.10);
+      const priceEl = document.createElement('div'); priceEl.className='price'; priceEl.textContent=formatMoney(p.precio*1.10);
       const catEl = document.createElement('div'); catEl.className='muted'; catEl.textContent=p.categoria||'';
       meta.append(priceEl,catEl); card.append(thumb,name,meta); return card;
     }
@@ -104,25 +106,14 @@
 
     function applyFilters(){
       const q = search.value.trim().toLowerCase();
-      let list = PRODUCTS.filter(p=>!currentCategory||currentCategory==='Todas'||normalizeCategory(p.categoria).toLowerCase()===currentCategory.toLowerCase());
+      let list = PRODUCTS.filter(p=>!currentCategory||currentCategory==='Todas'||p.categoria.toLowerCase()===currentCategory.toLowerCase());
       if(q) list = list.filter(p => (p.nombre||'').toLowerCase().includes(q));
       renderProducts(list);
     }
 
-    async function load(){
-      try{
-        const {data,error}=await supabase.from('productos').select('*').order('id',{ascending:true});
-        if(error) throw error;
-        PRODUCTS=data.map(p=>({...p,categoria:normalizeCategory(p.categoria)}));
-        buildCategoryButtons(); applyFilters();
-      }catch(e){
-        console.error('Error cargando productos:',e.message);
-        PRODUCTS=[]; buildCategoryButtons(); applyFilters();
-      }
-    }
-
     search.addEventListener('input',applyFilters);
-    load();
+    buildCategoryButtons();
+    applyFilters();
   </script>
 </body>
 </html>
