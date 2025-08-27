@@ -121,7 +121,7 @@
   card.innerHTML = `
     <div class="thumb">
       <img src="${imgPath}" alt="${p.nombre || 'Producto'}"
-           onerror="this.src='placeholder.png'">
+           onerror="this.onerror=null;this.src='placeholder.png'">
     </div>
     <div class="name">${p.nombre || 'Sin nombre'}</div>
     <div class="meta">
@@ -131,6 +131,7 @@
   `;
   return card;
 }
+
 
 
 
@@ -201,4 +202,5 @@
 
 </body>
 </html>
+
 
