@@ -49,27 +49,18 @@
     <footer>© Distribuidora Funaz — Pedidos: 2645583761 · Consultas: 2645583761</footer>
   </main>
 
-  <!-- Cargar Supabase una sola vez -->
+  <!-- Cargar Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
     // ---------- CONFIG ----------
     const SUPABASE_URL = 'https://slroycxifwezthdomkny.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'; // tu key completa
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8';
+    const FIXED_CATEGORIES = ["Todas", "Limpieza", "Higiene", "Perfumería", "Alimentos", "Accesorios"];
     // ----------------------------
 
     // ✅ Cliente global
     const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    window.supa = supa; // así lo usas en consola
-
-    async function testSupabase() {
-      console.log('🔍 Probando conexión...');
-      const { data, error } = await supa.from('productos').select('*').limit(5);
-      if (error) console.error(error);
-      else console.log(`✅ ${data.length} productos`, data);
-    }
-
-    testSupabase();
 
     // DOM refs
     const grid = document.getElementById('grid');
@@ -87,14 +78,12 @@
     }
     function normalizeCategory(c){ return c ? String(c).trim() : 'Otros'; }
 
-    // card builder (mantengo tu estructura)
+    // card builder
     function createCard(p){
       const card = document.createElement('article'); card.className = 'card';
       const thumb = document.createElement('div'); thumb.className = 'thumb';
       const img = document.createElement('img');
-      // no toco la DB: si imagen viene con .jpg lo dejo, o lo normalizo a .png si querés cambiarlo en frontend
       let imgPath = p.imagen || 'imagenes/placeholder.png';
-      // si querés forzar png (opcional): imgPath = imgPath.replace(/\.jpg$/i, '.png');
       if (imgPath.startsWith('/')) imgPath = imgPath.slice(1);
       img.src = imgPath;
       img.alt = p.nombre || 'Producto';
@@ -127,7 +116,12 @@
         const btn = document.createElement('button');
         btn.className = 'cat-btn' + (cat === currentCategory ? ' active' : '');
         btn.textContent = cat;
-        btn.onclick = ()=>{ currentCategory = cat; document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); applyFilters(); };
+        btn.onclick = ()=>{ 
+          currentCategory = cat; 
+          document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); 
+          btn.classList.add('active'); 
+          applyFilters(); 
+        };
         categoriesEl.appendChild(btn);
       });
     }
@@ -144,16 +138,14 @@
       renderProducts(list);
     }
 
-    // load: intenta DB (Supabase), si no hay datos intenta productos.json, si tampoco, sampleData
+    // load productos
     async function load(){
       console.log('🔎 Intentando cargar productos desde Supabase...');
       try {
-        const { data, error } = await supabase.from('productos').select('*').order('id', { ascending: true });
-        if (error) {
-          console.warn('⚠️ Supabase error:', error);
-        } else if (data && data.length > 0) {
+        const { data, error } = await supa.from('productos').select('*').order('id', { ascending: true });
+        if (error) throw error;
+        if (data && data.length > 0) {
           console.log(`✅ Supabase devolvió ${data.length} productos`);
-          // normalizar tipos (precio a number)
           PRODUCTS = data.map(p => ({
             ...p,
             precio: (p.precio === null || p.precio === undefined) ? 0 : (isNaN(Number(p.precio)) ? parseFloat(String(p.precio).replace(',', '.')) || 0 : Number(p.precio)),
@@ -163,23 +155,21 @@
           applyFilters();
           return;
         } else {
-          console.log('ℹ️ Supabase devolvió array vacío.');
+          console.warn('⚠️ Supabase devolvió array vacío.');
         }
       } catch (e) {
         console.error('❌ Error al consultar Supabase:', e.message || e);
       }
 
-      // fallback: intentar productos.json local (mantengo tu comportamiento original)
-      console.log('🔎 Intentando cargar productos desde productos.json (fallback)...');
+      // fallback productos.json
+      console.log('🔎 Intentando cargar productos desde productos.json...');
       try {
         const r = await fetch('productos.json', { cache: 'no-store' });
         if (r.ok) {
           const txt = await r.text();
-          // tryParseFlexible: tolerante al JSON sucio
           let parsed;
           try { parsed = JSON.parse(txt); }
           catch {
-            // tolerante: envolver en array o extraer objetos
             let t = txt.trim().replace(/^[,\s]+/, '');
             if(!t.startsWith('[')) t = '[' + t;
             if(!t.endsWith(']')) t = t + ']';
@@ -196,25 +186,17 @@
           applyFilters();
           return;
         } else {
-          console.log('productos.json no encontrado (HTTP ' + r.status + ')');
+          console.error('❌ productos.json no encontrado');
         }
       } catch (e) {
-        console.warn('Error cargando productos.json:', e.message || e);
+        console.error('Error cargando productos.json:', e.message || e);
       }
 
-      // último recurso: sampleData
-      console.log('🔁 Usando sampleData como fallback');
-      PRODUCTS = sampleData.map(p => ({ ...p, categoria: normalizeCategory(p.categoria) }));
-      buildCategoryButtons();
-      applyFilters();
+      console.error('❌ No hay datos disponibles');
     }
 
-    // listeners
     search.addEventListener('input', applyFilters);
-
-    // arrancar
     load();
   </script>
 </body>
 </html>
-
