@@ -12,14 +12,18 @@
     .brand{display:flex;align-items:center;gap:18px}.logo{width:100%;max-width:520px}.logo img{width:100%;object-fit:contain}
     .wrap{max-width:1200px;margin:28px auto;padding:0 20px}.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px}
     .search{display:flex;gap:10px;align-items:center;flex:1;min-width:220px}.search input{padding:12px 14px;border-radius:10px;border:1px solid #dfeede;min-width:220px}
-    .categories{display:flex;gap:8px;flex-wrap:wrap}.cat-btn{background:transparent;border:1px solid transparent;padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:600}
-    .cat-btn:hover{transform:translateY(-2px)}.cat-btn.active{background:var(--green-apple);color:#05310b}
+    .categories{display:flex;gap:8px;flex-wrap:wrap;margin-left:12px}.cat-btn{background:transparent;border:1px solid transparent;padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:600}
+    .cat-btn:hover{transform:translateY(-2px)}.cat-btn.active{background:var(--green-apple);color:#05310b;border-color:rgba(0,0,0,0.04)}
     .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}@media (max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}@media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}@media (max-width:420px){.grid{grid-template-columns:1fr}}
     .card{background:var(--card);border-radius:14px;padding:14px;box-shadow:0 8px 22px rgba(18,64,22,0.06);display:flex;flex-direction:column;gap:10px;min-height:240px}
     .thumb{height:150px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,rgba(126,217,87,0.12),rgba(126,217,87,0.04));display:flex;align-items:center;justify-content:center}
-    .thumb img{width:100%;height:100%;object-fit:cover}.name{font-weight:700;color:#08330f;font-size:16px}
-    .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}.price{font-weight:800;color:#063b11;font-size:18px}.muted{color:var(--muted);font-size:13px}
-    footer{margin:36px 0 80px;text-align:center;color:var(--muted)}.empty{padding:40px;border-radius:12px;background:#fff;text-align:center;color:var(--muted);box-shadow:0 6px 18px rgba(18,64,22,0.04)}
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .name{font-weight:700;color:#08330f;font-size:16px;line-height:1.2}
+    .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .price{font-weight:800;color:#063b11;font-size:18px}
+    .muted{color:var(--muted);font-size:13px}
+    footer{margin:36px 0 80px;text-align:center;color:var(--muted)}
+    .empty{padding:40px;border-radius:12px;background:#fff;text-align:center;color:var(--muted);box-shadow:0 6px 18px rgba(18,64,22,0.04)}
   </style>
 </head>
 <body>
@@ -53,67 +57,81 @@
   <script type="module">
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
+  // --- CONFIG --------------------------------------------------------------
   window.supa = createClient(
-     'https://slroycxifwezthdomkny.supabase.co',
-     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'
-   );
+    'https://slroycxifwezthdomkny.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'
+  );
 
+  const FIXED_CATEGORIES = ["Todas", "Limpieza", "Higiene", "Perfumería", "Alimentos", "Accesorios"];
   let PRODUCTS = [];
+  let currentCategory = 'Todas';
 
   const empty = document.getElementById('empty');
   const grid = document.getElementById('grid');
+  const categoriesEl = document.getElementById('categories');
+  const searchInput = document.getElementById('search');
 
-  function normalizeCategory(c) {
-    const fixed = ['Limpieza', 'Higiene', 'Perfumería', 'Alimentos', 'Accesorios'];
-    return fixed.includes(c) ? c : 'Otros';
+  // --- HELPERS -------------------------------------------------------------
+  function parsePrice(v){
+    if (v === null || v === undefined) return 0;
+    if (typeof v === 'number') return v;
+    const s = String(v).trim().replace(/\./g,'').replace(',', '.');
+    const n = parseFloat(s);
+    return isNaN(n) ? 0 : n;
+  }
+  function formatMoney(n){
+    return new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(n);
+  }
+  function normalizeCategory(c){
+    if(!c) return 'Otros';
+    const s = String(c).trim();
+    return FIXED_CATEGORIES.includes(s) ? s : 'Otros';
+  }
+  function normalizeImage(path){
+    if(!path) return 'imagenes/placeholder.png';
+    return path.startsWith('/') ? path.slice(1) : path;
   }
 
-  async function load() {
-    console.log('🔎 Cargando productos desde Supabase...');
-    try {
-      const { data, error } = await supa
-        .from('productos')
-        .select('*')
-        .order('id', { ascending: true });
-
-      if (error) throw error;
-
-      console.log('📦 Respuesta cruda de Supabase:', data);
-
-      PRODUCTS = data.map(p => ({
-        id: Number(p.id),
-        nombre: p.nombre,
-        precio: parseFloat(p.precio),
-        categoria: normalizeCategory(p.categoria),
-        stock: Number(p.stock),
-        imagen: p.imagen
-      }));
-
-      console.log(`✅ ${PRODUCTS.length} productos cargados`);
-      renderProducts(PRODUCTS);
-
-    } catch (e) {
-      console.error('❌ Error al cargar productos:', e.message || e);
-      empty.style.display = 'block';
-    }
+  // --- UI: categories (fixed, always visible) ------------------------------
+  function buildCategoryButtons(){
+    categoriesEl.innerHTML = '';
+    FIXED_CATEGORIES.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'cat-btn' + (cat === currentCategory ? ' active' : '');
+      btn.textContent = cat;
+      btn.onclick = () => {
+        currentCategory = cat;
+        document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilters();
+      };
+      categoriesEl.appendChild(btn);
+    });
   }
+  buildCategoryButtons();
 
-  function createCard(p) {
-    const card = document.createElement('div');
+  // --- CARD & RENDER -------------------------------------------------------
+  function createCard(p){
+    const card = document.createElement('article');
     card.className = 'card';
+    const imgPath = normalizeImage(p.imagen);
+    const displayedPrice = formatMoney( parsePrice(p.precio) * 1.10 ); // conserva +10% si querés
     card.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}">
-      <h3>${p.nombre}</h3>
-      <p>$${p.precio.toFixed(2)}</p>
-      <p>Stock: ${p.stock}</p>
+      <div class="thumb"><img src="${imgPath}" alt="${p.nombre || 'Producto'}"></div>
+      <div class="name">${p.nombre || 'Sin nombre'}</div>
+      <div class="meta">
+        <div class="price">${displayedPrice}</div>
+        <div class="muted">${p.categoria ? normalizeCategory(p.categoria) : ''}</div>
+      </div>
     `;
     return card;
   }
 
-  function renderProducts(list) {
+  function renderProducts(list){
     grid.innerHTML = '';
     console.log('🔍 Lista recibida en renderProducts:', list);
-    if (!list || !list.length) {
+    if(!list || list.length === 0){
       empty.style.display = 'block';
       return;
     }
@@ -121,10 +139,59 @@
     list.forEach(p => grid.appendChild(createCard(p)));
   }
 
+  // --- FILTERS -------------------------------------------------------------
+  function applyFilters(){
+    const q = searchInput.value.trim().toLowerCase();
+    let list = PRODUCTS.slice();
+    if(currentCategory && currentCategory !== 'Todas'){
+      list = list.filter(p => normalizeCategory(p.categoria).toLowerCase() === currentCategory.toLowerCase());
+    }
+    if(q){
+      list = list.filter(p => (p.nombre || '').toLowerCase().includes(q));
+    }
+    renderProducts(list);
+  }
+  searchInput.addEventListener('input', applyFilters);
+
+  // --- LOAD DATA -----------------------------------------------------------
+  async function load(){
+    console.log('🔎 Cargando productos desde Supabase...');
+    try {
+      const { data, error } = await supa
+        .from('productos')
+        .select('*')
+        .order('id', { ascending: true });
+
+      if (error) {
+        console.error('❌ Supabase error:', error);
+        empty.style.display = 'block';
+        return;
+      }
+
+      console.log('📦 Respuesta cruda de Supabase:', data);
+
+      PRODUCTS = (Array.isArray(data) ? data : []).map(p => ({
+        id: p.id ?? null,
+        nombre: p.nombre ?? '',
+        precio: parsePrice(p.precio),
+        categoria: p.categoria ?? '',
+        stock: p.stock ?? 0,
+        imagen: p.imagen ?? ''
+      }));
+
+      console.log(`✅ ${PRODUCTS.length} productos cargados`);
+      // rebuild categories active state (keeps the fixed list)
+      buildCategoryButtons();
+      applyFilters();
+
+    } catch (e) {
+      console.error('❌ Error al cargar productos:', e);
+      empty.style.display = 'block';
+    }
+  }
+
   load();
-</script>
+  </script>
 
 </body>
 </html>
-
-
