@@ -56,14 +56,6 @@
   "imagen": "/imagenes/13.jpg"
  },
  {
-  "id": 14,
-  "nombre": "AGNOLOTTIS LA ITALIANA RICOTA/MUZZARELLA Y VERDEO",
-  "precio": 2324.99,
-  "categoria": "Alimentos",
-  "stock": 3,
-  "imagen": "/imagenes/14.jpg"
- },
- {
   "id": 15,
   "nombre": "JABON LIQUIDO GRANBY 800ml",
   "precio": 1362.72,
