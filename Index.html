@@ -50,111 +50,80 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    // ---------- CONFIG ----------
-    const SUPABASE_URL = 'https://slroycxifwezthdomkny.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8';
-    const FIXED_CATEGORIES = ["Todas", "Limpieza", "Higiene", "Perfumería", "Alimentos", "Accesorios"];
-    const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-    // DOM refs
-    const grid = document.getElementById('grid');
-    const empty = document.getElementById('empty');
-    const search = document.getElementById('search');
-    const categoriesEl = document.getElementById('categories');
+  const supa = createClient(
+    'https://slroycxifwezthdomkny.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'
+  );
 
-    let PRODUCTS = [];
-    let currentCategory = 'Todas';
+  let PRODUCTS = [];
 
-    function formatMoney(n){
-      return isNaN(n) ? '$0.00' : new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(n);
-    }
-    function normalizeCategory(c){ return c ? String(c).trim() : 'Otros'; }
+  const empty = document.getElementById('empty');
+  const grid = document.getElementById('grid');
 
-    function createCard(p){
-      const card = document.createElement('article'); card.className = 'card';
-      const thumb = document.createElement('div'); thumb.className = 'thumb';
-      const img = document.createElement('img');
-      let imgPath = p.imagen || 'imagenes/placeholder.png';
-      if (imgPath.startsWith('/')) imgPath = imgPath.slice(1);
-      img.src = imgPath;
-      img.alt = p.nombre || 'Producto';
-      img.onerror = function(){ this.onerror=null; this.src='imagenes/placeholder.png'; };
-      thumb.appendChild(img);
+  function normalizeCategory(c) {
+    const fixed = ['Limpieza', 'Higiene', 'Perfumería', 'Alimentos', 'Accesorios'];
+    return fixed.includes(c) ? c : 'Otros';
+  }
 
-      const name = document.createElement('h3'); name.className='name'; name.textContent=p.nombre || 'Sin nombre';
-      const meta = document.createElement('div'); meta.className='meta';
-      const priceEl = document.createElement('div'); priceEl.className='price';
-      const valor = Number(p.precio);
-      priceEl.textContent = formatMoney((isNaN(valor) ? 0 : valor) * 1.10);
-      const catEl = document.createElement('div'); catEl.className='muted'; catEl.textContent = p.categoria || '';
-      meta.append(priceEl, catEl);
-      card.append(thumb, name, meta);
-      return card;
-    }
-
-    function renderProducts(list){
-      grid.innerHTML = '';
-      if(!list || !list.length){ empty.style.display='block'; return; }
-      empty.style.display='none';
-      list.forEach(p => grid.appendChild(createCard(p)));
-    }
-
-    function buildCategoryButtons(){
-      categoriesEl.innerHTML = '';
-      FIXED_CATEGORIES.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = 'cat-btn' + (cat === currentCategory ? ' active' : '');
-        btn.textContent = cat;
-        btn.onclick = ()=>{ 
-          currentCategory = cat; 
-          document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); 
-          btn.classList.add('active'); 
-          applyFilters(); 
-        };
-        categoriesEl.appendChild(btn);
-      });
-    }
-
-    function applyFilters(){
-      const q = search.value.trim().toLowerCase();
-      let list = PRODUCTS.slice();
-      if(currentCategory && currentCategory !== 'Todas'){
-        list = list.filter(p => normalizeCategory(p.categoria).toLowerCase() === currentCategory.toLowerCase());
-      }
-      if(q){
-        list = list.filter(p => (p.nombre || '').toLowerCase().includes(q));
-      }
-      renderProducts(list);
-    }
-
-    async function load(){
-      console.log('🔎 Cargando productos desde Supabase...');
+  async function load() {
+    console.log('🔎 Cargando productos desde Supabase...');
+    try {
       const { data, error } = await supa
         .from('productos')
         .select('*')
         .order('id', { ascending: true });
 
-      if (error) {
-        console.error('❌ Error al consultar Supabase:', error.message || error);
-        empty.style.display = 'block';
-        return;
-      }
+      if (error) throw error;
+
+      console.log('📦 Respuesta cruda de Supabase:', data);
 
       PRODUCTS = data.map(p => ({
-        ...p,
-        precio: (p.precio === null || p.precio === undefined) ? 0 : 
-                (isNaN(Number(p.precio)) ? parseFloat(String(p.precio).replace(',', '.')) || 0 : Number(p.precio)),
-        categoria: normalizeCategory(p.categoria)
+        id: Number(p.id),
+        nombre: p.nombre,
+        precio: parseFloat(p.precio),
+        categoria: normalizeCategory(p.categoria),
+        stock: Number(p.stock),
+        imagen: p.imagen
       }));
 
       console.log(`✅ ${PRODUCTS.length} productos cargados`);
-      buildCategoryButtons();
-      applyFilters();
-    }
+      renderProducts(PRODUCTS);
 
-    search.addEventListener('input', applyFilters);
-    load();
-  </script>
+    } catch (e) {
+      console.error('❌ Error al cargar productos:', e.message || e);
+      empty.style.display = 'block';
+    }
+  }
+
+  function createCard(p) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}">
+      <h3>${p.nombre}</h3>
+      <p>$${p.precio.toFixed(2)}</p>
+      <p>Stock: ${p.stock}</p>
+    `;
+    return card;
+  }
+
+  function renderProducts(list) {
+    grid.innerHTML = '';
+    console.log('🔍 Lista recibida en renderProducts:', list);
+    if (!list || !list.length) {
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    list.forEach(p => grid.appendChild(createCard(p)));
+  }
+
+  load();
+</script>
+
 </body>
 </html>
+
