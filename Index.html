@@ -50,25 +50,26 @@
   </main>
 
   <!-- Cargar Supabase una sola vez -->
-  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
     // ---------- CONFIG ----------
     const SUPABASE_URL = 'https://slroycxifwezthdomkny.supabase.co';
-    // usá la anon key (frontend). Si la querés ocultar, usa backend.
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'; // tu key completa
     // ----------------------------
 
-    // crear cliente (window.supabase ya existe por el script cargado)
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // ✅ Cliente global
+    const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    window.supa = supa; // así lo usas en consola
 
-    // fixed categories
-    const FIXED_CATEGORIES = ['Todas','Limpieza','Alimentos','Accesorios','Higiene','Perfumería','Otros'];
+    async function testSupabase() {
+      console.log('🔍 Probando conexión...');
+      const { data, error } = await supa.from('productos').select('*').limit(5);
+      if (error) console.error(error);
+      else console.log(`✅ ${data.length} productos`, data);
+    }
 
-    // sample fallback (si no hay DB o JSON)
-    const sampleData = [
-      { id: 1, nombre: "BICARBONATO AROMA X10 U", precio: 1436.97, categoria: "Otros", stock: 10, imagen: "imagenes/8.png" },
-      { id: 2, nombre: "CHIMICHURRI X 1KG", precio: 8168.05, categoria: "Alimentos", stock: 5, imagen: "imagenes/9.png" }
-    ];
+    testSupabase();
 
     // DOM refs
     const grid = document.getElementById('grid');
@@ -216,3 +217,4 @@
   </script>
 </body>
 </html>
+
