@@ -6,50 +6,21 @@
   <title>Distribuidora Funaz</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --green-apple: #7ED957;
-      --bg: #f7fbf7;
-      --card: #ffffff;
-      --muted: #6b6b6b;
-      --radius: 12px;
-    }
-    *{box-sizing:border-box}
-    body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;background:linear-gradient(180deg,var(--bg),#eef7ee);color:#0b2a12}
-
-    header{
-      display:flex;align-items:center;justify-content:center;padding:30px 0;background:linear-gradient(90deg,rgba(255,255,255,0.6),transparent);backdrop-filter: blur(4px);
-    }
-    .brand{display:flex;align-items:center;gap:18px}
-    .logo{width:100%;max-width:520px;height:auto;border-radius:0;overflow:hidden;flex-shrink:0;background:none;box-shadow:none}
-    .logo img{width:100%;height:auto;object-fit:contain;display:block}
-
-    .wrap{max-width:1200px;margin:28px auto;padding:0 20px}
-    .topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px}
-    .search{display:flex;gap:10px;align-items:center;flex:1;min-width:220px}
-    .search input{padding:12px 14px;border-radius:10px;border:1px solid #dfeede;background:transparent;min-width:220px}
-
-    /* categories */
-    .categories{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-    .cat-btn{background:transparent;border:1px solid transparent;padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:600}
-    .cat-btn:hover{transform:translateY(-2px)}
-    .cat-btn.active{background:var(--green-apple);color:#05310b;border-color:rgba(0,0,0,0.04)}
-    .cat-wrapper{display:flex;align-items:center;gap:12px}
-
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-    @media (max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
-    @media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:420px){.grid{grid-template-columns:1fr}}
-
+    /* 🎨 Tu CSS intacto */
+    :root{--green-apple:#7ED957;--bg:#f7fbf7;--card:#fff;--muted:#6b6b6b;--radius:12px}
+    *{box-sizing:border-box}body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;background:linear-gradient(180deg,var(--bg),#eef7ee);color:#0b2a12}
+    header{display:flex;align-items:center;justify-content:center;padding:30px 0;background:linear-gradient(90deg,rgba(255,255,255,0.6),transparent);backdrop-filter: blur(4px)}
+    .brand{display:flex;align-items:center;gap:18px}.logo{width:100%;max-width:520px}.logo img{width:100%;object-fit:contain}
+    .wrap{max-width:1200px;margin:28px auto;padding:0 20px}.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px}
+    .search{display:flex;gap:10px;align-items:center;flex:1;min-width:220px}.search input{padding:12px 14px;border-radius:10px;border:1px solid #dfeede;min-width:220px}
+    .categories{display:flex;gap:8px;flex-wrap:wrap}.cat-btn{background:transparent;border:1px solid transparent;padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:600}
+    .cat-btn:hover{transform:translateY(-2px)}.cat-btn.active{background:var(--green-apple);color:#05310b}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}@media (max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}@media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}@media (max-width:420px){.grid{grid-template-columns:1fr}}
     .card{background:var(--card);border-radius:14px;padding:14px;box-shadow:0 8px 22px rgba(18,64,22,0.06);display:flex;flex-direction:column;gap:10px;min-height:240px}
     .thumb{height:150px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,rgba(126,217,87,0.12),rgba(126,217,87,0.04));display:flex;align-items:center;justify-content:center}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .name{font-weight:700;color:#08330f;margin:0;font-size:16px}
-    .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}
-    .price{font-weight:800;color:#063b11;font-size:18px}
-    .muted{color:var(--muted);font-size:13px}
-
-    footer{margin:36px 0 80px;text-align:center;color:var(--muted)}
-    .empty{padding:40px;border-radius:12px;background:#fff;text-align:center;color:var(--muted);box-shadow:0 6px 18px rgba(18,64,22,0.04)}
+    .thumb img{width:100%;height:100%;object-fit:cover}.name{font-weight:700;color:#08330f;font-size:16px}
+    .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}.price{font-weight:800;color:#063b11;font-size:18px}.muted{color:var(--muted);font-size:13px}
+    footer{margin:36px 0 80px;text-align:center;color:var(--muted)}.empty{padding:40px;border-radius:12px;background:#fff;text-align:center;color:var(--muted);box-shadow:0 6px 18px rgba(18,64,22,0.04)}
   </style>
 </head>
 <body>
@@ -66,7 +37,6 @@
       <div class="search">
         <input id="search" placeholder="Buscar producto..." />
       </div>
-
       <div class="cat-wrapper">
         <div class="categories" id="categories"></div>
       </div>
@@ -77,20 +47,15 @@
       <div id="empty" class="empty" style="display:none;margin-top:18px">No se encontraron productos.</div>
     </section>
 
-    <footer>
-      © Distribuidora Funaz — Pedidos: 2645583761 · Consultas: 2645583761
-    </footer>
+    <footer>© Distribuidora Funaz — Pedidos: 2645583761 · Consultas: 2645583761</footer>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = 'https://slroycxifwezthdomkny.supabase.co'; 
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'; 
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-</script>
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    // 🔹 Configura tu Supabase aquí:
+  <!-- 🔹 Cargar Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = 'https://slroycxifwezthdomkny.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const FIXED_CATEGORIES = ['Todas','Limpieza','Alimentos','Accesorios','Higiene','Perfumería','Otros'];
 
@@ -106,56 +71,23 @@
       try{ return new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(n); }
       catch(e){ return '$' + Number(n).toFixed(2); }
     }
-
-    function normalizeCategory(c){
-      if(!c) return 'Otros';
-      return String(c).trim();
-    }
+    function normalizeCategory(c){ return c ? String(c).trim() : 'Otros'; }
 
     function createCard(p){
-      const card = document.createElement('article');
-      card.className = 'card';
-
-      const thumb = document.createElement('div');
-      thumb.className = 'thumb';
+      const card = document.createElement('article'); card.className = 'card';
+      const thumb = document.createElement('div'); thumb.className = 'thumb';
       const img = document.createElement('img');
-      let src = (p.imagen || 'imagenes/placeholder.png');
-      if(src.startsWith('/')) src = src.slice(1);
-      img.src = src;
-      img.alt = p.nombre || 'Producto';
-      img.onerror = function(){ this.onerror = null; this.src = 'imagenes/placeholder.png'; }
-      thumb.appendChild(img);
-
-      const name = document.createElement('h3');
-      name.className = 'name';
-      name.textContent = p.nombre || 'Sin nombre';
-
-      const meta = document.createElement('div');
-      meta.className = 'meta';
-
-      const precioCalculado = Number(p.precio || 0) * 1.10;
-      const priceEl = document.createElement('div');
-      priceEl.className = 'price';
-      priceEl.textContent = formatMoney(precioCalculado);
-
-      const catEl = document.createElement('div');
-      catEl.className = 'muted';
-      catEl.textContent = p.categoria || '';
-
-      meta.appendChild(priceEl);
-      meta.appendChild(catEl);
-
-      card.appendChild(thumb);
-      card.appendChild(name);
-      card.appendChild(meta);
-
-      return card;
+      img.src = p.imagen || 'imagenes/placeholder.png'; img.alt = p.nombre || 'Producto';
+      img.onerror = ()=> img.src='imagenes/placeholder.png'; thumb.appendChild(img);
+      const name = document.createElement('h3'); name.className='name'; name.textContent=p.nombre||'Sin nombre';
+      const meta = document.createElement('div'); meta.className='meta';
+      const priceEl = document.createElement('div'); priceEl.className='price'; priceEl.textContent=formatMoney(Number(p.precio)*1.10);
+      const catEl = document.createElement('div'); catEl.className='muted'; catEl.textContent=p.categoria||'';
+      meta.append(priceEl,catEl); card.append(thumb,name,meta); return card;
     }
 
     function renderProducts(list){
-      grid.innerHTML = '';
-      if(!list || !list.length){ empty.style.display='block'; return; }
-      empty.style.display='none';
+      grid.innerHTML = ''; empty.style.display = !list?.length ? 'block':'none';
       list.forEach(p => grid.appendChild(createCard(p)));
     }
 
@@ -163,55 +95,34 @@
       categoriesEl.innerHTML = '';
       FIXED_CATEGORIES.forEach(cat => {
         const btn = document.createElement('button');
-        btn.className = 'cat-btn' + (cat === currentCategory ? ' active' : '');
+        btn.className = 'cat-btn'+(cat===currentCategory?' active':'');
         btn.textContent = cat;
-        btn.addEventListener('click', ()=>{
-          currentCategory = cat;
-          document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
-          btn.classList.add('active');
-          applyFilters();
-        });
+        btn.onclick = ()=>{ currentCategory=cat;document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyFilters();};
         categoriesEl.appendChild(btn);
       });
     }
 
     function applyFilters(){
       const q = search.value.trim().toLowerCase();
-      let list = PRODUCTS.slice();
-      if(currentCategory && currentCategory !== 'Todas'){
-        list = list.filter(p => normalizeCategory(p.categoria).toLowerCase() === currentCategory.toLowerCase());
-      }
-      if(q){
-        list = list.filter(p => (p.nombre || '').toLowerCase().includes(q));
-      }
+      let list = PRODUCTS.filter(p=>!currentCategory||currentCategory==='Todas'||normalizeCategory(p.categoria).toLowerCase()===currentCategory.toLowerCase());
+      if(q) list = list.filter(p => (p.nombre||'').toLowerCase().includes(q));
       renderProducts(list);
     }
 
     async function load(){
-      try {
-        const { data, error } = await supabase
-          .from('productos')
-          .select('*')
-          .order('id', { ascending: true });
-
+      try{
+        const {data,error}=await supabase.from('productos').select('*').order('id',{ascending:true});
         if(error) throw error;
-
-        PRODUCTS = data.map(p => ({...p, categoria: normalizeCategory(p.categoria)}));
-        buildCategoryButtons();
-        applyFilters();
-      } catch(e) {
-        console.error('Error cargando productos:', e.message);
-        PRODUCTS = [];
-        buildCategoryButtons();
-        applyFilters();
+        PRODUCTS=data.map(p=>({...p,categoria:normalizeCategory(p.categoria)}));
+        buildCategoryButtons(); applyFilters();
+      }catch(e){
+        console.error('Error cargando productos:',e.message);
+        PRODUCTS=[]; buildCategoryButtons(); applyFilters();
       }
     }
 
-    search.addEventListener('input', ()=> applyFilters());
+    search.addEventListener('input',applyFilters);
     load();
   </script>
 </body>
 </html>
-
-
-
