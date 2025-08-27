@@ -82,14 +82,15 @@
     </footer>
   </main>
 
-  <script>
-    // categorías fijas (las que solicitaste). Cualquier producto con otra categoria irá a "Otros".
-    const FIXED_CATEGORIES = ['Todas','Limpieza','Alimentos','Accesorios','Higiene','Perfumería','Otros'];
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    const sampleData = [
-      { "id": 8, "nombre": "BICARBONATO AROMA X10 U", "precio": 1436.97, "categoria": null, "stock": true, "imagen": "imagenes/8.jpg" },
-      { "id": 9, "nombre": "CHIMICHURRI X 1KG", "precio": 8168.05, "categoria": null, "stock": true, "imagen": "imagenes/9.jpg" }
-    ];
+    // 🔹 Configura tu Supabase aquí:
+    const SUPABASE_URL = 'https://TU_PROYECTO.supabase.co'; 
+    const SUPABASE_KEY = 'TU_API_KEY_PUBLICA'; 
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const FIXED_CATEGORIES = ['Todas','Limpieza','Alimentos','Accesorios','Higiene','Perfumería','Otros'];
 
     const grid = document.getElementById('grid');
     const empty = document.getElementById('empty');
@@ -106,9 +107,7 @@
 
     function normalizeCategory(c){
       if(!c) return 'Otros';
-      c = String(c).trim();
-      // Si querés mapear categorías específicas, hacelo acá. Por defecto devolvemos la que venga.
-      return c;
+      return String(c).trim();
     }
 
     function createCard(p){
@@ -177,65 +176,37 @@
     function applyFilters(){
       const q = search.value.trim().toLowerCase();
       let list = PRODUCTS.slice();
-      // category filter
       if(currentCategory && currentCategory !== 'Todas'){
-        list = list.filter(p => {
-          const cat = normalizeCategory(p.categoria);
-          return cat.toLowerCase() === currentCategory.toLowerCase();
-        });
+        list = list.filter(p => normalizeCategory(p.categoria).toLowerCase() === currentCategory.toLowerCase());
       }
-      // search filter
       if(q){
         list = list.filter(p => (p.nombre || '').toLowerCase().includes(q));
       }
       renderProducts(list);
     }
 
-    // intenta parsear JSON de forma tolerante
-    function tryParseFlexible(text){
-      let t = text.trim();
-      try{ return JSON.parse(t); }catch(e){}
-      t = t.replace(/^[,\\s]+/, '');
-      if(!t.startsWith('[')) t = '[' + t;
-      if(!t.endsWith(']')) t = t + ']';
-      t = t.replace(/,\\s*\\]$/, ']');
-      t = t.replace(/,\\s*,/g, ',');
-      try{ return JSON.parse(t); }catch(e){
-        const objs = Array.from(t.matchAll(/{[^}]*}/g)).map(m => m[0]);
-        if(objs.length){
-          return objs.map(j => JSON.parse(j));
-        }
-        throw new Error('No se pudo parsear JSON');
-      }
-    }
-
     async function load(){
-      try{
-        const r = await fetch('productos.json', {cache: 'no-store'});
-        if(!r.ok) throw new Error('No existe productos.json (HTTP ' + r.status + ')');
-        const txt = await r.text();
-        const data = tryParseFlexible(txt);
-        if(!Array.isArray(data)) throw new Error('Formato inválido después del parseo');
-        // normalizar categorías
+      try {
+        const { data, error } = await supabase
+          .from('productos')
+          .select('*')
+          .order('id', { ascending: true });
+
+        if(error) throw error;
+
         PRODUCTS = data.map(p => ({...p, categoria: normalizeCategory(p.categoria)}));
         buildCategoryButtons();
         applyFilters();
-      }catch(e){
-        console.warn('No se pudo cargar productos.json — usando datos de ejemplo:', e.message);
-        PRODUCTS = sampleData.map(p=> ({...p, categoria: normalizeCategory(p.categoria)}));
+      } catch(e) {
+        console.error('Error cargando productos:', e.message);
+        PRODUCTS = [];
         buildCategoryButtons();
         applyFilters();
       }
     }
 
-    search.addEventListener('input', ()=>{
-      applyFilters();
-    });
-
-    // iniciar
+    search.addEventListener('input', ()=> applyFilters());
     load();
   </script>
 </body>
 </html>
-
-
