@@ -117,16 +117,17 @@
   card.className = 'card';
   const displayedPrice = formatMoney(parsePrice(p.precio) * 1.10);
 
+  // Imagen con placeholder primero
   const img = document.createElement('img');
-  img.src = 'placeholder.png'; // SIEMPRE empieza con placeholder
+  img.src = 'imagenes/placeholder.png'; 
   img.alt = p.nombre || 'Producto';
 
-  // Intentar precargar imagen real
+  // Si el producto tiene imagen, intentar cargarla
   if (p.imagen) {
     const realImg = new Image();
-    realImg.src = p.imagen;
+    realImg.src = `imagenes/${p.imagen}`; // Siempre busca en /imagenes/
     realImg.onload = () => {
-      img.src = p.imagen; // Solo la usa si carga bien
+      img.src = `imagenes/${p.imagen}`;
     };
   }
 
@@ -142,6 +143,7 @@
 
   return card;
 }
+
 
 
 
@@ -214,6 +216,7 @@
 
 </body>
 </html>
+
 
 
 
