@@ -132,17 +132,25 @@
   card.className = 'card';
   const displayedPrice = formatMoney(parsePrice(p.precio) * 1.10);
 
-  // Imagen con placeholder primero
+  // Imagen placeholder por defecto
   const img = document.createElement('img');
-  img.src = 'imagenes/placeholder.png'; 
+  img.src = 'imagenes/placeholder.png';
   img.alt = p.nombre || 'Producto';
 
-  // Si el producto tiene imagen, intentar cargarla
+  // Determinar URL real de la imagen
   if (p.imagen) {
+    let imgPath = p.imagen.trim();
+    if (!imgPath.startsWith('http') && !imgPath.startsWith('/') && !imgPath.startsWith('imagenes/')) {
+      imgPath = `imagenes/${imgPath}`;
+    }
+
     const realImg = new Image();
-    realImg.src = `imagenes/${p.imagen}`; // Siempre busca en /imagenes/
+    realImg.src = imgPath;
     realImg.onload = () => {
-      img.src = `imagenes/${p.imagen}`;
+      img.src = imgPath;
+    };
+    realImg.onerror = () => {
+      img.src = 'imagenes/placeholder.png'; // fallback si falla
     };
   }
 
@@ -158,6 +166,7 @@
 
   return card;
 }
+
 
 
 
@@ -231,6 +240,7 @@
 
 </body>
 </html>
+
 
 
 
