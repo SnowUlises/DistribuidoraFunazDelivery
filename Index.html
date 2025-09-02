@@ -4,55 +4,206 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Distribuidora Funaz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  >
   <style>
-    :root{--green-apple:#7ED957;--bg:#f7fbf7;--card:#fff;--muted:#6b6b6b;--radius:12px}
-    *{box-sizing:border-box}body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;background:linear-gradient(180deg,var(--bg),#eef7ee);color:#0b2a12}
-    header{display:flex;align-items:center;justify-content:center;padding:30px 0;background:linear-gradient(90deg,rgba(255,255,255,0.6),transparent);backdrop-filter: blur(4px)}
-    .brand{display:flex;align-items:center;gap:18px}.logo{width:100%;max-width:520px}.logo img{width:100%;object-fit:contain}
-    .wrap{max-width:1200px;margin:28px auto;padding:0 20px}.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px}
-    .search{display:flex;gap:10px;align-items:center;flex:1;min-width:220px}.search input{padding:12px 14px;border-radius:10px;border:1px solid #dfeede;min-width:220px}
-    .categories{display:flex;gap:8px;flex-wrap:wrap;margin-left:12px}.cat-btn{background:transparent;border:1px solid transparent;padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:600}
-    .cat-btn:hover{transform:translateY(-2px)}.cat-btn.active{background:var(--green-apple);color:#05310b;border-color:rgba(0,0,0,0.04)}
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}@media (max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}@media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}@media (max-width:420px){.grid{grid-template-columns:1fr}}
-    .card{background:var(--card);border-radius:14px;padding:14px;box-shadow:0 8px 22px rgba(18,64,22,0.06);display:flex;flex-direction:column;gap:10px;min-height:240px}
+    :root {
+      --green-apple: #7ED957;
+      --bg: #f7fbf7;
+      --card: #fff;
+      --muted: #6b6b6b;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Inter, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg), #eef7ee);
+      color: #0b2a12;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.6), transparent);
+      backdrop-filter: blur(4px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .logo {
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .logo img {
+      width: 100%;
+      object-fit: contain;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 28px auto;
+      padding: 0 20px;
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+
+    .search {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search input {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #dfeede;
+      min-width: 220px;
+    }
+
+    .categories {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-left: 12px;
+    }
+
+    .cat-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .cat-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .cat-btn.active {
+      background: var(--green-apple);
+      color: #05310b;
+      border-color: rgba(0,0,0,0.04);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width:1000px) {
+      .grid { grid-template-columns: repeat(3,1fr); }
+    }
+    @media (max-width:700px) {
+      .grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width:420px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 22px rgba(18,64,22,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 240px;
+    }
+
     .thumb {
-  width: 100%;
-  aspect-ratio: 1 / 1;       /* Siempre cuadro perfecto */
-  border-radius: 10px;
-  overflow: hidden;
-  background: transparent;   /* 👈 Fondo transparente para que se vea la página */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      overflow: hidden;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;       /* Ajusta toda la imagen sin recortar */
-}
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
-    .name{font-weight:700;color:#08330f;font-size:16px;line-height:1.2}
-    .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}
-    .price{font-weight:800;color:#063b11;font-size:18px}
-    .muted{color:var(--muted);font-size:13px}
-    footer{margin:36px 0 80px;text-align:center;color:var(--muted)}
-    .empty{padding:40px;border-radius:12px;background:#fff;text-align:center;color:var(--muted);box-shadow:0 6px 18px rgba(18,64,22,0.04)}
+    .name {
+      font-weight: 700;
+      color: #08330f;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .price {
+      font-weight: 800;
+      color: #063b11;
+      font-size: 18px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer {
+      margin: 36px 0 80px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty {
+      padding: 40px;
+      border-radius: 12px;
+      background: #fff;
+      text-align: center;
+      color: var(--muted);
+      box-shadow: 0 6px 18px rgba(18,64,22,0.04);
+    }
   </style>
 </head>
+
 <body>
   <header>
-  <div class="brand" style="justify-content:center;width:100%">
-    <div class="logo logo-wide">
-      <img src="imagenes/logo.png" alt="Logo" onerror="this.src='imagenes/placeholder.png'">
+    <div class="brand" style="justify-content:center;width:100%">
+      <div class="logo logo-wide">
+        <img src="imagenes/logo.png" alt="Logo" onerror="this.src='imagenes/placeholder.png'">
+      </div>
     </div>
-  </div>
-  <div style="text-align:center; margin-top:8px; font-size:14px; color:#05310b;">
-    © Distribuidora Funaz — Pedidos: 2645583761 · Consultas: 2645156933
-  </div>
-</header>
-
+  </header>
+  <header>
+      © Distribuidora Funaz — Pedidos: 2645583761 · Consultas: 2645156933
+  </header>
 
   <main class="wrap">
     <div class="topbar">
@@ -66,209 +217,183 @@
 
     <section id="productsArea">
       <div id="grid" class="grid"></div>
-      <div id="empty" class="empty" style="display:none;margin-top:18px">No se encontraron productos.</div>
+      <div id="empty" class="empty" style="display:none;margin-top:18px">
+        No se encontraron productos.
+      </div>
     </section>
 
+  
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="module">
-  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-  // --- CONFIG --------------------------------------------------------------
-  window.supa = createClient(
-    'https://slroycxifwezthdomkny.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'
-  );
+    // --- CONFIG --------------------------------------------------------------
+    const supa = createClient(
+      'https://slroycxifwezthdomkny.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'
+    );
 
-  const FIXED_CATEGORIES = ["Todas",
-"ALIMENTOS", 
-"ANALGESICOS",
-"CIGARRILLOS Y ENCENDEDORES",
-"CREMAS",
-"DESODORANTES",
-"GALLETAS Y GOLOSINAS",
-"GENERICOS",
-"JUGOS",
-"LIMPIEZA",
-"PAPELES Y BOLSAS",
-"PEGAMENTOS",
-"PERFUMERIA",
-"REPELENTES",
-"SHAMPO Y ENJUAGUE",
-"TINTURAS NANTYR"];
-  let PRODUCTS = [];
-  let currentCategory = 'Todas';
+    const FIXED_CATEGORIES = [
+      "Todas", "ALIMENTOS", "ANALGESICOS", "CIGARRILLOS Y ENCENDEDORES", "CREMAS",
+      "DESODORANTES", "GALLETAS Y GOLOSINAS", "GENERICOS", "JUGOS", "LIMPIEZA",
+      "PAPELES Y BOLSAS", "PEGAMENTOS", "PERFUMERIA", "REPELENTES",
+      "SHAMPO Y ENJUAGUE", "TINTURAS NANTYR"
+    ];
 
-  const empty = document.getElementById('empty');
-  const grid = document.getElementById('grid');
-  const categoriesEl = document.getElementById('categories');
-  const searchInput = document.getElementById('search');
+    let PRODUCTS = [];
+    let currentCategory = 'Todas';
 
-  // --- HELPERS -------------------------------------------------------------
-  function parsePrice(v){
-    if (v === null || v === undefined) return 0;
-    if (typeof v === 'number') return v;
-    const s = String(v).trim().replace(/\./g,'').replace(',', '.');
-    const n = parseFloat(s);
-    return isNaN(n) ? 0 : n;
-  }
-  function formatMoney(n){
-    return new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(n);
-  }
-  function normalizeCategory(c){
-    if(!c) return 'Otros';
-    const s = String(c).trim();
-    return FIXED_CATEGORIES.includes(s) ? s : 'Otros';
-  }
-  function normalizeImage(path){
-    if(!path) return 'imagenes/placeholder.png';
-    return path.startsWith('/') ? path.slice(1) : path;
-  }
+    const empty = document.getElementById('empty');
+    const grid = document.getElementById('grid');
+    const categoriesEl = document.getElementById('categories');
+    const searchInput = document.getElementById('search');
 
-  // --- UI: categories (fixed, always visible) ------------------------------
-  function buildCategoryButtons(){
-    categoriesEl.innerHTML = '';
-    FIXED_CATEGORIES.forEach(cat => {
-      const btn = document.createElement('button');
-      btn.className = 'cat-btn' + (cat === currentCategory ? ' active' : '');
-      btn.textContent = cat;
-      btn.onclick = () => {
-        currentCategory = cat;
-        document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        applyFilters();
-      };
-      categoriesEl.appendChild(btn);
-    });
-  }
-  buildCategoryButtons();
-
-  // --- CARD & RENDER -------------------------------------------------------
- function createCard(p) {
-  const card = document.createElement('article');
-  card.className = 'card';
-  const displayedPrice = formatMoney(parsePrice(p.precio) * 1.10);
-
-  // Imagen placeholder por defecto
-  const img = document.createElement('img');
-  img.src = 'imagenes/placeholder.png';
-  img.alt = p.nombre || 'Producto';
-
-  // Determinar URL real de la imagen
-  if (p.imagen) {
-    let imgPath = p.imagen.trim();
-    if (!imgPath.startsWith('http') && !imgPath.startsWith('/') && !imgPath.startsWith('imagenes/')) {
-      imgPath = `imagenes/${imgPath}`;
+    // --- HELPERS -------------------------------------------------------------
+    function parsePrice(v){
+      if (v === null || v === undefined) return 0;
+      if (typeof v === 'number') return v;
+      const s = String(v).trim().replace(/\./g,'').replace(',', '.');
+      const n = parseFloat(s);
+      return isNaN(n) ? 0 : n;
     }
 
-    const realImg = new Image();
-    realImg.src = imgPath;
-    realImg.onload = () => {
-      img.src = imgPath;
-    };
-    realImg.onerror = () => {
-      img.src = 'imagenes/placeholder.png'; // fallback si falla
-    };
-  }
-
-  card.innerHTML = `
-    <div class="thumb"></div>
-    <div class="name">${p.nombre || 'Sin nombre'}</div>
-    <div class="meta">
-      <div class="price">${displayedPrice}</div>
-      <div class="muted">${p.categoria ? normalizeCategory(p.categoria) : ''}</div>
-    </div>
-  `;
-  card.querySelector('.thumb').appendChild(img);
-
-  return card;
-}
-
-
-
-
-
-
-
-  function renderProducts(list){
-    grid.innerHTML = '';
-    console.log('🔍 Lista recibida en renderProducts:', list);
-    if(!list || list.length === 0){
-      empty.style.display = 'block';
-      return;
+    function formatMoney(n){
+      return new Intl.NumberFormat('es-AR', {
+        style:'currency',
+        currency:'ARS'
+      }).format(n);
     }
-    empty.style.display = 'none';
-    list.forEach(p => grid.appendChild(createCard(p)));
-  }
 
-  // --- FILTERS -------------------------------------------------------------
-  function applyFilters(){
-    const q = searchInput.value.trim().toLowerCase();
-    let list = PRODUCTS.slice();
-    if(currentCategory && currentCategory !== 'Todas'){
-      list = list.filter(p => normalizeCategory(p.categoria).toLowerCase() === currentCategory.toLowerCase());
+    function normalizeCategory(c){
+      if(!c) return 'Otros';
+      const s = String(c).trim();
+      return FIXED_CATEGORIES.includes(s) ? s : 'Otros';
     }
-    if(q){
-      list = list.filter(p => (p.nombre || '').toLowerCase().includes(q));
+
+    function normalizeImage(path){
+      if(!path) return 'imagenes/placeholder.png';
+      return path.startsWith('/') ? path.slice(1) : path;
     }
-    renderProducts(list);
-  }
-  searchInput.addEventListener('input', applyFilters);
 
-  // --- LOAD DATA -----------------------------------------------------------
-  async function load(){
-    console.log('🔎 Cargando productos desde Supabase...');
-    try {
-      const { data, error } = await supa
-        .from('productos')
-        .select('*')
-        .order('id', { ascending: true });
+    // --- UI: categories (fixed, always visible) ------------------------------
+    function buildCategoryButtons(){
+      categoriesEl.innerHTML = '';
+      FIXED_CATEGORIES.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'cat-btn' + (cat === currentCategory ? ' active' : '');
+        btn.textContent = cat;
+        btn.onclick = () => {
+          currentCategory = cat;
+          document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          applyFilters();
+        };
+        categoriesEl.appendChild(btn);
+      });
+    }
+    buildCategoryButtons();
 
-      if (error) {
-        console.error('❌ Supabase error:', error);
+    // --- CARD & RENDER -------------------------------------------------------
+    function createCard(p) {
+      const card = document.createElement('article');
+      card.className = 'card';
+
+      const displayedPrice = formatMoney(parsePrice(p.precio) * 1.10);
+
+      // Imagen placeholder por defecto
+      const img = document.createElement('img');
+      img.src = 'imagenes/placeholder.png';
+      img.alt = p.nombre || 'Producto';
+
+      // Determinar URL real de la imagen
+      if (p.imagen) {
+        let imgPath = p.imagen.trim();
+        if (!imgPath.startsWith('http') && !imgPath.startsWith('/') && !imgPath.startsWith('imagenes/')) {
+          imgPath = `imagenes/${imgPath}`;
+        }
+        const realImg = new Image();
+        realImg.src = imgPath;
+        realImg.onload = () => { img.src = imgPath; };
+        realImg.onerror = () => { img.src = 'imagenes/placeholder.png'; };
+      }
+
+      card.innerHTML = `
+        <div class="thumb"></div>
+        <div class="name">${p.nombre || 'Sin nombre'}</div>
+        <div class="meta">
+          <div class="price">${displayedPrice}</div>
+          <div class="muted">${p.categoria ? normalizeCategory(p.categoria) : ''}</div>
+        </div>
+      `;
+
+      card.querySelector('.thumb').appendChild(img);
+      return card;
+    }
+
+    function renderProducts(list){
+      grid.innerHTML = '';
+      if(!list || list.length === 0){
         empty.style.display = 'block';
         return;
       }
-
-      console.log('📦 Respuesta cruda de Supabase:', data);
-
-      PRODUCTS = (Array.isArray(data) ? data : []).map(p => ({
-        id: p.id ?? null,
-        nombre: p.nombre ?? '',
-        precio: parsePrice(p.precio),
-        categoria: p.categoria ?? '',
-        stock: p.stock ?? 0,
-        imagen: p.imagen ?? ''
-      }));
-
-      console.log(`✅ ${PRODUCTS.length} productos cargados`);
-      // rebuild categories active state (keeps the fixed list)
-      buildCategoryButtons();
-      applyFilters();
-
-    } catch (e) {
-      console.error('❌ Error al cargar productos:', e);
-      empty.style.display = 'block';
+      empty.style.display = 'none';
+      list.forEach(p => grid.appendChild(createCard(p)));
     }
-  }
 
-  load();
+    // --- FILTERS -------------------------------------------------------------
+    function applyFilters(){
+      const q = searchInput.value.trim().toLowerCase();
+      let list = PRODUCTS.slice();
+
+      if(currentCategory && currentCategory !== 'Todas'){
+        list = list.filter(p =>
+          normalizeCategory(p.categoria).toLowerCase() === currentCategory.toLowerCase()
+        );
+      }
+
+      if(q){
+        list = list.filter(p =>
+          (p.nombre || '').toLowerCase().includes(q)
+        );
+      }
+
+      renderProducts(list);
+    }
+    searchInput.addEventListener('input', applyFilters);
+
+    // --- LOAD DATA -----------------------------------------------------------
+    async function load(){
+      try {
+        const { data, error } = await supa
+          .from('productos')
+          .select('*')
+          .order('id', { ascending: true });
+
+        if (error) {
+          console.error('❌ Supabase error:', error);
+          empty.style.display = 'block';
+          return;
+        }
+
+        PRODUCTS = (Array.isArray(data) ? data : []).map(p => ({
+          id: p.id ?? null,
+          nombre: p.nombre ?? '',
+          precio: parsePrice(p.precio),
+          categoria: p.categoria ?? '',
+          stock: p.stock ?? 0,
+          imagen: p.imagen ?? ''
+        }));
+
+        buildCategoryButtons();
+        applyFilters();
+      } catch (e) {
+        console.error('❌ Error al cargar productos:', e);
+        empty.style.display = 'block';
+      }
+    }
+    load();
   </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
