@@ -26,7 +26,14 @@
   align-items: center;
   justify-content: center;
 }
-
+.contact-bar {
+  background: var(--green-apple);
+  color: #05310b;
+  font-weight: 600;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
+}
 .thumb img {
   width: 100%;
   height: 100%;
@@ -42,6 +49,16 @@
   </style>
 </head>
 <body>
+  <header>
+  <div class="contact-bar">
+    📞 Pedidos: 2645583761 · Consultas: 2645156933
+  </div>
+  <div class="brand" style="justify-content:center;width:100%">
+    <div class="logo logo-wide">
+      <img src="imagenes/logo.png" alt="Logo" onerror="this.src='imagenes/placeholder.png'">
+    </div>
+  </div>
+</header>
   <header>
     <div class="brand" style="justify-content:center;width:100%">
       <div class="logo logo-wide">
@@ -65,7 +82,6 @@
       <div id="empty" class="empty" style="display:none;margin-top:18px">No se encontraron productos.</div>
     </section>
 
-    <header>© Distribuidora Funaz — Pedidos: 2645583761 · Consultas: 2645156933</header>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -255,6 +271,7 @@
 
 </body>
 </html>
+
 
 
 
