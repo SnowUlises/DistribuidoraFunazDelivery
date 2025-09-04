@@ -442,7 +442,7 @@
 
       if(currentCategory && currentCategory !== 'Todas'){
         list = list.filter(p =>
-          normalizeCategory(p.categoria).toLowerCase() === currentCategory.toLowerCase()
+          (p.categoria || '').toLowerCase().includes(currentCategory.toLowerCase())
         );
       }
 
@@ -490,3 +490,4 @@
   </script>
 </body>
 </html>
+
