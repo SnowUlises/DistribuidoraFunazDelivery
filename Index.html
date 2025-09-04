@@ -58,21 +58,21 @@
     }
 
     .topbar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-      gap: 12px;
-    }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
 
-    .search {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex: 1;
-      min-width: 220px;
-    }
+.search {
+  flex: 1 1 auto;
+}
+
+.cat-wrapper {
+  flex: 0 0 auto;
+  margin-left: auto; /* fuerza el botón a la derecha */
+}
 
     .search input {
       padding: 12px 14px;
@@ -490,3 +490,4 @@
   </script>
 </body>
 </html>
+
