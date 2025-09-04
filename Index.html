@@ -31,12 +31,14 @@
 
 body::before {
   content: "";
-  position: absolute;
+  position: fixed;   /* que se quede fijo en la pantalla */
   inset: 0;
-  background: radial-gradient(circle 200px at 20% 30%, rgba(126,217,87,0.15), transparent 70%),
-              radial-gradient(circle 250px at 80% 60%, rgba(74,144,226,0.12), transparent 70%);
-  z-index: -1;
+  background: radial-gradient(circle 200px at 20% 30%, rgba(126,217,87,0.18), transparent 70%),
+              radial-gradient(circle 250px at 80% 60%, rgba(74,144,226,0.15), transparent 70%);
+  z-index: 0;        /* más bajo que todo el contenido */
+  pointer-events: none; /* que no interfiera con clicks */
 }
+
 
 
     header {
@@ -503,5 +505,6 @@ body::before {
   </script>
 </body>
 </html>
+
 
 
