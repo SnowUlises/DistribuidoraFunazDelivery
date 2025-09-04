@@ -59,19 +59,19 @@
 
     .topbar {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
+  flex-wrap: nowrap; /* evita que se bajen de línea */
 }
 
 .search {
-  flex: 1 1 auto;
+  flex: 1; /* ocupa todo el espacio libre */
 }
 
 .cat-wrapper {
-  flex: 0 0 auto;
-  margin-left: auto; /* fuerza el botón a la derecha */
+  flex-shrink: 0;   /* evita que se achique */
+  margin-left: auto; /* lo pega a la derecha */
 }
 
     .search input {
@@ -81,7 +81,6 @@
       min-width: 220px;
     }
 
-    /* antes las categorías en línea, ahora las reemplazamos por un dropdown */
     .categories {
       display: flex;
       gap: 8px;
@@ -490,5 +489,6 @@
   </script>
 </body>
 </html>
+
 
 
