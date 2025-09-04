@@ -20,11 +20,24 @@
     * { box-sizing: border-box; }
 
     body {
-      font-family: Inter, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      margin: 0;
-      background: linear-gradient(180deg, var(--bg), #eef7ee);
-      color: #0b2a12;
-    }
+  font-family: Inter, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg), #eef7ee);
+  color: #0b2a12;
+  position: relative;
+  overflow-x: hidden; /* evita scroll raro con círculos */
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 200px at 20% 30%, rgba(126,217,87,0.15), transparent 70%),
+              radial-gradient(circle 250px at 80% 60%, rgba(74,144,226,0.12), transparent 70%);
+  z-index: -1;
+}
+
 
     header {
       display: flex;
@@ -490,4 +503,5 @@
   </script>
 </body>
 </html>
+
 
