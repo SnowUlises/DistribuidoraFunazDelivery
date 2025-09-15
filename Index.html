@@ -343,7 +343,7 @@
     function createCard(p) {
       const card = document.createElement('article');
       card.className = 'card';
-      const displayedPrice = formatMoney((parsePrice(p.precio) * 0.97) * 1.10);
+      const displayedPrice = formatMoney(((parsePrice(p.precio) * 1.10) *0.97) * 1.10);
       // Imagen placeholder por defecto
       const img = document.createElement('img');
       img.src = 'imagenes/placeholder.png';
@@ -427,6 +427,7 @@
   </script>
 </body>
 </html>
+
 
 
 
