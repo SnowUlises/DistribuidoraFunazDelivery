@@ -221,10 +221,14 @@
       <div class="logo logo-wide">
         <img src="imagenes/logo.png" alt="Logo" onerror="this.src='imagenes/placeholder.png'">
       </div>
-      <div class="subtitle" style="margin-top:10px; text-align:center; font-size:14px; color:#6b6b6b;">
-        Pedidos: 2645583761 · Consultas: 2645156933
-        Ubicacion: Cristobal Colon 1730. 
-      </div>
+     <div class="subtitle" style="margin-top:10px; text-align:center; font-size:14px; color:#6b6b6b;">
+  <a href="https://distribuidorapedidos.onrender.com" style="color:#6b6b6b; text-decoration:none;">
+    Haz tu pedido aquí
+  </a>
+  · Consultas: 2645156933
+  Ubicación: Cristóbal Colón 1730.
+</div>
+
     </div>
   </header>
   <main class="wrap">
@@ -343,7 +347,7 @@
     function createCard(p) {
       const card = document.createElement('article');
       card.className = 'card';
-      const displayedPrice = formatMoney(parsePrice(p.precio) * 1.17);
+      const displayedPrice = formatMoney((parsePrice(p.precio) * 0.97) * 1.10);
       // Imagen placeholder por defecto
       const img = document.createElement('img');
       img.src = 'imagenes/placeholder.png';
@@ -427,6 +431,7 @@
   </script>
 </body>
 </html>
+
 
 
 
