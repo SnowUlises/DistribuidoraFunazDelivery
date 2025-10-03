@@ -4,7 +4,7 @@
     "nombre": "TOALLAS  DONCELLA X",
     "precio": 488.99,
     "categoria": "PERFUMERIA",
-    "stock": 300,
+    "stock": 288,
     "imagen": "imagenes/1.png"
   },
   {
@@ -12,7 +12,7 @@
     "nombre": "MAYONESA NATURA 125GR",
     "precio": 444.54,
     "categoria": "ALIMENTOS",
-    "stock": 149,
+    "stock": 139,
     "imagen": "imagenes/2.png"
   },
   {
@@ -28,7 +28,7 @@
     "nombre": "HOJAS ROJAS",
     "precio": 869.82,
     "categoria": "ACCESORIOS",
-    "stock": -2,
+    "stock": 0,
     "imagen": "imagenes/4.png"
   },
   {
@@ -36,7 +36,7 @@
     "nombre": "ALA P/DILUIR X 500ML",
     "precio": 4453.63,
     "categoria": "LIMPIEZA",
-    "stock": 14,
+    "stock": 8,
     "imagen": "imagenes/5.png"
   },
   {
@@ -44,13 +44,13 @@
     "nombre": "YERBA VERDEFLOR SERRANA 500G",
     "precio": 1271.81,
     "categoria": "ALIMENTOS",
-    "stock": 52,
+    "stock": 43,
     "imagen": "imagenes/8.png"
   },
   {
     "id": 9,
     "nombre": "SUAVIZANTE VIVERE 900ML",
-    "precio": 1849,
+    "precio": 2168,
     "categoria": "PERFUMERIA",
     "stock": 0,
     "imagen": "imagenes/9.png"
@@ -60,7 +60,7 @@
     "nombre": "JABON LIQUIDO GRANBY 800ML",
     "precio": 1362.72,
     "categoria": "LIMPIEZA",
-    "stock": 77,
+    "stock": 68,
     "imagen": "imagenes/15.png"
   },
   {
@@ -68,7 +68,7 @@
     "nombre": "ACEITE LEGITIMO GIRASOL 1.5LT",
     "precio": 3363.6,
     "categoria": "ALIMENTOS OFERTAS",
-    "stock": 72,
+    "stock": 76,
     "imagen": "imagenes/16.png"
   },
   {
@@ -76,7 +76,7 @@
     "nombre": "PLUSBELLE SH 1L",
     "precio": 2471.74,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": 26,
+    "stock": 18,
     "imagen": "imagenes/18.png"
   },
   {
@@ -100,7 +100,7 @@
     "nombre": "TE MANZANILLA LV X 25 SAQ",
     "precio": 996.16,
     "categoria": "ALIMENTOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/21.png"
   },
   {
@@ -108,7 +108,7 @@
     "nombre": "PROT. DONCELLA X 20 U",
     "precio": 535.1,
     "categoria": "PERFUMERIA",
-    "stock": 38,
+    "stock": 35,
     "imagen": "imagenes/22.png"
   },
   {
@@ -124,7 +124,7 @@
     "nombre": "COLGATE X 90GR",
     "precio": 1544.53,
     "categoria": "PERFUMERIA",
-    "stock": 7,
+    "stock": 1,
     "imagen": "imagenes/24.png"
   },
   {
@@ -132,7 +132,7 @@
     "nombre": "COLGATE HERBAL X 70GR",
     "precio": 1417.52,
     "categoria": "PERFUMERIA",
-    "stock": 10,
+    "stock": 3,
     "imagen": "imagenes/25.png"
   },
   {
@@ -140,7 +140,7 @@
     "nombre": "KOLYNOS SUP. BL. X 70GR",
     "precio": 1339.22,
     "categoria": "PERFUMERIA",
-    "stock": 7,
+    "stock": 2,
     "imagen": "imagenes/26.png"
   },
   {
@@ -148,7 +148,7 @@
     "nombre": "ODOL X 70GR",
     "precio": 1256.64,
     "categoria": "PERFUMERIA",
-    "stock": 63,
+    "stock": 58,
     "imagen": "imagenes/27.png"
   },
   {
@@ -156,7 +156,7 @@
     "nombre": "VOLIGOMA",
     "precio": 829.43,
     "categoria": "PEGAMENTOS",
-    "stock": 3,
+    "stock": 0,
     "imagen": "imagenes/28.png"
   },
   {
@@ -172,7 +172,7 @@
     "nombre": "SECADOR NEGRO X40CM",
     "precio": 1519.25,
     "categoria": "LIMPIEZA",
-    "stock": 2,
+    "stock": 0,
     "imagen": "imagenes/30.png"
   },
   {
@@ -180,7 +180,7 @@
     "nombre": "DES. REXONA X 150 ML",
     "precio": 2274,
     "categoria": "DESODORANTES",
-    "stock": 5,
+    "stock": 1,
     "imagen": "imagenes/31.png"
   },
   {
@@ -188,7 +188,7 @@
     "nombre": "DES. REXONA WOM X 150 ML",
     "precio": 2274,
     "categoria": "DESODORANTES",
-    "stock": 10,
+    "stock": 1,
     "imagen": "imagenes/32.png"
   },
   {
@@ -196,7 +196,7 @@
     "nombre": "REXONA ROLL-ON HOMB. X50ML",
     "precio": 1759,
     "categoria": "DESODORANTES",
-    "stock": 2,
+    "stock": 0,
     "imagen": "imagenes/33.png"
   },
   {
@@ -204,7 +204,7 @@
     "nombre": "REXONA ROLL-ON MUJER X50ML",
     "precio": 1759,
     "categoria": "DESODORANTES",
-    "stock": 1,
+    "stock": -1,
     "imagen": "imagenes/34.png"
   },
   {
@@ -212,7 +212,7 @@
     "nombre": "ODORONO CREMA X 60G",
     "precio": 1327.52,
     "categoria": "DESODORANTES",
-    "stock": 6,
+    "stock": 0,
     "imagen": "imagenes/35.png"
   },
   {
@@ -220,7 +220,7 @@
     "nombre": "DES. KEVIN RED X 150 CC",
     "precio": 2683.1,
     "categoria": "DESODORANTES",
-    "stock": 1,
+    "stock": -1,
     "imagen": "imagenes/36.png"
   },
   {
@@ -228,7 +228,7 @@
     "nombre": "DES. KEVIN BLACK X 150 CC",
     "precio": 2683.1,
     "categoria": "DESODORANTES",
-    "stock": 3,
+    "stock": 0,
     "imagen": "imagenes/37.png"
   },
   {
@@ -236,7 +236,7 @@
     "nombre": "DES. KEVIN SPIRIT X 150 CC",
     "precio": 2683.1,
     "categoria": "DESODORANTES",
-    "stock": 4,
+    "stock": 1,
     "imagen": "imagenes/38.png"
   },
   {
@@ -250,17 +250,17 @@
   {
     "id": 40,
     "nombre": "BOLSA RESIDUOS 60X90 R",
-    "precio": 570.59,
+    "precio": 594.36,
     "categoria": "PAPELES Y BOLSAS",
-    "stock": 8,
+    "stock": 4,
     "imagen": "imagenes/40.png"
   },
   {
     "id": 41,
     "nombre": "BOLSA CONSORCIO 45X60 X30U",
-    "precio": 673.53,
+    "precio": 701.59,
     "categoria": "PAPELES Y BOLSAS",
-    "stock": 6,
+    "stock": -3,
     "imagen": "imagenes/41.png"
   },
   {
@@ -268,7 +268,7 @@
     "nombre": "BOLSA RESIDUO 45X60X10U",
     "precio": 230.21,
     "categoria": "PAPELES Y BOLSAS",
-    "stock": 0,
+    "stock": -4,
     "imagen": "imagenes/42.png"
   },
   {
@@ -276,7 +276,7 @@
     "nombre": "SAHUMERIO AMBAR X20U",
     "precio": 1108,
     "categoria": "ACCESORIOS",
-    "stock": 25,
+    "stock": 20,
     "imagen": "imagenes/43.png"
   },
   {
@@ -292,7 +292,7 @@
     "nombre": "OREGANO X 10U",
     "precio": 1591.88,
     "categoria": "ALIMENTOS",
-    "stock": -1,
+    "stock": 5,
     "imagen": "imagenes/45.png"
   },
   {
@@ -300,7 +300,7 @@
     "nombre": "PIMENTON X 10U",
     "precio": 1973.09,
     "categoria": "ALIMENTOS",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/46.png"
   },
   {
@@ -308,7 +308,7 @@
     "nombre": "AJI X 10 U",
     "precio": 1802.2,
     "categoria": "ALIMENTOS",
-    "stock": 1,
+    "stock": -1,
     "imagen": "imagenes/47.png"
   },
   {
@@ -316,7 +316,7 @@
     "nombre": "ENC. MAXI BIC X 6",
     "precio": 5930.2,
     "categoria": "ENCENDEDORES",
-    "stock": 5,
+    "stock": 4,
     "imagen": "imagenes/48.png"
   },
   {
@@ -332,7 +332,7 @@
     "nombre": "JABON ARGENTINO X200GR",
     "precio": 526.55,
     "categoria": "PERFUMERIA",
-    "stock": 3,
+    "stock": 2,
     "imagen": "imagenes/50.png"
   },
   {
@@ -340,7 +340,7 @@
     "nombre": "HUGGIES XG",
     "precio": 1922,
     "categoria": "PERFUMERIA",
-    "stock": 2,
+    "stock": 0,
     "imagen": "imagenes/51.png"
   },
   {
@@ -348,7 +348,7 @@
     "nombre": "HUGGIES XXG",
     "precio": 1922,
     "categoria": "PERFUMERIA",
-    "stock": -5,
+    "stock": -38,
     "imagen": "imagenes/52.png"
   },
   {
@@ -356,7 +356,7 @@
     "nombre": "ESPONJA COCINA FIBRALIMP",
     "precio": 183.75,
     "categoria": "LIMPIEZA",
-    "stock": 13,
+    "stock": 0,
     "imagen": "imagenes/53.png"
   },
   {
@@ -378,15 +378,15 @@
   {
     "id": 56,
     "nombre": "LANA DE ACERO SINA X 10U",
-    "precio": 405.47,
+    "precio": 422.36,
     "categoria": "LIMPIEZA",
-    "stock": 7,
+    "stock": 0,
     "imagen": "imagenes/56.png"
   },
   {
     "id": 57,
     "nombre": "BRONCE SINA X 12GR",
-    "precio": 375.31,
+    "precio": 451.55,
     "categoria": "LIMPIEZA",
     "stock": 0,
     "imagen": "imagenes/57.png"
@@ -396,7 +396,7 @@
     "nombre": "PANTENE SH X24",
     "precio": 3367.39,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": -6,
+    "stock": -2,
     "imagen": "imagenes/58.png"
   },
   {
@@ -404,15 +404,15 @@
     "nombre": "PANTENE AC X24",
     "precio": 3367.39,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": -5,
+    "stock": -1,
     "imagen": "imagenes/59.png"
   },
   {
     "id": 60,
     "nombre": "SEDAL AC. CERAMIDAS X 24",
-    "precio": 3691,
+    "precio": 3954,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": 0,
+    "stock": 2,
     "imagen": "imagenes/60.png"
   },
   {
@@ -420,7 +420,7 @@
     "nombre": "SEDAL SH. CERAMIDAS X 24",
     "precio": 3954,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": 2,
+    "stock": 1,
     "imagen": "imagenes/61.png"
   },
   {
@@ -428,7 +428,7 @@
     "nombre": "SEDAL SH. X 190ML",
     "precio": 1929.49,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": 8,
+    "stock": 5,
     "imagen": "imagenes/62.png"
   },
   {
@@ -436,7 +436,7 @@
     "nombre": "SEDAL AC. CERAMIDA X 300ML",
     "precio": 2098.77,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": 12,
+    "stock": 9,
     "imagen": "imagenes/63.png"
   },
   {
@@ -444,23 +444,23 @@
     "nombre": "SEDAL SH. CERAMIDA X 300ML",
     "precio": 2098.77,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": 14,
+    "stock": 10,
     "imagen": "imagenes/64.png"
   },
   {
     "id": 65,
     "nombre": "JERINGA C/AGUA 5 ML",
-    "precio": 96.11,
+    "precio": 110,
     "categoria": "ACCESORIOS",
-    "stock": 95,
+    "stock": 85,
     "imagen": "imagenes/65.png"
   },
   {
     "id": 66,
     "nombre": "JERINGA C/AGUA 10 ML",
-    "precio": 137.81,
+    "precio": 150,
     "categoria": "ACCESORIOS",
-    "stock": 98,
+    "stock": 94,
     "imagen": "imagenes/66.png"
   },
   {
@@ -468,7 +468,7 @@
     "nombre": "CURITAS CURITA X1U",
     "precio": 384.25,
     "categoria": "ACCESORIOS",
-    "stock": 14,
+    "stock": 6,
     "imagen": "imagenes/67.png"
   },
   {
@@ -476,7 +476,7 @@
     "nombre": "PAPEL HIG. PETALO 1U X50M",
     "precio": 399,
     "categoria": "PAPELES Y BOLSAS OFERTAS",
-    "stock": 301,
+    "stock": 208,
     "imagen": "imagenes/68.png"
   },
   {
@@ -484,7 +484,7 @@
     "nombre": "LA GOTITA",
     "precio": 1177.31,
     "categoria": "PEGAMENTOS",
-    "stock": 0,
+    "stock": -2,
     "imagen": "imagenes/69.png"
   },
   {
@@ -492,7 +492,7 @@
     "nombre": "ALA REGULAR X400GR",
     "precio": 914.51,
     "categoria": "LIMPIEZA",
-    "stock": 24,
+    "stock": 14,
     "imagen": "imagenes/70.png"
   },
   {
@@ -506,9 +506,9 @@
   {
     "id": 72,
     "nombre": "CIF DETERGENTE X 300 ML",
-    "precio": 1216,
+    "precio": 1250,
     "categoria": "LIMPIEZA",
-    "stock": 22,
+    "stock": 56,
     "imagen": "imagenes/72.png"
   },
   {
@@ -516,7 +516,7 @@
     "nombre": "CIF LIMPIADOR X 375 GR",
     "precio": 1403.19,
     "categoria": "LIMPIEZA",
-    "stock": 6,
+    "stock": 0,
     "imagen": "imagenes/73.png"
   },
   {
@@ -524,7 +524,7 @@
     "nombre": "NIVEA LATA 60 GR.",
     "precio": 2250,
     "categoria": "CREMAS",
-    "stock": 2,
+    "stock": 0,
     "imagen": "imagenes/74.png"
   },
   {
@@ -532,7 +532,7 @@
     "nombre": "SKIP LIQ X 800 ML",
     "precio": 2300.09,
     "categoria": "LIMPIEZA",
-    "stock": 18,
+    "stock": 13,
     "imagen": "imagenes/75.png"
   },
   {
@@ -540,7 +540,7 @@
     "nombre": "ENVASE ESTERIL X1U",
     "precio": 222.61,
     "categoria": "ACCESORIOS",
-    "stock": 29,
+    "stock": 3,
     "imagen": "imagenes/76.png"
   },
   {
@@ -548,7 +548,7 @@
     "nombre": "LAVANDINA ECO. X 1 LT",
     "precio": 658.06,
     "categoria": "LIMPIEZA",
-    "stock": 43,
+    "stock": 20,
     "imagen": "imagenes/77.png"
   },
   {
@@ -556,7 +556,7 @@
     "nombre": "MAGISTRAL X 215 ML",
     "precio": 1250,
     "categoria": "LIMPIEZA",
-    "stock": 42,
+    "stock": 38,
     "imagen": "imagenes/78.png"
   },
   {
@@ -572,7 +572,7 @@
     "nombre": "ROLLO COCINA SOL MAYOR X3 X 40",
     "precio": 818,
     "categoria": "PAPELES Y BOLSAS OFERTAS",
-    "stock": 8,
+    "stock": 7,
     "imagen": "imagenes/81.png"
   },
   {
@@ -580,39 +580,39 @@
     "nombre": "ALCOHOL PORTA 250 CC 70%",
     "precio": 900,
     "categoria": "LIMPIEZA",
-    "stock": 15,
+    "stock": 14,
     "imagen": "imagenes/82.png"
   },
   {
     "id": 83,
     "nombre": "YERBA VERDEFLOR MENTA Y JENGIBRE 500G",
-    "precio": 1226.36,
+    "precio": 1271.81,
     "categoria": "ALIMENTOS",
-    "stock": 0,
+    "stock": -99,
     "imagen": "imagenes/83.png"
   },
   {
     "id": 84,
     "nombre": "YERBA VERDEFLOR CEDRON 500G",
-    "precio": 1226.36,
+    "precio": 1271.81,
     "categoria": "ALIMENTOS",
-    "stock": 13,
+    "stock": 12,
     "imagen": "imagenes/84.png"
   },
   {
     "id": 85,
     "nombre": "YERBA VERDEFLOR NARANJA 500G",
-    "precio": 1226.37,
+    "precio": 1271.81,
     "categoria": "ALIMENTOS",
-    "stock": 13,
+    "stock": 12,
     "imagen": "imagenes/85.png"
   },
   {
     "id": 86,
     "nombre": "YERBA VERDEFLOR MENTA 500G",
-    "precio": 1226.36,
+    "precio": 1271.81,
     "categoria": "ALIMENTOS",
-    "stock": 21,
+    "stock": 20,
     "imagen": "imagenes/86.png"
   },
   {
@@ -620,13 +620,13 @@
     "nombre": "ACEITE LEGITIMO GIRASOL 900ML",
     "precio": 1999.09,
     "categoria": "ALIMENTOS",
-    "stock": 39,
+    "stock": 35,
     "imagen": "imagenes/87.png"
   },
   {
     "id": 88,
     "nombre": "YERBA VERDEFLOR PEPERINA 500G",
-    "precio": 1226.36,
+    "precio": 1271.81,
     "categoria": "ALIMENTOS",
     "stock": 19,
     "imagen": "imagenes/88.png"
@@ -634,17 +634,17 @@
   {
     "id": 89,
     "nombre": "YERBA VERDEFLOR MELISA 500G",
-    "precio": 1226.36,
+    "precio": 1271.81,
     "categoria": "ALIMENTOS",
-    "stock": 8,
+    "stock": 7,
     "imagen": "imagenes/89.png"
   },
   {
     "id": 90,
     "nombre": "YERBA VERDEFLOR BOLDO 500G",
-    "precio": 1226.36,
+    "precio": 1271.36,
     "categoria": "ALIMENTOS",
-    "stock": 19,
+    "stock": 16,
     "imagen": "imagenes/90.png"
   },
   {
@@ -660,7 +660,7 @@
     "nombre": "ROLLO COCINA SUSSEX 3 X 50",
     "precio": 1135.45,
     "categoria": "PAPELES Y BOLSAS",
-    "stock": 115,
+    "stock": 114,
     "imagen": "imagenes/92.png"
   },
   {
@@ -668,7 +668,7 @@
     "nombre": "TOALLAS FEMENINAS CALIPSO POCKET X 8",
     "precio": 571.81,
     "categoria": "PERFUMERIA",
-    "stock": 111,
+    "stock": 91,
     "imagen": "imagenes/93.png"
   },
   {
@@ -676,7 +676,7 @@
     "nombre": "ACEITE COCINERO DE GIRASOL X900ML",
     "precio": 2090,
     "categoria": "ALIMENTOS",
-    "stock": 38,
+    "stock": 33,
     "imagen": "imagenes/94.png"
   },
   {
@@ -684,7 +684,7 @@
     "nombre": "LAVANDINA AYUDIN X 1LT",
     "precio": 726.3636,
     "categoria": "LIMPIEZA",
-    "stock": 118,
+    "stock": 109,
     "imagen": "imagenes/95.png"
   },
   {
@@ -692,7 +692,7 @@
     "nombre": "AZUCAR LA PERLA X1 KG",
     "precio": 650,
     "categoria": "ALIMENTOS OFERTAS",
-    "stock": 92,
+    "stock": 68,
     "imagen": "imagenes/96.png"
   },
   {
@@ -724,7 +724,7 @@
     "nombre": "CALDOS KNORR VERD. X12U",
     "precio": 1537,
     "categoria": "ALIMENTOS",
-    "stock": 3,
+    "stock": 2,
     "imagen": "imagenes/100.png"
   },
   {
@@ -732,7 +732,7 @@
     "nombre": "CALDOS KNORR CARNE X12U",
     "precio": 1537,
     "categoria": "ALIMENTOS",
-    "stock": 18,
+    "stock": 17,
     "imagen": "imagenes/101.png"
   },
   {
@@ -740,7 +740,7 @@
     "nombre": "CALDOS KNORR GALL. X12U",
     "precio": 1537,
     "categoria": "ALIMENTOS",
-    "stock": -3,
+    "stock": 0,
     "imagen": "imagenes/102.png"
   },
   {
@@ -764,7 +764,7 @@
     "nombre": "MINORA X 1U",
     "precio": 600,
     "categoria": "ACCESORIOS",
-    "stock": 94,
+    "stock": 74,
     "imagen": "imagenes/105.png"
   },
   {
@@ -772,7 +772,7 @@
     "nombre": "PRESTOBARBA X 1U",
     "precio": 750,
     "categoria": "ACCESORIOS",
-    "stock": 2,
+    "stock": -8,
     "imagen": "imagenes/106.png"
   },
   {
@@ -796,7 +796,7 @@
     "nombre": "JABON CUPIDO X3",
     "precio": 764.1,
     "categoria": "PERFUMERIA",
-    "stock": 66,
+    "stock": 65,
     "imagen": "imagenes/109.png"
   },
   {
@@ -804,7 +804,7 @@
     "nombre": "JABON LUX X1",
     "precio": 629,
     "categoria": "PERFUMERIA",
-    "stock": 16,
+    "stock": 9,
     "imagen": "imagenes/110.png"
   },
   {
@@ -820,7 +820,7 @@
     "nombre": "SKIP P/DILUIR X 500ML",
     "precio": 5500,
     "categoria": "LIMPIEZA",
-    "stock": 22,
+    "stock": 20,
     "imagen": "imagenes/112.png"
   },
   {
@@ -828,7 +828,7 @@
     "nombre": "CEP. COLGATE CLASICO X1",
     "precio": 1000,
     "categoria": "PERFUMERIA",
-    "stock": 25,
+    "stock": 24,
     "imagen": "imagenes/114.png"
   },
   {
@@ -836,15 +836,15 @@
     "nombre": "CEP. COLGATE SUAVE X1",
     "precio": 1500,
     "categoria": "PERFUMERIA",
-    "stock": 3,
+    "stock": 0,
     "imagen": "imagenes/115.png"
   },
   {
     "id": 116,
     "nombre": "CEP. COLGATE KIDS X2",
     "precio": 1500,
-    "categoria": "PERFUMERIA",
-    "stock": -1,
+    "categoria": "LIMPIEZA",
+    "stock": 0,
     "imagen": "imagenes/116.png"
   },
   {
@@ -852,7 +852,7 @@
     "nombre": "ROLLO COCINA SOL MAYOR X200",
     "precio": 1090,
     "categoria": "PAPELES Y BOLSA OFERTAS",
-    "stock": 166,
+    "stock": 163,
     "imagen": "imagenes/117.png"
   },
   {
@@ -868,7 +868,7 @@
     "nombre": "PAPEL HIG. MI HOGAR 4X30",
     "precio": 800,
     "categoria": "PAPELES Y BOLSAS",
-    "stock": 117,
+    "stock": 116,
     "imagen": "imagenes/119.png"
   },
   {
@@ -884,7 +884,7 @@
     "nombre": "ALA MATIC X400GR",
     "precio": 914.51,
     "categoria": "LIMPIEZA",
-    "stock": 96,
+    "stock": 52,
     "imagen": "imagenes/121.png"
   },
   {
@@ -892,7 +892,7 @@
     "nombre": "PAPEL HIG. HIGIENOL 4X30",
     "precio": 1100,
     "categoria": "PAPELES Y BOLSAS",
-    "stock": 20,
+    "stock": 18,
     "imagen": "imagenes/122.png"
   },
   {
@@ -908,7 +908,7 @@
     "nombre": "TOALLAS LADYSOFT X8",
     "precio": 650,
     "categoria": "PERFUMERIA",
-    "stock": 34,
+    "stock": 24,
     "imagen": "imagenes/124.png"
   },
   {
@@ -916,7 +916,7 @@
     "nombre": "PAÑO MULTIUSO",
     "precio": 325.48,
     "categoria": "LIMPIEZA",
-    "stock": 48,
+    "stock": 38,
     "imagen": "imagenes/125.png"
   },
   {
@@ -924,7 +924,7 @@
     "nombre": "LAPICERA BIC AZUL",
     "precio": 449.42,
     "categoria": "ACCESORIOS",
-    "stock": 13,
+    "stock": 11,
     "imagen": "imagenes/126.png"
   },
   {
@@ -932,7 +932,7 @@
     "nombre": "LAPICERA BIC NEGRA",
     "precio": 449.42,
     "categoria": "ACCESORIOS",
-    "stock": 5,
+    "stock": 3,
     "imagen": "imagenes/127.png"
   },
   {
@@ -948,7 +948,7 @@
     "nombre": "POETT PISOS X 900 ML",
     "precio": 1167.5,
     "categoria": "LIMPIEZA",
-    "stock": 4,
+    "stock": 3,
     "imagen": "imagenes/129.png"
   },
   {
@@ -980,7 +980,7 @@
     "nombre": "ESCOBA MICA SINA",
     "precio": 1600,
     "categoria": "LIMPIEZA",
-    "stock": 10,
+    "stock": 15,
     "imagen": "imagenes/133.png"
   },
   {
@@ -988,7 +988,7 @@
     "nombre": "ESCOBON SINA",
     "precio": 2400,
     "categoria": "LIMPIEZA",
-    "stock": 0,
+    "stock": 6,
     "imagen": "imagenes/134.png"
   },
   {
@@ -1012,15 +1012,15 @@
     "nombre": "GIGANTE DETERGENTE X750ML",
     "precio": 976.54,
     "categoria": "LIMPIEZA",
-    "stock": 0,
+    "stock": 5,
     "imagen": "imagenes/137.png"
   },
   {
     "id": 138,
     "nombre": "MOPA ALGODON SINA X 1U",
-    "precio": 2079.67,
+    "precio": 2300,
     "categoria": "LIMPIEZA",
-    "stock": 5,
+    "stock": 2,
     "imagen": "imagenes/138.png"
   },
   {
@@ -1044,7 +1044,7 @@
     "nombre": "EFFICIENT X100GRS",
     "precio": 2100,
     "categoria": "PERFUMERIA",
-    "stock": 12,
+    "stock": -1,
     "imagen": "imagenes/141.png"
   },
   {
@@ -1052,7 +1052,7 @@
     "nombre": "ALGABO TALCO CLASICO/SOFT DP X200GR",
     "precio": 1174.94,
     "categoria": "PERFUMERIA",
-    "stock": 7,
+    "stock": 3,
     "imagen": "imagenes/142.png"
   },
   {
@@ -1060,23 +1060,23 @@
     "nombre": "BLEM CITRUS",
     "precio": 2880.5,
     "categoria": "LIMPIEZA",
-    "stock": 6,
+    "stock": 4,
     "imagen": "imagenes/155.png"
   },
   {
     "id": 156,
     "nombre": "R2 MIX FRUTAL X10",
-    "precio": 2933.15,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 1,
+    "stock": 5,
     "imagen": "imagenes/156.png"
   },
   {
     "id": 157,
     "nombre": "R2 NAR-DURAZNO X10",
-    "precio": 3284.76,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 3,
+    "stock": 5,
     "imagen": "imagenes/157.png"
   },
   {
@@ -1092,7 +1092,7 @@
     "nombre": "CIF ANTI GRASA REPUESTO 450ML",
     "precio": 1333.2,
     "categoria": "LIMPIEZA",
-    "stock": 3,
+    "stock": 2,
     "imagen": "imagenes/159.png"
   },
   {
@@ -1100,7 +1100,7 @@
     "nombre": "CIF BAÑO REPUESTO 450ML",
     "precio": 890,
     "categoria": "LIMPIEZA",
-    "stock": 3,
+    "stock": 2,
     "imagen": "imagenes/160.png"
   },
   {
@@ -1108,7 +1108,7 @@
     "nombre": "ALA ULTRA X300ML",
     "precio": 982.5,
     "categoria": "LIMPIEZA",
-    "stock": 9,
+    "stock": 0,
     "imagen": "imagenes/161.png"
   },
   {
@@ -1204,7 +1204,7 @@
     "nombre": "JABÓN LUX 3X125G",
     "precio": 1729.88,
     "categoria": "PERFUMERIA",
-    "stock": 3,
+    "stock": 0,
     "imagen": "imagenes/175.png"
   },
   {
@@ -1212,7 +1212,7 @@
     "nombre": "JABÓN NIVEA X 125G",
     "precio": 734.52,
     "categoria": "PERFUMERIA",
-    "stock": 0,
+    "stock": -4,
     "imagen": "imagenes/176.png"
   },
   {
@@ -1242,7 +1242,7 @@
   {
     "id": 180,
     "nombre": "CARTAS ESPAÑOLAS X50",
-    "precio": 616,
+    "precio": 746.9,
     "categoria": "ACCESORIOS",
     "stock": 0,
     "imagen": "imagenes/180.png"
@@ -1260,7 +1260,7 @@
     "nombre": "VELAS CHICAS",
     "precio": 281.12,
     "categoria": "ACCESORIOS",
-    "stock": -6,
+    "stock": 0,
     "imagen": "imagenes/182.png"
   },
   {
@@ -1274,7 +1274,7 @@
   {
     "id": 184,
     "nombre": "BOLSA CAMISETA 40X50",
-    "precio": 930.9,
+    "precio": 959.59,
     "categoria": "PAPELES Y BOLSAS",
     "stock": 0,
     "imagen": "imagenes/184.png"
@@ -1284,7 +1284,7 @@
     "nombre": "LUCCHETTI ARROZ 500G SIN TACC",
     "precio": 621,
     "categoria": "ALIMENTOS",
-    "stock": 25,
+    "stock": 24,
     "imagen": "imagenes/185.png"
   },
   {
@@ -1292,7 +1292,7 @@
     "nombre": "BICARBONATO YUSPE X50X20G",
     "precio": 5710.27,
     "categoria": "ACCESORIOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/186.png"
   },
   {
@@ -1308,7 +1308,7 @@
     "nombre": "LECHE PURISIMA ENTERA 800G",
     "precio": 5635.45,
     "categoria": "ALIMENTOS OFERTAS",
-    "stock": 123,
+    "stock": 101,
     "imagen": "imagenes/188.png"
   },
   {
@@ -1316,7 +1316,7 @@
     "nombre": "NESQUIK CACAO 180G",
     "precio": 1448.63,
     "categoria": "ALIMENTOS",
-    "stock": 3,
+    "stock": 0,
     "imagen": "imagenes/189.png"
   },
   {
@@ -1364,7 +1364,7 @@
     "nombre": "FÓSFOROS 3 PATITOS X220U",
     "precio": 436.19,
     "categoria": "ACCESORIOS",
-    "stock": 2,
+    "stock": 0,
     "imagen": "imagenes/196.png"
   },
   {
@@ -1380,7 +1380,7 @@
     "nombre": "DES. AXE 150ML",
     "precio": 2185.11,
     "categoria": "DESODORANTES",
-    "stock": 0,
+    "stock": 3,
     "imagen": "imagenes/198.png"
   },
   {
@@ -1396,7 +1396,7 @@
     "nombre": "DES. CIEL CRYSTAL 123ML",
     "precio": 2400.62,
     "categoria": "DESODORANTES",
-    "stock": 2,
+    "stock": 1,
     "imagen": "imagenes/200.png"
   },
   {
@@ -1404,7 +1404,7 @@
     "nombre": "DES. CIEL ROSE 123ML",
     "precio": 2400.62,
     "categoria": "DESODORANTES",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/201.png"
   },
   {
@@ -1412,7 +1412,7 @@
     "nombre": "DES. IMPULSE VERY PINK 150CC",
     "precio": 1914.79,
     "categoria": "DESODORANTES",
-    "stock": 2,
+    "stock": 0,
     "imagen": "imagenes/202.png"
   },
   {
@@ -1420,7 +1420,7 @@
     "nombre": "DES. IMPULSE TRUE LOVE 150CC",
     "precio": 1915.02,
     "categoria": "DESODORANTES",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/203.png"
   },
   {
@@ -1428,39 +1428,39 @@
     "nombre": "DES. IMPULSE MUSK 150CC",
     "precio": 1915.02,
     "categoria": "DESODORANTES",
-    "stock": -2,
+    "stock": 0,
     "imagen": "imagenes/204.png"
   },
   {
     "id": 205,
     "nombre": "R2 ANANA X10",
-    "precio": 3284.76,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": 4,
     "imagen": "imagenes/205.png"
   },
   {
     "id": 206,
     "nombre": "R2 DURAZNO X10",
-    "precio": 3284.76,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": 6,
     "imagen": "imagenes/206.png"
   },
   {
     "id": 207,
     "nombre": "R2 LIMONADA X10",
-    "precio": 3284.76,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": 4,
     "imagen": "imagenes/207.png"
   },
   {
     "id": 208,
     "nombre": "R2 MANZANA X10",
-    "precio": 3284.76,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": 3,
     "imagen": "imagenes/208.png"
   },
   {
@@ -1492,7 +1492,7 @@
     "nombre": "A- 600",
     "precio": 5342,
     "categoria": "ANALGESICOS",
-    "stock": -3,
+    "stock": -4,
     "imagen": "imagenes/212.png"
   },
   {
@@ -1508,7 +1508,7 @@
     "nombre": "A- LIMON",
     "precio": 17025,
     "categoria": "ANALGESICOS",
-    "stock": -1,
+    "stock": -2,
     "imagen": "imagenes/214.png"
   },
   {
@@ -1516,7 +1516,7 @@
     "nombre": "A- M",
     "precio": 2243.98,
     "categoria": "ANALGESICOS",
-    "stock": 0,
+    "stock": -1,
     "imagen": "imagenes/215.png"
   },
   {
@@ -1570,9 +1570,9 @@
   {
     "id": 223,
     "nombre": "ACERO SINA X 10G",
-    "precio": 213.19,
+    "precio": 234.51,
     "categoria": "ACCESORIOS",
-    "stock": -2,
+    "stock": -6,
     "imagen": "imagenes/223.png"
   },
   {
@@ -1620,7 +1620,7 @@
     "nombre": "AGUA OXIG. VOL 30",
     "precio": 632.6,
     "categoria": "ACCESORIOS",
-    "stock": 0,
+    "stock": -5,
     "imagen": "imagenes/229.png"
   },
   {
@@ -1668,7 +1668,7 @@
     "nombre": "AL- 100GR",
     "precio": 5201.71,
     "categoria": "ANALGESICOS",
-    "stock": 0,
+    "stock": -1,
     "imagen": "imagenes/235.png"
   },
   {
@@ -1692,7 +1692,7 @@
     "nombre": "ALA LIQ. DP X 800ML",
     "precio": 2096,
     "categoria": "LIMPIEZA",
-    "stock": 57,
+    "stock": 54,
     "imagen": "imagenes/239.png"
   },
   {
@@ -1708,7 +1708,7 @@
     "nombre": "ALCOHOL ECO. 1000 CC",
     "precio": 2234.19,
     "categoria": "ACCESORIOS",
-    "stock": 0,
+    "stock": -1,
     "imagen": "imagenes/243.png"
   },
   {
@@ -1740,7 +1740,7 @@
     "nombre": "ALCOHOL PORTA 500CC",
     "precio": 1500.48,
     "categoria": "ACCESORIOS",
-    "stock": 6,
+    "stock": 2,
     "imagen": "imagenes/247.png"
   },
   {
@@ -1868,7 +1868,7 @@
     "nombre": "ALGODON DONCELLA X 70 GR",
     "precio": 543.81,
     "categoria": "ACCESORIOS",
-    "stock": 3,
+    "stock": 83,
     "imagen": "imagenes/263.png"
   },
   {
@@ -1892,7 +1892,7 @@
     "nombre": "AM",
     "precio": 1122.25,
     "categoria": "ANALGESICOS",
-    "stock": -3,
+    "stock": 0,
     "imagen": "imagenes/266.png"
   },
   {
@@ -2036,7 +2036,7 @@
     "nombre": "AVENA X 300 GR",
     "precio": 1508.56,
     "categoria": "ALIMENTOS",
-    "stock": -3,
+    "stock": 0,
     "imagen": "imagenes/284.png"
   },
   {
@@ -2084,7 +2084,7 @@
     "nombre": "BAGGIO PRONTO X  1 LIT. MANZANA",
     "precio": 1119.54,
     "categoria": "JUGOS",
-    "stock": 20,
+    "stock": 19,
     "imagen": "imagenes/290.png"
   },
   {
@@ -2172,7 +2172,7 @@
     "nombre": "BISCOCHOS DON SATUR X 200 G.",
     "precio": 711.27,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": 0,
+    "stock": -4,
     "imagen": "imagenes/301.png"
   },
   {
@@ -2188,7 +2188,7 @@
     "nombre": "BLEM ORIGINAL X 360CM",
     "precio": 3883.87,
     "categoria": "LIMPIEZA",
-    "stock": 21,
+    "stock": 18,
     "imagen": "imagenes/303.png"
   },
   {
@@ -2284,7 +2284,7 @@
     "nombre": "BRILLAPISO PAYADO X 500 ML",
     "precio": 1332,
     "categoria": "LIMPIEZA",
-    "stock": 0,
+    "stock": -4,
     "imagen": "imagenes/317.png"
   },
   {
@@ -2292,7 +2292,7 @@
     "nombre": "BRILLAPISO PAYADO X 900 ML",
     "precio": 1900,
     "categoria": "LIMPIEZA",
-    "stock": 0,
+    "stock": -2,
     "imagen": "imagenes/318.png"
   },
   {
@@ -2306,7 +2306,7 @@
   {
     "id": 320,
     "nombre": "BUS X6 TIRAS",
-    "precio": 29798.59,
+    "precio": 30692.26,
     "categoria": "ANALGESICOS",
     "stock": -1,
     "imagen": "imagenes/320.png"
@@ -2322,7 +2322,7 @@
   {
     "id": 322,
     "nombre": "BUS- P",
-    "precio": 3504.58,
+    "precio": 3609.71,
     "categoria": "ANALGESICOS",
     "stock": 0,
     "imagen": "imagenes/322.png"
@@ -2340,7 +2340,7 @@
     "nombre": "CAF-P X20",
     "precio": 4107.93,
     "categoria": "ANALGESICOS",
-    "stock": 0,
+    "stock": -1,
     "imagen": "imagenes/324.png"
   },
   {
@@ -2466,7 +2466,7 @@
   {
     "id": 345,
     "nombre": "CARTAS CASINO X40",
-    "precio": 1368.13,
+    "precio": 1825.95,
     "categoria": "ACCESORIOS",
     "stock": 0,
     "imagen": "imagenes/345.png"
@@ -2474,7 +2474,7 @@
   {
     "id": 346,
     "nombre": "CARTAS CASINO X50",
-    "precio": 1867.08,
+    "precio": 2040.2,
     "categoria": "ACCESORIOS",
     "stock": 0,
     "imagen": "imagenes/346.png"
@@ -2540,7 +2540,7 @@
     "nombre": "CHUP. BOLA LOCA RELL. DE  CHICLE X 24U",
     "precio": 1755.72,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/355.png"
   },
   {
@@ -2572,7 +2572,7 @@
     "nombre": "CHUP. PICO DULCE LED ESTUCHE X 24U",
     "precio": 2484.27,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/359.png"
   },
   {
@@ -2636,7 +2636,7 @@
     "nombre": "CIF DETERGENTE X 500 ML",
     "precio": 1832.21,
     "categoria": "LIMPIEZA",
-    "stock": -4,
+    "stock": 0,
     "imagen": "imagenes/370.png"
   },
   {
@@ -2652,7 +2652,7 @@
     "nombre": "CIF VIDRIOS DP X 450 ML",
     "precio": 1368.39,
     "categoria": "LIMPIEZA",
-    "stock": 0,
+    "stock": -2,
     "imagen": "imagenes/372.png"
   },
   {
@@ -2668,7 +2668,7 @@
     "nombre": "CINTA EMBALAR X48MMX50MT",
     "precio": 1110.19,
     "categoria": "ACCESORIOS",
-    "stock": 0,
+    "stock": 1,
     "imagen": "imagenes/374.png"
   },
   {
@@ -2676,7 +2676,7 @@
     "nombre": "CINTA HIPO. 1.25",
     "precio": 352.44,
     "categoria": "ACCESORIOS",
-    "stock": -2,
+    "stock": 0,
     "imagen": "imagenes/375.png"
   },
   {
@@ -2796,7 +2796,7 @@
     "nombre": "COCO RALLADO X5U",
     "precio": 1723.69,
     "categoria": "ALIMENTOS",
-    "stock": -5,
+    "stock": 0,
     "imagen": "imagenes/390.png"
   },
   {
@@ -2826,17 +2826,17 @@
   {
     "id": 394,
     "nombre": "COLGATE 70GRS",
-    "precio": 1392.3,
+    "precio": 1486,
     "categoria": "PERFUMERIA",
-    "stock": -3,
+    "stock": -4,
     "imagen": "imagenes/394.png"
   },
   {
     "id": 395,
     "nombre": "COLGATE KIDS X 50GR",
     "precio": 919.29,
-    "categoria": "PERFUMERIA",
-    "stock": -2,
+    "categoria": "LIMPIEZA",
+    "stock": -1,
     "imagen": "imagenes/395.png"
   },
   {
@@ -2860,7 +2860,7 @@
     "nombre": "COMINO X10U",
     "precio": 1567.7,
     "categoria": "ALIMENTOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/399.png"
   },
   {
@@ -2900,7 +2900,7 @@
     "nombre": "CREMA NANTYR X 400 ML",
     "precio": 2651.17,
     "categoria": "CREMAS",
-    "stock": 2,
+    "stock": 0,
     "imagen": "imagenes/404.png"
   },
   {
@@ -2948,7 +2948,7 @@
     "nombre": "DES. AXE ANTI X 150ML",
     "precio": 2399.18,
     "categoria": "DESODORANTES",
-    "stock": 0,
+    "stock": 6,
     "imagen": "imagenes/410.png"
   },
   {
@@ -3058,9 +3058,9 @@
   {
     "id": 425,
     "nombre": "DES. DOVE X 150 ML",
-    "precio": 2699.67,
+    "precio": 2793,
     "categoria": "DESODORANTES",
-    "stock": 27,
+    "stock": 40,
     "imagen": "imagenes/425.png"
   },
   {
@@ -3100,7 +3100,7 @@
     "nombre": "DES. KEVIN PARK X 150 CC",
     "precio": 2683.1,
     "categoria": "DESODORANTES",
-    "stock": 0,
+    "stock": -1,
     "imagen": "imagenes/430.png"
   },
   {
@@ -3116,7 +3116,7 @@
     "nombre": "DES. KEVIN PLATINUM X 150 CC",
     "precio": 2768.2,
     "categoria": "DESODORANTES",
-    "stock": 2,
+    "stock": 1,
     "imagen": "imagenes/432.png"
   },
   {
@@ -3298,7 +3298,7 @@
   {
     "id": 487,
     "nombre": "DOVE AC. X 200 ML",
-    "precio": 2400,
+    "precio": 2628,
     "categoria": "SHAMPO Y ENJUAGUE",
     "stock": 0,
     "imagen": "imagenes/487.png"
@@ -3306,18 +3306,10 @@
   {
     "id": 488,
     "nombre": "DOVE SH. X 200 ML",
-    "precio": 2400,
+    "precio": 2628,
     "categoria": "SHAMPO Y ENJUAGUE",
     "stock": 0,
     "imagen": "imagenes/488.png"
-  },
-  {
-    "id": 489,
-    "nombre": "DOVE SH. X 400 ML",
-    "precio": 3500,
-    "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": 0,
-    "imagen": "imagenes/489.png"
   },
   {
     "id": 490,
@@ -3360,19 +3352,11 @@
     "imagen": "imagenes/515.png"
   },
   {
-    "id": 516,
-    "nombre": "ESPONJA COCINA VIRULANA",
-    "precio": 200,
-    "categoria": "LIMPIEZA",
-    "stock": 0,
-    "imagen": "imagenes/516.png"
-  },
-  {
     "id": 518,
-    "nombre": "ESPONJA VIRULANA X 1U",
-    "precio": 200,
+    "nombre": "ESPONJA VIRULANA MULTIUSO",
+    "precio": 399,
     "categoria": "LIMPIEZA",
-    "stock": 0,
+    "stock": 24,
     "imagen": "imagenes/518.png"
   },
   {
@@ -3394,9 +3378,9 @@
   {
     "id": 521,
     "nombre": "EVEREADY AAA X 2",
-    "precio": 500,
+    "precio": 1100,
     "categoria": "ACCESORIOS",
-    "stock": 0,
+    "stock": -5,
     "imagen": "imagenes/521.png"
   },
   {
@@ -3532,7 +3516,7 @@
     "nombre": "HELLMANN´S ADEREZO PICANTE X 250 GR",
     "precio": 1511.71,
     "categoria": "ALIMENTOS",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/552.png"
   },
   {
@@ -3564,7 +3548,7 @@
     "nombre": "HELLMANN´S X 237GR",
     "precio": 957,
     "categoria": "ALIMENTOS",
-    "stock": 15,
+    "stock": 11,
     "imagen": "imagenes/556.png"
   },
   {
@@ -3588,7 +3572,7 @@
     "nombre": "HINDS X 250 GRS",
     "precio": 3632.95,
     "categoria": "CREMAS",
-    "stock": 3,
+    "stock": 2,
     "imagen": "imagenes/559.png"
   },
   {
@@ -3612,7 +3596,7 @@
     "nombre": "HISOPOS FUREY X 100U",
     "precio": 901.1,
     "categoria": "ACCESORIOS",
-    "stock": 0,
+    "stock": 2,
     "imagen": "imagenes/562.png"
   },
   {
@@ -3690,9 +3674,9 @@
   {
     "id": 636,
     "nombre": "JABON DOVE X 90GR",
-    "precio": 1263.74,
+    "precio": 1265,
     "categoria": "PERFUMERIA",
-    "stock": 0,
+    "stock": 20,
     "imagen": "imagenes/636.png"
   },
   {
@@ -3716,7 +3700,7 @@
     "nombre": "JABON ESPADOL X 80 GR",
     "precio": 950,
     "categoria": "PERFUMERIA",
-    "stock": 0,
+    "stock": -4,
     "imagen": "imagenes/639.png"
   },
   {
@@ -3780,7 +3764,7 @@
     "nombre": "JABON PLUSBELLE X 125 GR",
     "precio": 630,
     "categoria": "PERFUMERIA",
-    "stock": 23,
+    "stock": 12,
     "imagen": "imagenes/648.png"
   },
   {
@@ -3788,7 +3772,7 @@
     "nombre": "JABON PLUSBELLE X 3 X 125GR",
     "precio": 1647.79,
     "categoria": "PERFUMERIA",
-    "stock": 5,
+    "stock": 1,
     "imagen": "imagenes/649.png"
   },
   {
@@ -3796,7 +3780,7 @@
     "nombre": "JABON REXONA X 125 GR",
     "precio": 695,
     "categoria": "PERFUMERIA",
-    "stock": 10,
+    "stock": 0,
     "imagen": "imagenes/650.png"
   },
   {
@@ -3812,7 +3796,7 @@
     "nombre": "JABON SEISEME X 300 GR",
     "precio": 1505.55,
     "categoria": "PERFUMERIA",
-    "stock": 9,
+    "stock": 14,
     "imagen": "imagenes/652.png"
   },
   {
@@ -3820,7 +3804,7 @@
     "nombre": "JABON SIGNO X 150 GR",
     "precio": 347.51,
     "categoria": "PERFUMERIA",
-    "stock": 6,
+    "stock": 0,
     "imagen": "imagenes/653.png"
   },
   {
@@ -3884,7 +3868,7 @@
     "nombre": "K- M",
     "precio": 507.3,
     "categoria": "ANALGESICOS",
-    "stock": -8,
+    "stock": -6,
     "imagen": "imagenes/661.png"
   },
   {
@@ -3924,7 +3908,7 @@
     "nombre": "L- F- M",
     "precio": 3025.29,
     "categoria": "ANALGESICOS",
-    "stock": -4,
+    "stock": 0,
     "imagen": "imagenes/666.png"
   },
   {
@@ -3954,9 +3938,9 @@
   {
     "id": 670,
     "nombre": "LANA DE ACERO VIRULANA X10",
-    "precio": 1443.36,
+    "precio": 908.1818,
     "categoria": "LIMPIEZA",
-    "stock": 0,
+    "stock": 20,
     "imagen": "imagenes/670.png"
   },
   {
@@ -4036,7 +4020,7 @@
     "nombre": "LYSOFORM X 360CM",
     "precio": 2727.91,
     "categoria": "LIMPIEZA",
-    "stock": 8,
+    "stock": 6,
     "imagen": "imagenes/681.png"
   },
   {
@@ -4044,7 +4028,7 @@
     "nombre": "M- N",
     "precio": 2002.54,
     "categoria": "ANALGESICOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/682.png"
   },
   {
@@ -4084,7 +4068,7 @@
     "nombre": "MAIZENA ALMIDON DE MAIZ X 220GR",
     "precio": 1238.13,
     "categoria": "ALIMENTOS",
-    "stock": 6,
+    "stock": 3,
     "imagen": "imagenes/688.png"
   },
   {
@@ -4092,7 +4076,7 @@
     "nombre": "MALVAVISCOS X 36U X 20G",
     "precio": 6304.6,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/689.png"
   },
   {
@@ -4204,7 +4188,7 @@
     "nombre": "MI",
     "precio": 3347.13,
     "categoria": "ANALGESICOS",
-    "stock": -3,
+    "stock": -2,
     "imagen": "imagenes/705.png"
   },
   {
@@ -4274,7 +4258,7 @@
   {
     "id": 718,
     "nombre": "NANTYR 0.11",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/718.png"
@@ -4282,31 +4266,23 @@
   {
     "id": 719,
     "nombre": "NANTYR 1.0",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
-    "stock": 0,
+    "stock": 2,
     "imagen": "imagenes/719.png"
-  },
-  {
-    "id": 720,
-    "nombre": "NANTYR 10.0",
-    "precio": 1477.18,
-    "categoria": "TINTURAS NANTYR",
-    "stock": 0,
-    "imagen": "imagenes/720.png"
   },
   {
     "id": 721,
     "nombre": "NANTYR 10.1",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
-    "stock": -12,
+    "stock": 0,
     "imagen": "imagenes/721.png"
   },
   {
     "id": 722,
     "nombre": "NANTYR 10.21",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/722.png"
@@ -4314,7 +4290,7 @@
   {
     "id": 723,
     "nombre": "NANTYR 12.0",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/723.png"
@@ -4322,23 +4298,15 @@
   {
     "id": 724,
     "nombre": "NANTYR 3.0",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/724.png"
   },
   {
-    "id": 725,
-    "nombre": "NANTYR 3.31",
-    "precio": 1477.18,
-    "categoria": "TINTURAS NANTYR",
-    "stock": 0,
-    "imagen": "imagenes/725.png"
-  },
-  {
     "id": 726,
     "nombre": "NANTYR 4.0",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/726.png"
@@ -4346,7 +4314,7 @@
   {
     "id": 727,
     "nombre": "NANTYR 4.66",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/727.png"
@@ -4354,7 +4322,7 @@
   {
     "id": 728,
     "nombre": "NANTYR 5.0",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/728.png"
@@ -4362,7 +4330,7 @@
   {
     "id": 729,
     "nombre": "NANTYR 5.1",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/729.png"
@@ -4370,7 +4338,7 @@
   {
     "id": 730,
     "nombre": "NANTYR 5.37",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/730.png"
@@ -4378,7 +4346,7 @@
   {
     "id": 731,
     "nombre": "NANTYR 5.4",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/731.png"
@@ -4386,15 +4354,15 @@
   {
     "id": 732,
     "nombre": "NANTYR 5.5",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
-    "stock": -12,
+    "stock": 0,
     "imagen": "imagenes/732.png"
   },
   {
     "id": 733,
     "nombre": "NANTYR 5.6",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/733.png"
@@ -4402,7 +4370,7 @@
   {
     "id": 734,
     "nombre": "NANTYR 5.66",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/734.png"
@@ -4410,7 +4378,7 @@
   {
     "id": 735,
     "nombre": "NANTYR 5.7",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/735.png"
@@ -4418,7 +4386,7 @@
   {
     "id": 736,
     "nombre": "NANTYR 6.0",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/736.png"
@@ -4426,7 +4394,7 @@
   {
     "id": 737,
     "nombre": "NANTYR 6.1",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/737.png"
@@ -4434,7 +4402,7 @@
   {
     "id": 738,
     "nombre": "NANTYR 6.55",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/738.png"
@@ -4442,15 +4410,15 @@
   {
     "id": 739,
     "nombre": "NANTYR 6.66",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
-    "stock": -12,
+    "stock": 0,
     "imagen": "imagenes/739.png"
   },
   {
     "id": 740,
     "nombre": "NANTYR 6.74",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/740.png"
@@ -4458,7 +4426,7 @@
   {
     "id": 741,
     "nombre": "NANTYR 66.46",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/741.png"
@@ -4466,7 +4434,7 @@
   {
     "id": 742,
     "nombre": "NANTYR 7.0",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/742.png"
@@ -4474,7 +4442,7 @@
   {
     "id": 743,
     "nombre": "NANTYR 7.1",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/743.png"
@@ -4482,7 +4450,7 @@
   {
     "id": 744,
     "nombre": "NANTYR 7.3",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/744.png"
@@ -4490,7 +4458,7 @@
   {
     "id": 745,
     "nombre": "NANTYR 7.32",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/745.png"
@@ -4498,7 +4466,7 @@
   {
     "id": 746,
     "nombre": "NANTYR 7.4",
-    "precio": 1477.18,
+    "precio": 1502.18,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/746.png"
@@ -4506,7 +4474,7 @@
   {
     "id": 747,
     "nombre": "NANTYR 7.66",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/747.png"
@@ -4514,7 +4482,7 @@
   {
     "id": 748,
     "nombre": "NANTYR 7.7",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/748.png"
@@ -4522,7 +4490,7 @@
   {
     "id": 749,
     "nombre": "NANTYR 77.44",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/749.png"
@@ -4530,7 +4498,7 @@
   {
     "id": 750,
     "nombre": "NANTYR 8.0",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/750.png"
@@ -4538,7 +4506,7 @@
   {
     "id": 751,
     "nombre": "NANTYR 8.1",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/751.png"
@@ -4546,15 +4514,15 @@
   {
     "id": 752,
     "nombre": "NANTYR 8.3",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
-    "stock": -12,
+    "stock": 0,
     "imagen": "imagenes/752.png"
   },
   {
     "id": 753,
     "nombre": "NANTYR 8.32",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/753.png"
@@ -4562,7 +4530,7 @@
   {
     "id": 754,
     "nombre": "NANTYR 8.4",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/754.png"
@@ -4570,7 +4538,7 @@
   {
     "id": 755,
     "nombre": "NANTYR 8.73",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/755.png"
@@ -4578,7 +4546,7 @@
   {
     "id": 756,
     "nombre": "NANTYR 9.0",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/756.png"
@@ -4586,7 +4554,7 @@
   {
     "id": 757,
     "nombre": "NANTYR 9.1",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 1,
     "imagen": "imagenes/757.png"
@@ -4594,7 +4562,7 @@
   {
     "id": 758,
     "nombre": "NANTYR 9.2",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/758.png"
@@ -4602,7 +4570,7 @@
   {
     "id": 759,
     "nombre": "NANTYR 9.3",
-    "precio": 1473.76,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/759.png"
@@ -4610,7 +4578,7 @@
   {
     "id": 760,
     "nombre": "NANTYR 9.31",
-    "precio": 1477.18,
+    "precio": 1502.2,
     "categoria": "TINTURAS NANTYR",
     "stock": 0,
     "imagen": "imagenes/760.png"
@@ -4740,7 +4708,7 @@
     "nombre": "NANTYR SHOCK DE KERATINA X 30GR",
     "precio": 610.82,
     "categoria": "TINTURAS NANTYR",
-    "stock": 0,
+    "stock": -6,
     "imagen": "imagenes/776.png"
   },
   {
@@ -4844,7 +4812,7 @@
     "nombre": "NO",
     "precio": 4733.27,
     "categoria": "ANALGESICOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/789.png"
   },
   {
@@ -4884,7 +4852,7 @@
     "nombre": "OBLITA X 50G",
     "precio": 245.18,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": 15,
+    "stock": 7,
     "imagen": "imagenes/794.png"
   },
   {
@@ -4900,7 +4868,7 @@
     "nombre": "ODOLITO X 50GR",
     "precio": 1446.18,
     "categoria": "PERFUMERIA",
-    "stock": 0,
+    "stock": 1,
     "imagen": "imagenes/796.png"
   },
   {
@@ -4932,7 +4900,7 @@
     "nombre": "OME-15",
     "precio": 461.58,
     "categoria": "ANALGESICOS",
-    "stock": -7,
+    "stock": -3,
     "imagen": "imagenes/800.png"
   },
   {
@@ -4948,7 +4916,7 @@
     "nombre": "OREGANO X 1KG",
     "precio": 7784.68,
     "categoria": "ALIMENTOS",
-    "stock": 0,
+    "stock": -99,
     "imagen": "imagenes/802.png"
   },
   {
@@ -4972,7 +4940,7 @@
     "nombre": "P- C",
     "precio": 727.61,
     "categoria": "ANALGESICOS",
-    "stock": -3,
+    "stock": 0,
     "imagen": "imagenes/805.png"
   },
   {
@@ -4996,7 +4964,7 @@
     "nombre": "PAMPERS G",
     "precio": 1500,
     "categoria": "ACCESORIOS",
-    "stock": 0,
+    "stock": -2,
     "imagen": "imagenes/808.png"
   },
   {
@@ -5020,7 +4988,7 @@
     "nombre": "PAÑUELO DESC. ECO. X6",
     "precio": 801.33,
     "categoria": "PAPELES Y BOLSAS",
-    "stock": 6,
+    "stock": 5,
     "imagen": "imagenes/811.png"
   },
   {
@@ -5052,7 +5020,7 @@
     "nombre": "PAPEL OCB NEGRO X 50 HOJAS",
     "precio": 794.86,
     "categoria": "ENCENDEDORES",
-    "stock": -4,
+    "stock": 0,
     "imagen": "imagenes/817.png"
   },
   {
@@ -5060,7 +5028,7 @@
     "nombre": "PAPEL OCB ROJO X 50 HOJAS",
     "precio": 426.07,
     "categoria": "ENCENDEDORES",
-    "stock": -3,
+    "stock": 0,
     "imagen": "imagenes/818.png"
   },
   {
@@ -5092,7 +5060,7 @@
     "nombre": "PARCHES DINI N°3 X 30U",
     "precio": 1902.24,
     "categoria": "ACCESORIOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/822.png"
   },
   {
@@ -5100,7 +5068,7 @@
     "nombre": "PARCHES DINI N°4 X 20U",
     "precio": 1763.89,
     "categoria": "ACCESORIOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/823.png"
   },
   {
@@ -5124,7 +5092,7 @@
     "nombre": "PEPITO CADBURY X 119 G.",
     "precio": 1181.03,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": -5,
+    "stock": 0,
     "imagen": "imagenes/826.png"
   },
   {
@@ -5140,7 +5108,7 @@
     "nombre": "PERF. TEXTIL SAPHIRUS X 250ML",
     "precio": 2142.93,
     "categoria": "PERFUMERIA",
-    "stock": 0,
+    "stock": -6,
     "imagen": "imagenes/828.png"
   },
   {
@@ -5276,7 +5244,7 @@
     "nombre": "POLVORITA X 81 GR.",
     "precio": 340.58,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": -4,
+    "stock": -99,
     "imagen": "imagenes/846.png"
   },
   {
@@ -5458,15 +5426,15 @@
   {
     "id": 871,
     "nombre": "R2 FRUTILLA X 10",
-    "precio": 3284.76,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": 2,
     "imagen": "imagenes/871.png"
   },
   {
     "id": 872,
     "nombre": "R2 MANDARINA X 10",
-    "precio": 3150,
+    "precio": 3500,
     "categoria": "JUGOS",
     "stock": 0,
     "imagen": "imagenes/872.png"
@@ -5474,7 +5442,7 @@
   {
     "id": 873,
     "nombre": "R2 MANGO X 10",
-    "precio": 3150,
+    "precio": 3500,
     "categoria": "JUGOS",
     "stock": 0,
     "imagen": "imagenes/873.png"
@@ -5482,15 +5450,15 @@
   {
     "id": 874,
     "nombre": "R2 NAR-BANANA X 10",
-    "precio": 2933.15,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": 6,
     "imagen": "imagenes/874.png"
   },
   {
     "id": 875,
     "nombre": "R2 NAR-CITRUZ X 10",
-    "precio": 3150,
+    "precio": 3500,
     "categoria": "JUGOS",
     "stock": 0,
     "imagen": "imagenes/875.png"
@@ -5498,31 +5466,31 @@
   {
     "id": 876,
     "nombre": "R2 NAR-MANGO X 10",
-    "precio": 3150,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": 6,
     "imagen": "imagenes/876.png"
   },
   {
     "id": 877,
     "nombre": "R2 NARANJA X 10",
-    "precio": 2933.15,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": 5,
     "imagen": "imagenes/877.png"
   },
   {
     "id": 878,
     "nombre": "R2 PERA X 10",
-    "precio": 2933.15,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": 2,
     "imagen": "imagenes/878.png"
   },
   {
     "id": 879,
     "nombre": "R2 POMELO X 10",
-    "precio": 2933.15,
+    "precio": 3500,
     "categoria": "JUGOS",
     "stock": 0,
     "imagen": "imagenes/879.png"
@@ -5530,7 +5498,7 @@
   {
     "id": 880,
     "nombre": "R2 SANDIA X 10",
-    "precio": 3150,
+    "precio": 3500,
     "categoria": "JUGOS",
     "stock": 0,
     "imagen": "imagenes/880.png"
@@ -5538,7 +5506,7 @@
   {
     "id": 881,
     "nombre": "R2 UVA X 10",
-    "precio": 3150,
+    "precio": 3500,
     "categoria": "JUGOS",
     "stock": 0,
     "imagen": "imagenes/881.png"
@@ -5616,14 +5584,6 @@
     "imagen": "imagenes/894.png"
   },
   {
-    "id": 895,
-    "nombre": "REF- COMP",
-    "precio": 6394.8,
-    "categoria": "ANALGESICOS",
-    "stock": 0,
-    "imagen": "imagenes/895.png"
-  },
-  {
     "id": 896,
     "nombre": "REN - 12 C",
     "precio": 1956.61,
@@ -5692,7 +5652,7 @@
     "nombre": "S- C",
     "precio": 4659.99,
     "categoria": "ANALGESICOS",
-    "stock": -2,
+    "stock": 0,
     "imagen": "imagenes/905.png"
   },
   {
@@ -5708,7 +5668,7 @@
     "nombre": "SABORIZADOR DE 4 QUESOS S/TAC",
     "precio": 2555.79,
     "categoria": "ALIMENTOS",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/907.png"
   },
   {
@@ -5732,7 +5692,7 @@
     "nombre": "SABORIZADOR DE CHAMP/HONG S/TAC",
     "precio": 2555.79,
     "categoria": "ALIMENTOS",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/910.png"
   },
   {
@@ -5748,7 +5708,7 @@
     "nombre": "SAL FINA AROMAS X 12U X500GR",
     "precio": 3889.05,
     "categoria": "ALIMENTOS",
-    "stock": 0,
+    "stock": -99,
     "imagen": "imagenes/916.png"
   },
   {
@@ -5756,7 +5716,7 @@
     "nombre": "SAL GRUESA AROMAS X 10U X 500GR",
     "precio": 3889.05,
     "categoria": "ALIMENTOS",
-    "stock": 9,
+    "stock": -99,
     "imagen": "imagenes/917.png"
   },
   {
@@ -5780,7 +5740,7 @@
     "nombre": "SECADOR ROJO 40 CM",
     "precio": 3609.94,
     "categoria": "LIMPIEZA",
-    "stock": 4,
+    "stock": 2,
     "imagen": "imagenes/920.png"
   },
   {
@@ -5796,7 +5756,7 @@
     "nombre": "SEDAL AC. BALANCE X 24",
     "precio": 3954.96,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": -2,
+    "stock": 0,
     "imagen": "imagenes/922.png"
   },
   {
@@ -5810,9 +5770,9 @@
   {
     "id": 924,
     "nombre": "SEDAL AC. REST. X 24",
-    "precio": 3691,
+    "precio": 3954,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": -1,
+    "stock": -99,
     "imagen": "imagenes/924.png"
   },
   {
@@ -5820,7 +5780,7 @@
     "nombre": "SEDAL AC. X 190 ML",
     "precio": 1708.93,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": 8,
+    "stock": 5,
     "imagen": "imagenes/925.png"
   },
   {
@@ -5828,7 +5788,7 @@
     "nombre": "SEDAL SH. BALANCE X 24",
     "precio": 3954.96,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/926.png"
   },
   {
@@ -5842,9 +5802,9 @@
   {
     "id": 929,
     "nombre": "SEDAL SH. REST. X 24",
-    "precio": 3691,
+    "precio": 3954,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": 0,
+    "stock": -99,
     "imagen": "imagenes/929.png"
   },
   {
@@ -5892,7 +5852,7 @@
     "nombre": "SOPAPA GOMA NEGRA",
     "precio": 1016.35,
     "categoria": "LIMPIEZA",
-    "stock": -3,
+    "stock": 0,
     "imagen": "imagenes/938.png"
   },
   {
@@ -5900,7 +5860,7 @@
     "nombre": "SOPAPA GOMA ROJA",
     "precio": 1138.37,
     "categoria": "LIMPIEZA",
-    "stock": -2,
+    "stock": 0,
     "imagen": "imagenes/939.png"
   },
   {
@@ -5972,7 +5932,7 @@
     "nombre": "T- V F",
     "precio": 1958.01,
     "categoria": "ANALGESICOS",
-    "stock": 0,
+    "stock": -5,
     "imagen": "imagenes/948.png"
   },
   {
@@ -5996,7 +5956,7 @@
     "nombre": "T-NEXT",
     "precio": 1090,
     "categoria": "ANALGESICOS",
-    "stock": 0,
+    "stock": -6,
     "imagen": "imagenes/951.png"
   },
   {
@@ -6012,7 +5972,7 @@
     "nombre": "TAF",
     "precio": 1398.86,
     "categoria": "ANALGESICOS",
-    "stock": -9,
+    "stock": -1,
     "imagen": "imagenes/953.png"
   },
   {
@@ -6020,7 +5980,7 @@
     "nombre": "TAF- 650",
     "precio": 1878.09,
     "categoria": "ANALGESICOS",
-    "stock": -2,
+    "stock": -1,
     "imagen": "imagenes/954.png"
   },
   {
@@ -6028,7 +5988,7 @@
     "nombre": "TAF- PL",
     "precio": 1970.17,
     "categoria": "ANALGESICOS",
-    "stock": -8,
+    "stock": -1,
     "imagen": "imagenes/955.png"
   },
   {
@@ -6044,7 +6004,7 @@
     "nombre": "TAF-1GR",
     "precio": 1398.86,
     "categoria": "ANALGESICOS",
-    "stock": -10,
+    "stock": -7,
     "imagen": "imagenes/957.png"
   },
   {
@@ -6108,7 +6068,7 @@
     "nombre": "TANG ANANA X 20",
     "precio": 4714.26,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": -1,
     "imagen": "imagenes/967.png"
   },
   {
@@ -6196,7 +6156,7 @@
     "nombre": "TANG NAR-LIMA X 20 U",
     "precio": 4714.26,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": -1,
     "imagen": "imagenes/978.png"
   },
   {
@@ -6244,7 +6204,7 @@
     "nombre": "TAUR-F MAX",
     "precio": 1162.68,
     "categoria": "ANALGESICOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/984.png"
   },
   {
@@ -6276,7 +6236,7 @@
     "nombre": "TE BOLDO LV X 25 SAQ.",
     "precio": 1294.96,
     "categoria": "ALIMENTOS",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/988.png"
   },
   {
@@ -6332,7 +6292,7 @@
     "nombre": "TE MANZ. C/ANIS LV X 25 SAQ.",
     "precio": 1172.73,
     "categoria": "ALIMENTOS",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/995.png"
   },
   {
@@ -6348,7 +6308,7 @@
     "nombre": "TE MENTA-PEPERINA LV X 25 SAQ.",
     "precio": 884.07,
     "categoria": "ALIMENTOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/997.png"
   },
   {
@@ -6380,7 +6340,7 @@
     "nombre": "TE TILO LV X 25 SAQ.",
     "precio": 2396.39,
     "categoria": "ALIMENTOS",
-    "stock": 6,
+    "stock": 3,
     "imagen": "imagenes/1001.png"
   },
   {
@@ -6460,7 +6420,7 @@
     "nombre": "TOALL. HUM. BABY",
     "precio": 1985.72,
     "categoria": "PERFUMERIA",
-    "stock": 6,
+    "stock": 5,
     "imagen": "imagenes/1013.png"
   },
   {
@@ -6514,7 +6474,7 @@
   {
     "id": 1021,
     "nombre": "TRAPO PISO GRIS SINA 48X60CM",
-    "precio": 481.36,
+    "precio": 536.36,
     "categoria": "LIMPIEZA",
     "stock": 0,
     "imagen": "imagenes/1021.png"
@@ -6620,7 +6580,7 @@
     "nombre": "VAINILLIN",
     "precio": 3802.26,
     "categoria": "ALIMENTOS",
-    "stock": 1,
+    "stock": 0,
     "imagen": "imagenes/1037.png"
   },
   {
@@ -6644,7 +6604,7 @@
     "nombre": "VELAS CUMPLEAÑOS X 20",
     "precio": 2806.23,
     "categoria": "ACCESORIOS",
-    "stock": 0,
+    "stock": 1,
     "imagen": "imagenes/1040.png"
   },
   {
@@ -6652,7 +6612,7 @@
     "nombre": "VELAS GDE",
     "precio": 493.85,
     "categoria": "ACCESORIOS",
-    "stock": 0,
+    "stock": -4,
     "imagen": "imagenes/1041.png"
   },
   {
@@ -6660,7 +6620,7 @@
     "nombre": "VERITA BLANCO X 120G",
     "precio": 1485.59,
     "categoria": "PERFUMERIA",
-    "stock": 0,
+    "stock": -2,
     "imagen": "imagenes/1042.png"
   },
   {
@@ -6684,7 +6644,7 @@
     "nombre": "VINAGRE LA RINCONADA X 930",
     "precio": 1036,
     "categoria": "ALIMENTOS",
-    "stock": 0,
+    "stock": -4,
     "imagen": "imagenes/1046.png"
   },
   {
@@ -6692,7 +6652,7 @@
     "nombre": "VIVERE PLANCHA FACIL X 810 ML.",
     "precio": 2001.32,
     "categoria": "PERFUMERIA",
-    "stock": 0,
+    "stock": -1,
     "imagen": "imagenes/1047.png"
   },
   {
@@ -6772,7 +6732,7 @@
     "nombre": "ENC. BX7 NEW C/U",
     "precio": 659.34,
     "categoria": "ENCENDEDORES",
-    "stock": 0,
+    "stock": -3,
     "imagen": "imagenes/1067.png"
   },
   {
@@ -6796,7 +6756,7 @@
     "nombre": "ENC. CANDELA HOGAR FLEX",
     "precio": 2957.65,
     "categoria": "ENCENDEDORES",
-    "stock": -2,
+    "stock": 0,
     "imagen": "imagenes/1070.png"
   },
   {
@@ -6804,7 +6764,7 @@
     "nombre": "ENC. CANDELA X 25U",
     "precio": 5564.84,
     "categoria": "ENCENDEDORES",
-    "stock": 0,
+    "stock": 1,
     "imagen": "imagenes/1071.png"
   },
   {
@@ -6852,7 +6812,7 @@
     "nombre": "Q",
     "precio": 6077,
     "categoria": "ANALGESICOS",
-    "stock": -2,
+    "stock": 0,
     "imagen": "imagenes/1079.png"
   },
   {
@@ -6868,7 +6828,7 @@
     "nombre": "DI- 100",
     "precio": 618.38,
     "categoria": "ANALGESICOS",
-    "stock": 0,
+    "stock": -3,
     "imagen": "imagenes/1081.png"
   },
   {
@@ -6908,7 +6868,7 @@
     "nombre": "I- 600",
     "precio": 609.65,
     "categoria": "ANALGESICOS",
-    "stock": 0,
+    "stock": -4,
     "imagen": "imagenes/1086.png"
   },
   {
@@ -6972,7 +6932,7 @@
     "nombre": "VAINILLAS X80GR",
     "precio": 342.58,
     "categoria": "ALIMENTOS",
-    "stock": 6,
+    "stock": 0,
     "imagen": "imagenes/1096.png"
   },
   {
@@ -7044,7 +7004,7 @@
     "nombre": "HUGGIES G",
     "precio": 1922,
     "categoria": "PERFUMERIA",
-    "stock": 0,
+    "stock": -2,
     "imagen": "imagenes/1106.png"
   },
   {
@@ -7060,7 +7020,7 @@
     "nombre": "ATUN DESMENUZADO ACEITE X170GR",
     "precio": 1044.54,
     "categoria": "ALIMENTOS",
-    "stock": 39,
+    "stock": 36,
     "imagen": "imagenes/1108.png"
   },
   {
@@ -7068,7 +7028,7 @@
     "nombre": "ATUN DESMENUZADO NATURAL X170GR",
     "precio": 1044.54,
     "categoria": "ALIMENTOS",
-    "stock": 45,
+    "stock": 43,
     "imagen": "imagenes/1109.png"
   },
   {
@@ -7100,7 +7060,7 @@
     "nombre": "CHAMPIGNONES ENTEROS X400GR",
     "precio": 2199.23,
     "categoria": "ALIMENTOS",
-    "stock": 1,
+    "stock": -1,
     "imagen": "imagenes/1113.png"
   },
   {
@@ -7108,7 +7068,7 @@
     "nombre": "CHOCLOS AMARILLOS GRANOS X280GR",
     "precio": 965.39,
     "categoria": "ALIMENTOS",
-    "stock": 7,
+    "stock": -99,
     "imagen": "imagenes/1114.png"
   },
   {
@@ -7172,7 +7132,7 @@
     "nombre": "PALMITOS EN RODAJAS X400GR",
     "precio": 2085.66,
     "categoria": "ALIMENTOS",
-    "stock": 6,
+    "stock": 3,
     "imagen": "imagenes/1122.png"
   },
   {
@@ -7180,7 +7140,7 @@
     "nombre": "JUGO PEPITO X160CC",
     "precio": 249,
     "categoria": "JUGOS",
-    "stock": 111,
+    "stock": 109,
     "imagen": "imagenes/1123.png"
   },
   {
@@ -7212,7 +7172,7 @@
     "nombre": "GE- 500",
     "precio": 1013.86,
     "categoria": "ANALGESICOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/1127.png"
   },
   {
@@ -7252,7 +7212,7 @@
     "nombre": "HUGGIES PLUS M",
     "precio": 1999,
     "categoria": "PERFUMERIA",
-    "stock": 0,
+    "stock": -2,
     "imagen": "imagenes/1132.png"
   },
   {
@@ -7298,9 +7258,9 @@
   {
     "id": 1138,
     "nombre": "R2 NAR-DURAZNO",
-    "precio": 3284.05,
+    "precio": 3500,
     "categoria": "JUGOS",
-    "stock": 2,
+    "stock": 6,
     "imagen": "imagenes/1138.png"
   },
   {
@@ -7308,7 +7268,7 @@
     "nombre": "ECCOLE X 3 GRS",
     "precio": 1636.58,
     "categoria": "PEGAMENTOS",
-    "stock": -1,
+    "stock": 0,
     "imagen": "imagenes/1139.png"
   },
   {
@@ -7316,7 +7276,7 @@
     "nombre": "MINI OREO X 50G",
     "precio": 559,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": 34,
+    "stock": 23,
     "imagen": "imagenes/1140.png"
   },
   {
@@ -7340,7 +7300,7 @@
     "nombre": "GEL ALGABO X 150M",
     "precio": 1278.76,
     "categoria": "PERFUMERIA",
-    "stock": 6,
+    "stock": -4,
     "imagen": "imagenes/1143.png"
   },
   {
@@ -7348,7 +7308,7 @@
     "nombre": "TRAPO PISO FIBRAN",
     "precio": 494.06,
     "categoria": "LIMPIEZA",
-    "stock": 27,
+    "stock": 26,
     "imagen": "imagenes/1144.png"
   },
   {
@@ -7404,7 +7364,7 @@
     "nombre": "ECOVITA X800ML DYP",
     "precio": 1099.99,
     "categoria": "LIMPIEZA",
-    "stock": 24,
+    "stock": 19,
     "imagen": "imagenes/1152.png"
   },
   {
@@ -7412,7 +7372,7 @@
     "nombre": "BAGGIO PRONTO X 200 DURAZNO",
     "precio": 330.62,
     "categoria": "JUGOS",
-    "stock": 0,
+    "stock": 2,
     "imagen": "imagenes/1154.png"
   },
   {
@@ -7444,7 +7404,7 @@
     "nombre": "BAGGIO PRONTO X  1 LIT. DURAZNO",
     "precio": 1119.54,
     "categoria": "JUGOS",
-    "stock": 15,
+    "stock": 11,
     "imagen": "imagenes/1158.png"
   },
   {
@@ -7492,7 +7452,7 @@
     "nombre": "HARINA CAÑUELA 000 X 1 KG.",
     "precio": 720.75,
     "categoria": "ALIMENTOS",
-    "stock": 8,
+    "stock": 4,
     "imagen": "imagenes/1164.png"
   },
   {
@@ -7548,7 +7508,7 @@
     "nombre": "GALLETAS MEDIA TARDE TRIPACK 3 X 315 G",
     "precio": 750,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": 0,
+    "stock": -3,
     "imagen": "imagenes/1171.png"
   },
   {
@@ -7940,7 +7900,7 @@
     "nombre": "PAPEL HIG. HIGIENOL 4X80M",
     "precio": 2909.09,
     "categoria": "PAPELES Y BOLSAS",
-    "stock": 8,
+    "stock": 7,
     "imagen": "imagenes/1265.png"
   },
   {
@@ -7956,7 +7916,7 @@
     "nombre": "DUQUESA X 115 G.",
     "precio": 962.49,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": "",
+    "stock": 3,
     "imagen": "imagenes/1281.png"
   },
   {
@@ -7964,7 +7924,7 @@
     "nombre": "MINI PEPITO X 50 GR.",
     "precio": 724.35,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": 3,
+    "stock": 7,
     "imagen": "imagenes/1283.png"
   },
   {
@@ -7972,7 +7932,7 @@
     "nombre": "MALVAVISCOS X 1U",
     "precio": 227.27,
     "categoria": "GALLETAS Y GOLOSINAS",
-    "stock": 33,
+    "stock": 23,
     "imagen": "imagenes/1284.png"
   },
   {
@@ -7980,7 +7940,7 @@
     "nombre": "PROTECTORES CAREFREE NORMALES",
     "precio": 726.37,
     "categoria": "PERFUMERIA OFERTAS",
-    "stock": 29,
+    "stock": 28,
     "imagen": "imagenes/1285.png"
   },
   {
@@ -7993,7 +7953,7 @@
   },
   {
     "id": 1287,
-    "nombre": "ESPONJA LISA TASK",
+    "nombre": "ESPONJA TASK LISA",
     "precio": 350,
     "categoria": "LIMPIEZA",
     "stock": 36,
@@ -8020,7 +7980,7 @@
     "nombre": "MIL- MENTA",
     "precio": 2732.71,
     "categoria": "ANALGESICOS",
-    "stock": 0,
+    "stock": -1,
     "imagen": ""
   },
   {
@@ -8042,15 +8002,15 @@
   {
     "id": 1293,
     "nombre": "FIDEOS LUCCHETTI CODITO X500G",
-    "precio": 800,
+    "precio": 899.99,
     "categoria": "ALIMENTOS",
-    "stock": 20,
+    "stock": 6,
     "imagen": ""
   },
   {
     "id": 1294,
     "nombre": "FIDEOS FAVORITA TALLARINES X500G",
-    "precio": 1000,
+    "precio": 899.99,
     "categoria": "ALIMENTOS",
     "stock": 4,
     "imagen": ""
@@ -8076,7 +8036,135 @@
     "nombre": "ALGABO SH REP. X300",
     "precio": 908.18,
     "categoria": "SHAMPO Y ENJUAGUE",
-    "stock": 20,
+    "stock": 19,
+    "imagen": ""
+  },
+  {
+    "id": 1298,
+    "nombre": "CEP. COLGATE KIDS +2A",
+    "precio": 1302.81,
+    "categoria": "LIMPIEZA",
+    "stock": 1,
+    "imagen": ""
+  },
+  {
+    "id": 1299,
+    "nombre": "GEL ALGABO X 200M",
+    "precio": 1441.34,
+    "categoria": "PERFUMERIA",
+    "stock": -2,
+    "imagen": ""
+  },
+  {
+    "id": 1300,
+    "nombre": "DOVE SH X 180ML DP",
+    "precio": 2087.3,
+    "categoria": "SHAMPO Y ENJUAGUE",
+    "stock": 0,
+    "imagen": ""
+  },
+  {
+    "id": 1301,
+    "nombre": "DOVE AC X 180ML DP",
+    "precio": 2087.3,
+    "categoria": "SHAMPO Y ENJUAGUE",
+    "stock": 0,
+    "imagen": ""
+  },
+  {
+    "id": 1302,
+    "nombre": "NANTYR 10.0",
+    "precio": 1502.2,
+    "categoria": "TINTURAS NANTYR",
+    "stock": 0,
+    "imagen": ""
+  },
+  {
+    "id": 1303,
+    "nombre": "NANTYR 3.31",
+    "precio": 1502.2,
+    "categoria": "TINTURAS NANTYR",
+    "stock": 0,
+    "imagen": ""
+  },
+  {
+    "id": 1304,
+    "nombre": "FASTIX X25G",
+    "precio": 3141.27,
+    "categoria": "PEGAMENTOS",
+    "stock": 0,
+    "imagen": ""
+  },
+  {
+    "id": 1305,
+    "nombre": "HOJAS DORCO X 10U",
+    "precio": 1897.72,
+    "categoria": "ACCESORIOS",
+    "stock": -2,
+    "imagen": ""
+  },
+  {
+    "id": 1306,
+    "nombre": "FUYI AEROSOL x 360CM",
+    "precio": 3627.58,
+    "categoria": "REPELENTES",
+    "stock": -1,
+    "imagen": ""
+  },
+  {
+    "id": 1307,
+    "nombre": "FUYI TABLETA X24U",
+    "precio": 3160.99,
+    "categoria": "REPELENTES",
+    "stock": 0,
+    "imagen": ""
+  },
+  {
+    "id": 1308,
+    "nombre": "EQUIPO DE SOLUCION Y PARCHE",
+    "precio": 940.4,
+    "categoria": "PEGAMENTOS",
+    "stock": -1,
+    "imagen": ""
+  },
+  {
+    "id": 1309,
+    "nombre": "FIDEOS SPAGGETTI TIRABUZON X500G",
+    "precio": 899.99,
+    "categoria": "ALIMENTOS",
+    "stock": 14,
+    "imagen": ""
+  },
+  {
+    "id": 1310,
+    "nombre": "FIDEOS TALLARINES LUCCHETTI",
+    "precio": 899.99,
+    "categoria": "ALIMENTOS",
+    "stock": 18,
+    "imagen": ""
+  },
+  {
+    "id": 1311,
+    "nombre": "REF- COMP",
+    "precio": 6409.83,
+    "categoria": "ANALGESICOS",
+    "stock": -1,
+    "imagen": ""
+  },
+  {
+    "id": 1312,
+    "nombre": "GALLETITAS LA PROVIDENCIA CRACKERS",
+    "precio": 296,
+    "categoria": "GALLETAS Y GOLOSINAS",
+    "stock": 10,
+    "imagen": ""
+  },
+  {
+    "id": 1313,
+    "nombre": "ESPONJA VIRULANA LISA",
+    "precio": 389,
+    "categoria": "LIMPIEZA",
+    "stock": 36,
     "imagen": ""
   }
 ]
