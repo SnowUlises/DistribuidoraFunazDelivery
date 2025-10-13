@@ -241,6 +241,9 @@
           <ul id="categoriesMenu" class="cat-menu" hidden role="menu" aria-labelledby="catToggle"></ul>
         </div>
       </div>
+      <div class="pdf-wrapper" style="flex-shrink:0;">
+        <button id="pdfBtn" class="cat-toggle">PDF</button>
+      </div>
     </div>
     <section id="productsArea">
       <div id="grid" class="grid"></div>
@@ -250,6 +253,7 @@
     </section>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     // --- CONFIG --------------------------------------------------------------
@@ -270,6 +274,7 @@
     const categoriesMenu = document.getElementById('categoriesMenu');
     const catToggle = document.getElementById('catToggle');
     const searchInput = document.getElementById('search');
+    const pdfBtn = document.getElementById('pdfBtn');
     // --- HELPERS -------------------------------------------------------------
     function parsePrice(v){
       if (v === null || v === undefined) return 0;
@@ -292,6 +297,22 @@
     function normalizeImage(path){
       if(!path) return 'imagenes/placeholder.png';
       return path.startsWith('/') ? path.slice(1) : path;
+    }
+    async function getBase64(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          resolve({ data: canvas.toDataURL('image/png'), width: img.width, height: img.height });
+        };
+        img.onerror = () => resolve({ data: null, width: 0, height: 0 });
+        img.src = url;
+      });
     }
     // --- BUILD dropdown menu -----------------------------------------------
     function buildCategoryMenu(){
@@ -396,6 +417,74 @@
       renderProducts(list);
     }
     searchInput.addEventListener('input', applyFilters);
+    // --- PDF GENERATION ------------------------------------------------------
+    async function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'landscape', unit: 'mm' });
+      const pageWidth = 297;
+      const pageHeight = 210;
+      const margin = 10;
+      const usableWidth = pageWidth - 2 * margin;
+      const usableHeight = pageHeight - 2 * margin;
+      const cols = 6;
+      const rows = 5;
+      const cellW = usableWidth / cols;
+      const cellH = usableHeight / rows;
+      const productList = PRODUCTS.map(p => ({
+        name: p.nombre || 'Sin nombre',
+        price: formatMoney(((parsePrice(p.precio) * 1.10) * 0.97) * 1.10),
+        category: normalizeCategory(p.categoria),
+        imageUrl: normalizeImage(p.imagen)
+      }));
+      const base64List = await Promise.all(productList.map(p => getBase64(p.imageUrl)));
+      productList.forEach((p, i) => { p.base64Data = base64List[i]; });
+      let currentPage = 0;
+      for (let chunkStart = 0; chunkStart < productList.length; chunkStart += 30) {
+        if (currentPage > 0) doc.addPage();
+        currentPage++;
+        const chunk = productList.slice(chunkStart, chunkStart + 30);
+        for (let idx = 0; idx < chunk.length; idx++) {
+          const row = Math.floor(idx / cols);
+          const col = idx % cols;
+          const x = margin + col * cellW;
+          const y = margin + row * cellH;
+          const imgData = chunk[idx].base64Data;
+          if (imgData.data) {
+            let imgW = cellW - 4;
+            let imgH = (imgData.height / imgData.width) * imgW;
+            if (imgH > cellH - 20) {
+              imgH = cellH - 20;
+              imgW = (imgData.width / imgData.height) * imgH;
+            }
+            const imgX = x + (cellW - imgW) / 2;
+            const imgY = y + 2;
+            doc.addImage(imgData.data, 'PNG', imgX, imgY, imgW, imgH);
+            const textY = imgY + imgH + 4;
+            doc.setFontSize(8);
+            doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
+            doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
+            doc.setFontSize(6);
+            doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
+            doc.setFontSize(10);
+          } else {
+            // Sin imagen, solo texto centrado
+            let textY = y + cellH / 2 - 10;
+            doc.setFontSize(8);
+            doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
+            doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
+            doc.setFontSize(6);
+            doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
+            doc.setFontSize(10);
+          }
+        }
+      }
+      doc.save('productos.pdf');
+    }
+    pdfBtn.addEventListener('click', async () => {
+      if (confirm('¿Desea descargar el PDF con todos los productos?')) {
+        await generatePDF();
+      }
+    });
     // --- LOAD DATA -----------------------------------------------------------
     async function load(){
       try {
@@ -427,10 +516,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
