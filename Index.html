@@ -439,51 +439,64 @@
         const usableHeight = pageHeight - 2 * margin;
         const cols = 6;
         const rows = 5;
+        const productsPerPage = cols * rows;
         const cellW = usableWidth / cols;
         const cellH = usableHeight / rows;
         const productList = PRODUCTS.map(p => ({
           name: p.nombre || 'Sin nombre',
           price: formatMoney(((parsePrice(p.precio) * 1.10) * 0.97) * 1.10),
           category: normalizeCategory(p.categoria),
-          imageUrl: normalizeImage(p.imagen),
-          base64Data: null
+          imageUrl: normalizeImage(p.imagen)
         }));
-        // Load images sequentially to avoid freezing
-        for (let p of productList) {
-          p.base64Data = await getBase64(p.imageUrl);
-        }
+        const pagesPerBatch = 5;
+        const productsPerBatch = pagesPerBatch * productsPerPage;
         let currentPage = 0;
-        for (let chunkStart = 0; chunkStart < productList.length; chunkStart += 30) {
-          if (currentPage > 0) doc.addPage();
-          currentPage++;
-          const chunk = productList.slice(chunkStart, chunkStart + 30);
-          for (let idx = 0; idx < chunk.length; idx++) {
-            const row = Math.floor(idx / cols);
-            const col = idx % cols;
-            const x = margin + col * cellW;
-            const y = margin + row * cellH;
-            const imgData = chunk[idx].base64Data;
-            if (imgData.data) {
-              try {
-                let imgW = cellW - 4;
-                let imgH = (imgData.height / imgData.width) * imgW;
-                if (imgH > cellH - 20) {
-                  imgH = cellH - 20;
-                  imgW = (imgData.width / imgData.height) * imgH;
+        for (let batchStart = 0; batchStart < productList.length; batchStart += productsPerBatch) {
+          const batchEnd = Math.min(batchStart + productsPerBatch, productList.length);
+          const batch = productList.slice(batchStart, batchEnd);
+          const base64List = await Promise.all(batch.map(p => getBase64(p.imageUrl)));
+          batch.forEach((p, i) => { p.base64Data = base64List[i]; });
+          for (let chunkStart = 0; chunkStart < batch.length; chunkStart += productsPerPage) {
+            if (currentPage > 0) doc.addPage();
+            currentPage++;
+            const chunk = batch.slice(chunkStart, chunkStart + productsPerPage);
+            for (let idx = 0; idx < chunk.length; idx++) {
+              const row = Math.floor(idx / cols);
+              const col = idx % cols;
+              const x = margin + col * cellW;
+              const y = margin + row * cellH;
+              const imgData = chunk[idx].base64Data;
+              if (imgData.data) {
+                try {
+                  let imgW = cellW - 4;
+                  let imgH = (imgData.height / imgData.width) * imgW;
+                  if (imgH > cellH - 20) {
+                    imgH = cellH - 20;
+                    imgW = (imgData.width / imgData.height) * imgH;
+                  }
+                  const imgX = x + (cellW - imgW) / 2;
+                  const imgY = y + 2;
+                  doc.addImage(imgData.data, 'PNG', imgX, imgY, imgW, imgH);
+                  const textY = imgY + imgH + 4;
+                  doc.setFontSize(8);
+                  doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
+                  doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
+                  doc.setFontSize(6);
+                  doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
+                  doc.setFontSize(10);
+                } catch (e) {
+                  console.error('Failed to add image to PDF:', e);
+                  // Render text only
+                  let textY = y + cellH / 2 - 10;
+                  doc.setFontSize(8);
+                  doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
+                  doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
+                  doc.setFontSize(6);
+                  doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
+                  doc.setFontSize(10);
                 }
-                const imgX = x + (cellW - imgW) / 2;
-                const imgY = y + 2;
-                doc.addImage(imgData.data, 'PNG', imgX, imgY, imgW, imgH);
-                const textY = imgY + imgH + 4;
-                doc.setFontSize(8);
-                doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
-                doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
-                doc.setFontSize(6);
-                doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
-                doc.setFontSize(10);
-              } catch (e) {
-                console.error('Failed to add image to PDF:', e);
-                // Render text only
+              } else {
+                // Sin imagen, solo texto centrado
                 let textY = y + cellH / 2 - 10;
                 doc.setFontSize(8);
                 doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
@@ -492,15 +505,6 @@
                 doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
                 doc.setFontSize(10);
               }
-            } else {
-              // Sin imagen, solo texto centrado
-              let textY = y + cellH / 2 - 10;
-              doc.setFontSize(8);
-              doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
-              doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
-              doc.setFontSize(6);
-              doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
-              doc.setFontSize(10);
             }
           }
         }
