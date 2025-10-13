@@ -302,6 +302,31 @@
       }
       return imgPath;
     }
+    function getBase64(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            const data = canvas.toDataURL('image/png');
+            resolve({ data, width: img.width, height: img.height });
+          } catch (e) {
+            console.error('Error processing image:', e);
+            resolve({ data: null, width: 0, height: 0 });
+          }
+        };
+        img.onerror = () => {
+          console.error('Error loading image:', url);
+          resolve({ data: null, width: 0, height: 0 });
+        };
+        img.src = url;
+      });
+    }
     // --- BUILD dropdown menu -----------------------------------------------
     function buildCategoryMenu(){
       categoriesMenu.innerHTML = '';
@@ -419,8 +444,14 @@
         const productList = PRODUCTS.map(p => ({
           name: p.nombre || 'Sin nombre',
           price: formatMoney(((parsePrice(p.precio) * 1.10) * 0.97) * 1.10),
-          category: normalizeCategory(p.categoria)
+          category: normalizeCategory(p.categoria),
+          imageUrl: normalizeImage(p.imagen),
+          base64Data: null
         }));
+        // Load images sequentially to avoid freezing
+        for (let p of productList) {
+          p.base64Data = await getBase64(p.imageUrl);
+        }
         let currentPage = 0;
         for (let chunkStart = 0; chunkStart < productList.length; chunkStart += 30) {
           if (currentPage > 0) doc.addPage();
@@ -431,14 +462,46 @@
             const col = idx % cols;
             const x = margin + col * cellW;
             const y = margin + row * cellH;
-            // Render text only
-            let textY = y + cellH / 2 - 10;
-            doc.setFontSize(8);
-            doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
-            doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
-            doc.setFontSize(6);
-            doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
-            doc.setFontSize(10);
+            const imgData = chunk[idx].base64Data;
+            if (imgData.data) {
+              try {
+                let imgW = cellW - 4;
+                let imgH = (imgData.height / imgData.width) * imgW;
+                if (imgH > cellH - 20) {
+                  imgH = cellH - 20;
+                  imgW = (imgData.width / imgData.height) * imgH;
+                }
+                const imgX = x + (cellW - imgW) / 2;
+                const imgY = y + 2;
+                doc.addImage(imgData.data, 'PNG', imgX, imgY, imgW, imgH);
+                const textY = imgY + imgH + 4;
+                doc.setFontSize(8);
+                doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
+                doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
+                doc.setFontSize(6);
+                doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
+                doc.setFontSize(10);
+              } catch (e) {
+                console.error('Failed to add image to PDF:', e);
+                // Render text only
+                let textY = y + cellH / 2 - 10;
+                doc.setFontSize(8);
+                doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
+                doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
+                doc.setFontSize(6);
+                doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
+                doc.setFontSize(10);
+              }
+            } else {
+              // Sin imagen, solo texto centrado
+              let textY = y + cellH / 2 - 10;
+              doc.setFontSize(8);
+              doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
+              doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
+              doc.setFontSize(6);
+              doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
+              doc.setFontSize(10);
+            }
           }
         }
         doc.save('productos.pdf');
@@ -448,7 +511,7 @@
       }
     }
     pdfBtn.addEventListener('click', async () => {
-      if (confirm('¿Desea descargar el PDF con todos los productos?')) {
+      if (confirm('¿Desea descargar el PDF con todos los productos? Esto puede tomar tiempo si hay muchas imágenes.')) {
         await generatePDF();
       }
     });
