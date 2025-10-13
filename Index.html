@@ -419,11 +419,8 @@
         const productList = PRODUCTS.map(p => ({
           name: p.nombre || 'Sin nombre',
           price: formatMoney(((parsePrice(p.precio) * 1.10) * 0.97) * 1.10),
-          category: normalizeCategory(p.categoria),
-          imageUrl: normalizeImage(p.imagen)
+          category: normalizeCategory(p.categoria)
         }));
-        // Skip image loading to avoid freezing
-        productList.forEach(p => { p.base64Data = { data: null, width: 0, height: 0 }; });
         let currentPage = 0;
         for (let chunkStart = 0; chunkStart < productList.length; chunkStart += 30) {
           if (currentPage > 0) doc.addPage();
@@ -434,8 +431,7 @@
             const col = idx % cols;
             const x = margin + col * cellW;
             const y = margin + row * cellH;
-            const imgData = chunk[idx].base64Data;
-            // Always render text only, skipping images to prevent freezing
+            // Render text only
             let textY = y + cellH / 2 - 10;
             doc.setFontSize(8);
             doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
@@ -452,7 +448,7 @@
       }
     }
     pdfBtn.addEventListener('click', async () => {
-      if (confirm('¿Desea descargar el PDF con todos los productos? Nota: Las imágenes se omiten para evitar congelamientos.')) {
+      if (confirm('¿Desea descargar el PDF con todos los productos?')) {
         await generatePDF();
       }
     });
