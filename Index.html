@@ -302,34 +302,6 @@
       }
       return imgPath;
     }
-    function getBase64(url) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.crossOrigin = 'Anonymous';
-        img.onload = () => {
-          try {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            const data = canvas.toDataURL('image/png');
-            resolve({ data, width: img.width, height: img.height });
-          } catch (e) {
-            console.error('Error processing image:', e);
-            resolve({ data: null, width: 0, height: 0 });
-          }
-        };
-        img.onerror = () => {
-          console.error('Error loading image:', url);
-          resolve({ data: null, width: 0, height: 0 });
-        };
-        img.src = url;
-        setTimeout(() => {
-          resolve({ data: null, width: 0, height: 0 });
-        }, 5000); // Timeout after 5 seconds
-      });
-    }
     // --- BUILD dropdown menu -----------------------------------------------
     function buildCategoryMenu(){
       categoriesMenu.innerHTML = '';
@@ -450,8 +422,8 @@
           category: normalizeCategory(p.categoria),
           imageUrl: normalizeImage(p.imagen)
         }));
-        const base64List = await Promise.all(productList.map(p => getBase64(p.imageUrl)));
-        productList.forEach((p, i) => { p.base64Data = base64List[i]; });
+        // Skip image loading to avoid freezing
+        productList.forEach(p => { p.base64Data = { data: null, width: 0, height: 0 }; });
         let currentPage = 0;
         for (let chunkStart = 0; chunkStart < productList.length; chunkStart += 30) {
           if (currentPage > 0) doc.addPage();
@@ -463,45 +435,14 @@
             const x = margin + col * cellW;
             const y = margin + row * cellH;
             const imgData = chunk[idx].base64Data;
-            if (imgData.data) {
-              try {
-                let imgW = cellW - 4;
-                let imgH = (imgData.height / imgData.width) * imgW;
-                if (imgH > cellH - 20) {
-                  imgH = cellH - 20;
-                  imgW = (imgData.width / imgData.height) * imgH;
-                }
-                const imgX = x + (cellW - imgW) / 2;
-                const imgY = y + 2;
-                doc.addImage(imgData.data, 'PNG', imgX, imgY, imgW, imgH);
-                const textY = imgY + imgH + 4;
-                doc.setFontSize(8);
-                doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
-                doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
-                doc.setFontSize(6);
-                doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
-                doc.setFontSize(10);
-              } catch (e) {
-                console.error('Failed to add image to PDF:', e);
-                // Render text only
-                let textY = y + cellH / 2 - 10;
-                doc.setFontSize(8);
-                doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
-                doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
-                doc.setFontSize(6);
-                doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
-                doc.setFontSize(10);
-              }
-            } else {
-              // Sin imagen, solo texto centrado
-              let textY = y + cellH / 2 - 10;
-              doc.setFontSize(8);
-              doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
-              doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
-              doc.setFontSize(6);
-              doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
-              doc.setFontSize(10);
-            }
+            // Always render text only, skipping images to prevent freezing
+            let textY = y + cellH / 2 - 10;
+            doc.setFontSize(8);
+            doc.text(chunk[idx].name, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 4 });
+            doc.text(chunk[idx].price, x + cellW / 2, textY + 5, { align: 'center', maxWidth: cellW - 4 });
+            doc.setFontSize(6);
+            doc.text(chunk[idx].category, x + cellW / 2, textY + 10, { align: 'center', maxWidth: cellW - 4 });
+            doc.setFontSize(10);
           }
         }
         doc.save('productos.pdf');
@@ -511,7 +452,7 @@
       }
     }
     pdfBtn.addEventListener('click', async () => {
-      if (confirm('¿Desea descargar el PDF con todos los productos?')) {
+      if (confirm('¿Desea descargar el PDF con todos los productos? Nota: Las imágenes se omiten para evitar congelamientos.')) {
         await generatePDF();
       }
     });
