@@ -445,15 +445,15 @@
     async function generatePDF() {
       try {
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ orientation: 'landscape', unit: 'mm' });
-        const pageWidth = 297;
-        const pageHeight = 210;
+        const doc = new jsPDF({ orientation: 'portrait', unit: 'mm' });
+        const pageWidth = 210;
+        const pageHeight = 297;
         const margin = 10;
         const headerHeight = 15;
         const usableWidth = pageWidth - 2 * margin;
         const usableHeight = pageHeight - 2 * margin - headerHeight;
         const cols = 5; // Reducido para celdas más grandes
-        const rows = 4; // Reducido para celdas más grandes
+        const rows = 6; // Reducido para celdas más grandes
         const productsPerPage = cols * rows;
         const cellW = usableWidth / cols;
         const cellH = usableHeight / rows;
@@ -599,3 +599,4 @@
   </script>
 </body>
 </html>
+
