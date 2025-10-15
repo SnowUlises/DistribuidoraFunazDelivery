@@ -1,493 +1,772 @@
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import path from 'path';
-import PDFDocument from 'pdfkit';
-import fs from 'fs';
-import { createClient } from '@supabase/supabase-js';
-const app = express();
-const PORT = process.env.PORT || 3000;
-app.use(cors({ origin: "*" }));
-app.use(bodyParser.json());
-app.use(express.static('public'));
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-const PDF_PATH = path.join(process.cwd(), 'public', 'pedidos-pdf');
-if (!fs.existsSync(PDF_PATH)) fs.mkdirSync(PDF_PATH, { recursive: true });
-
-app.put('/api/actualizar-pedido/:id', async (req, res) => {
-  try {
-    const pedidoId = req.params.id;
-    const { items, stockUpdates } = req.body;
-    if (!Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ error: 'Items inválidos' });
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Distribuidora Funaz - Mayorista/Minorista en San Juan</title>
+  <meta name="description" content="Distribuidora Funaz ofrece productos mayoristas en San Juan: alimentos, limpieza, perfumería y más. Pedí por WhatsApp y recibí tu pedido fácil y rápido.">
+  <meta name="keywords" content="distribuidora mayorista, alimentos San Juan, perfumería, limpieza, Funaz, productos mayoristas">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    :root {
+      --green-apple: #7ED957;
+      --bg: #f7fbf7;
+      --card: #fff;
+      --muted: #6b6b6b;
+      --radius: 12px;
     }
-    // Actualizar stock solo para ítems con cantidad aumentada
-    for (const update of stockUpdates) {
-      const { data: prod } = await supabase
-        .from('productos')
-        .select('*')
-        .eq('id', update.id)
-        .single();
-      if (prod) {
-        const newStock = Number(prod.stock ?? 0) - Number(update.cantidad ?? 0);
-        const { error: updErr } = await supabase
-          .from('productos')
-          .update({ stock: newStock })
-          .eq('id', update.id);
-        if (updErr) console.error('❌ Error actualizando stock:', updErr);
-      }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Inter, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg), #eef7ee);
+      color: #0b2a12;
     }
-    // Actualizar el pedido en la base de datos
-    const total = items.reduce((sum, item) => sum + (item.cantidad * item.precio_unitario), 0);
-    const { error } = await supabase
-      .from('pedidos')
-      .update({ items, total })
-      .eq('id', pedidoId);
-    if (error) {
-      console.error('❌ Error actualizando pedido:', error);
-      return res.status(500).json({ error: `Error al actualizar el pedido: ${error.message}` });
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.6), transparent);
+      backdrop-filter: blur(4px);
     }
-    res.json({ ok: true, mensaje: 'Pedido actualizado' });
-  } catch (err) {
-    console.error('❌ Exception en actualizar-pedido:', err);
-    res.status(500).json({ error: err.message || 'Error interno del servidor' });
-  }
-});
-
-app.post('/api/generar-pdf-peticion', async (req, res) => {
-  try {
-    const { user, items, total, fecha } = req.body;
-    if (!user || !Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ error: 'Datos inválidos: user o items faltantes' });
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
     }
-    // Validar y preparar datos para el PDF
-    const fechaLocal = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString();
-    const pedido = {
-      id: `preview_${Date.now()}`, // ID único temporal para el PDF
-      user: user || 'Invitado',
-      items: items.map(item => ({
-        id: item.id,
-        nombre: item.nombre,
-        cantidad: Number(item.cantidad) || 0,
-        precio_unitario: Number(item.precio_unitario * 1.1) || 0,
-        subtotal: Number(item.subtotal) || 0
-      })),
-      total: Number(total) || 0,
-      
-      fecha: fechaLocal || new Date().toISOString()
-    };
-    // Generar PDF
-    const pdfBuffer = await generarPDF(pedido);
-    // Subir a Storage con nombre único
-    const pdfFileName = `preview_${pedido.id}.pdf`;
-    const { error: uploadErr } = await supabase.storage
-      .from('pedidos-pdf')
-      .upload(pdfFileName, pdfBuffer, {
-        contentType: 'application/pdf',
-        upsert: true,
-      });
-    if (uploadErr) {
-      console.error('❌ Error subiendo PDF:', uploadErr);
-      return res.status(500).json({ error: 'No se pudo subir el PDF' });
+    .logo {
+      width: 100%;
+      max-width: 520px;
     }
-    // Generar URL firmada
-    const { data: signed, error: signedErr } = await supabase
-      .storage
-      .from('pedidos-pdf')
-      .createSignedUrl(pdfFileName, 60 * 60 * 24 * 7); // 7 días de expiración
-    if (signedErr) {
-      console.error('❌ Error generando URL firmada:', signedErr);
-      return res.status(500).json({ error: 'No se pudo obtener URL del PDF' });
+    .logo img {
+      width: 100%;
+      object-fit: contain;
     }
-    const url = signed.signedUrl;
-    res.json({ ok: true, pdf: url });
-  } catch (err) {
-    console.error('❌ Error en generar-pdf-peticion:', err);
-    res.status(500).json({ error: err.message || 'Error generando PDF de petición' });
-  }
-});
-
-app.delete('/api/peticiones/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { error } = await supabase
-      .from('Peticiones')
-      .delete()
-      .eq('id', id);
-    if (error) {
-      console.error('❌ Supabase delete error:', error);
-      return res.status(500).json({ error: `Error al eliminar la petición: ${error.message}` });
+    .wrap {
+      max-width: 1200px;
+      margin: 28px auto;
+      padding: 0 20px;
     }
-    res.json({ ok: true, mensaje: 'Petición eliminada' });
-  } catch (err) {
-    console.error('❌ Exception en DELETE /api/peticiones:', err);
-    res.status(500).json({ error: err.message || 'Error interno del servidor' });
-  }
-});
-/* -----------------------------
- 📦 LISTAR PRODUCTOS
------------------------------ */
-app.get('/api/productos', async (req, res) => {
-  try {
-    const step = 1000;
-    let from = 0;
-    let all = [];
-    let done = false;
-
-    while (!done) {
-      const { data, error } = await supabase
-        .from('productos')
-        .select('*', { head: false })
-        .range(from, from + step - 1);
-
-      if (error) throw error;
-      if (!data.length) done = true;
-      else {
-        all = all.concat(data);
-        from += step;
-      }
-    }
-
-    res.json(all);
-  } catch (err) {
-    console.error('❌ Error cargando productos:', err);
-    res.status(500).json({ error: 'No se pudieron cargar productos' });
-  }
-});
-/* -----------------------------
- 📦 LISTAR PEDIDOS
------------------------------ */
-app.get('/api/pedidos', async (req, res) => {
-  try {
-    const { data, error } = await supabase
-      .from('pedidos')
-      .select('*')
-      .order('fecha', { ascending: false });
-    if (error) throw error;
-    res.json(data);
-  } catch (err) {
-    console.error('❌ Error cargando pedidos:', err);
-    res.status(500).json({ error: 'No se pudieron cargar pedidos' });
-  }
-});
-app.get('/api/peticiones', async (req, res) => {
-  try {
-    const { data, error } = await supabase
-      .from('Peticiones')
-      .select('*')
-      .order('fecha', { ascending: false });
-    if (error) throw error;
-    res.json(data);
-  } catch (err) {
-    console.error('❌ Error cargando peticiones:', err);
-    res.status(500).json({ error: 'No se pudieron cargar peticiones' });
-  }
-});
-app.get('/api/pedidos/:id/pdf', async (req, res) => {
-  try {
-    const pedidoId = req.params.id;
-    const { data: pedido, error: pedidoErr } = await supabase
-      .from('pedidos')
-      .select('*')
-      .eq('id', pedidoId)
-      .single();
-    if (pedidoErr || !pedido) return res.status(404).json({ error: 'Pedido no encontrado' });
-    // Generar PDF
-    const pdfBuffer = await generarPDF(pedido);
-    // Subir a Storage
-    const pdfFileName = `pedido_${pedidoId}.pdf`;
-    const { error: uploadErr } = await supabase.storage
-      .from('pedidos-pdf')
-      .upload(pdfFileName, pdfBuffer, {
-        contentType: 'application/pdf',
-        upsert: true,
-      });
-    if (uploadErr) return res.status(500).json({ error: 'No se pudo subir el PDF' });
-    // Siempre generar URL firmada para asegurar acceso (funciona para buckets públicos o privados)
-    const { data: signed, error: signedErr } = await supabase
-      .storage
-      .from('pedidos-pdf')
-      .createSignedUrl(pdfFileName, 60 * 60 * 24 * 7); // 7 días de expiración
-    if (signedErr) return res.status(500).json({ error: 'No se pudo obtener URL del PDF' });
-    const url = signed.signedUrl;
-    return res.json({ ok: true, pdf: url });
-  } catch (err) {
-    console.error('❌ PDF error:', err);
-    res.status(500).json({ error: err.message || 'Error generando PDF' });
-  }
-});
-/* -----------------------------
- 📦 GUARDAR PEDIDOS
------------------------------ */
-app.post('/api/guardar-pedidos', async (req, res) => {
-  try {
-    const pedidoItems = req.body.pedido;
-    const usuarioPedido = req.body.user || req.body.usuario || 'invitado';
-    if (!Array.isArray(pedidoItems) || pedidoItems.length === 0) {
-      return res.status(400).json({ error: 'Pedido inválido' });
-    }
-    let total = 0;
-    const items = [];
-    // Start a transaction
-    for (const it of pedidoItems) {
-      const prodId = it.id;
-      const { data: prod, error: prodError } = await supabase
-        .from('productos')
-        .select('*')
-        .eq('id', prodId)
-        .single();
-      if (prodError || !prod) {
-        return res.status(400).json({ error: `Producto con ID ${prodId} no encontrado` });
-      }
-      const cantidadFinal = Number(it.cantidad) || 0;
-      if (cantidadFinal <= 0) {
-        return res.status(400).json({ error: `Cantidad inválida para producto ${prodId}` });
-      }
-      // Validate stock
-      const currentStock = Number(prod.stock) || 0;
-      const precioUnitario = Number(it.precio ?? it.precio_unitario ?? prod.precio) || 0;
-      const subtotal = cantidadFinal * precioUnitario;
-      total += subtotal;
-      items.push({
-        id: prodId,
-        nombre: prod.nombre,
-        cantidad: cantidadFinal,
-        precio_unitario: precioUnitario,
-        subtotal
-      });
-      // Update stock
-      const newStock = currentStock - cantidadFinal;
-      const { error: updErr } = await supabase
-        .from('productos')
-        .update({ stock: newStock })
-        .eq('id', prodId);
-      if (updErr) {
-        return res.status(500).json({ error: `Error actualizando stock para producto ${prodId}: ${updErr.message}` });
-      }
-    }
-    if (items.length === 0) {
-      return res.status(400).json({ error: 'No hay items válidos para el pedido' });
-    }
-    const id = Date.now().toString();
-    const fechaLocal = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString();
-    const payload = { id, user: usuarioPedido, fecha: fechaLocal, items, total };
-    console.log('💾 Guardando pedido:', payload);
-    const { data, error } = await supabase
-      .from('pedidos')
-      .insert([payload])
-      .select()
-      .single();
-    if (error) {
-      return res.status(500).json({ error: `Error al guardar el pedido: ${error.message}` });
-    }
-    const returnedId = data?.id ?? id;
-    res.json({
-      ok: true,
-      mensaje: 'Pedido guardado',
-      id: returnedId,
-      endpoint_pdf: `/api/pedidos/${returnedId}/pdf`
-    });
-  } catch (err) {
-    console.error('❌ Exception en guardar-pedidos:', err);
-    res.status(500).json({ error: err.message || 'Error interno del servidor' });
-  }
-});
-app.post('/api/Enviar-Peticion', async (req, res) => {
-    try {
-        console.log('Received payload:', JSON.stringify(req.body, null, 2)); // Log payload for debugging
-        const { nombre, telefono, items: pedidoItems, total: providedTotal } = req.body;
-        // Validate input
-        if (!nombre || !telefono || !Array.isArray(pedidoItems) || pedidoItems.length === 0) {
-            return res.status(400).json({ error: 'Petición inválida: nombre, telefono, o items faltantes' });
-        }
-        // Convert telefono to integer
-        const telefonoNum = parseInt(telefono.replace(/\D/g, '')); // Remove non-digits
-        if (isNaN(telefonoNum)) {
-            return res.status(400).json({ error: 'Número de teléfono inválido' });
-        }
-        let total = 0;
-        const processedItems = [];
-        const fechaLocal = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString();
-        // Process each item
-        for (const it of pedidoItems) {
-            const prodId = it.id;
-            if (!prodId) {
-                console.warn(`⚠️ Item sin ID: ${JSON.stringify(it)}`);
-                continue;
-            }
-            // Fetch product
-            const { data: prod, error: prodError } = await supabase
-                .from('productos')
-                .select('*')
-                .eq('id', prodId)
-                .single();
-            if (prodError || !prod) {
-                console.warn(`⚠️ Producto no encontrado para ID ${prodId}:`, prodError?.message || 'No product');
-                continue;
-            }
-            const cantidadFinal = Number(it.cantidad) || 0;
-            if (cantidadFinal <= 0) {
-                console.warn(`⚠️ Cantidad inválida para producto ${prodId}: ${it.cantidad}`);
-                continue;
-            }
-            const precioUnitario = Number(it.precio ?? prod.precio) || 0;
-            const subtotal = cantidadFinal * precioUnitario;
-            total += subtotal;
-            processedItems.push({
-                id: prodId,
-                nombre: prod.nombre,
-                cantidad: cantidadFinal,
-                precio_unitario: precioUnitario,
-                subtotal
-            });
-        }
-        if (processedItems.length === 0) {
-            return res.status(400).json({ error: 'No hay items válidos para la petición' });
-        }
-        // Round total to integer for int8 column
-        const totalInt = Math.round(total);
-        // Insert into Peticiones table
-        const payload = {
-            nombre,
-            telefono: telefonoNum,
-            items: processedItems,
-            total: totalInt,
-            fecha: fechaLocal
-        };
-        console.log('💾 Guardando petición:', payload);
-        const { data, error } = await supabase
-            .from('Peticiones')
-            .insert([payload])
-            .select()
-            .single();
-        if (error) {
-            console.error('❌ Supabase insert error:', error);
-            return res.status(500).json({ error: `Error al guardar la petición: ${error.message}` });
-        }
-        const returnedId = data?.id;
-        res.json({
-            ok: true,
-            mensaje: 'Petición guardada',
-            id: returnedId
-        });
-    } catch (err) {
-        console.error('❌ Exception en Enviar-Peticion:', err);
-        res.status(500).json({ error: err.message || 'Error interno del servidor' });
-    }
-});
-async function generarPDF(pedido) {
-  return new Promise(async (resolve, reject) => {
-    const items = Array.isArray(pedido.items) ? pedido.items : [];
-    const doc = new PDFDocument({
-      size: [267, 862], // Tamaño fijo para impresora térmica
-      margins: { top: 20, bottom: 20, left: 20, right: 20 },
-    });
-    const chunks = [];
-    doc.on('data', c => chunks.push(c));
-    doc.on('end', () => resolve(Buffer.concat(chunks)));
-    doc.on('error', reject);
-    // Logo from Supabase
-    const { data: logoBlob, error: logoError } = await supabase.storage.from('imagenes').download('logo.png');
-    if (logoError) {
-      console.error('Error downloading logo:', logoError);
-    } else {
-      const logoBuffer = Buffer.from(await logoBlob.arrayBuffer());
-      doc.image(logoBuffer, 100, 20, { width: 100 });
-      doc.moveDown(8);
-    }
-    // Encabezado
-    doc.font('Helvetica-Bold').fontSize(16).text(`${pedido.user || 'Invitado'}`, { align: 'center' }); // Reemplazo de "Distribuidora Funaz"
-    doc.moveDown(1);
-    doc.font('Helvetica').fontSize(14);
-    doc.text(`Dirección: Calle Colon 1740 Norte`);
-    doc.text(`Factura N°: ${pedido.id || ''}`);
-    doc.text(`Pedidos: 2645583761`);
-    doc.text(`Consultas: 2645156933`);
-    doc.moveDown(1.5);
-    const fecha = new Date(pedido.fecha || Date.now());
-    doc.fontSize(14).text(`Fecha: ${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`, { align: 'center' });
-    doc.moveDown(1.5);
-    doc.moveTo(20, doc.y).lineTo(247, doc.y).stroke(); // Ajustado a 247 para respetar márgenes
-    doc.moveDown(1.5);
-    // Título
-    doc.fontSize(18).font('Helvetica-Bold').text('PEDIDO', { underline: true, align: 'center' });
-    doc.moveDown(2);
-    // Ítems
-    let total = 0;
-    items.forEach(item => {
-      const cant = Number(item.cantidad) || 0;
-      const precio = Number(item.precio_unitario ?? item.precio) || 0;
-      const subtotal = cant * precio;
-      total += subtotal;
-      doc.fontSize(14).font('Helvetica-Bold').text(`${item.nombre || ''}`);
-      doc.font('Helvetica').fontSize(14);
-      doc.text(`${cant} x $${precio.toFixed(2)}`, { continued: true });
-      doc.text(` $${subtotal.toFixed(2)}`, { align: 'right' });
-      doc.moveDown(1.2);
-    });
-    // Total
-    doc.moveDown(2);
-    doc.moveTo(20, doc.y).lineTo(247, doc.y).stroke();
-    doc.moveDown(1.5);
-    doc.fontSize(20).font('Helvetica-Bold').text(`TOTAL: $${total.toFixed(2)}`, { align: 'center' });
-    doc.moveDown(3);
-    doc.fontSize(14).text('¡Gracias por su compra!', { align: 'center' });
-    doc.end();
-  });
+    .topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: nowrap; /* evita que se bajen de línea */
 }
-/* -----------------------------
- ❌ ELIMINAR PEDIDO
------------------------------ */
-app.delete('/api/eliminar-pedido/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
-    const { recibido } = req.body; // Obtener el estado recibido del cuerpo de la solicitud
-    console.log(`🗑️ Intentando eliminar pedido ID: ${id}, recibido: ${recibido}`);
-    // Buscar el pedido en la base de datos
-    const { data: pedido, error: pedidoError } = await supabase
-      .from('pedidos')
-      .select('*')
-      .eq('id', id)
-      .single();
-    console.log('📦 Pedido encontrado:', pedido);
-    if (pedidoError || !pedido) {
-      console.error('❌ Pedido no encontrado:', pedidoError);
-      return res.status(404).json({ error: 'Pedido no encontrado' });
+.search {
+  flex: 1; /* ocupa todo el espacio libre */
+}
+.cat-wrapper {
+  flex-shrink: 0; /* evita que se achique */
+  margin-left: auto; /* lo pega a la derecha */
+}
+    .search input {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #dfeede;
+      min-width: 220px;
     }
-    // Restaurar stock solo si el pedido NO está marcado como recibido
-    if (!recibido) {
-      for (const it of pedido.items || []) {
-        const prodId = it.id;
-        console.log(`🔄 Restaurando stock para producto ${prodId} (+${it.cantidad})`);
-        const { data: prod } = await supabase
+    .categories {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-left: 12px;
+    }
+    .cat-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .cat-btn:hover {
+      transform: translateY(-2px);
+    }
+    .cat-btn.active {
+      background: var(--green-apple);
+      color: #05310b;
+      border-color: rgba(0,0,0,0.04);
+    }
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+    .grid.cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 22px rgba(18,64,22,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 240px;
+    }
+    .thumb {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      overflow: hidden;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .name {
+      font-weight: 700;
+      color: #08330f;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .price {
+      font-weight: 800;
+      color: #063b11;
+      font-size: 18px;
+    }
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer {
+      margin: 36px 0 80px;
+      text-align: center;
+      color: var(--muted);
+    }
+    .empty {
+      padding: 40px;
+      border-radius: 12px;
+      background: #fff;
+      text-align: center;
+      color: var(--muted);
+      box-shadow: 0 6px 18px rgba(18,64,22,0.04);
+    }
+    /* ----------------- CSS del dropdown de categorías ----------------- */
+    .cat-toggle{
+      appearance: none;
+      -webkit-appearance: none;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(6,59,17,0.06);
+      background: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(6,59,17,0.04);
+    }
+    .cat-toggle[aria-expanded="true"]{ transform: translateY(-1px); }
+    .cat-menu{
+      position: absolute;
+      right: 0;
+      top: calc(100% + 10px);
+      min-width: 200px;
+      max-height: 320px;
+      overflow:auto;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 14px 40px rgba(6,59,17,0.08);
+      border: 1px solid rgba(0,0,0,0.04);
+      list-style: none;
+      margin: 0;
+      z-index: 60;
+    }
+    .cat-menu li{
+      margin: 6px 0;
+    }
+    .cat-menu button {
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .cat-menu button:hover { transform: translateX(4px); }
+    .cat-menu button.active {
+      background: var(--green-apple);
+      color: #05310b;
+      font-weight: 800;
+      box-shadow: 0 6px 18px rgba(7,50,14,0.06);
+    }
+    /* --------------------------------------------------------------- */
+    @media (max-width: 600px) {
+      .topbar {
+        flex-wrap: wrap;
+      }
+      .search {
+        order: 0;
+        flex-basis: 100%;
+      }
+      .search input {
+        min-width: 0;
+        width: 100%;
+      }
+      .cols-wrapper {
+        order: 1;
+        margin-left: 0;
+        flex-shrink: 0;
+      }
+      .cat-wrapper {
+        order: 2;
+        margin-left: auto;
+        flex-shrink: 0;
+      }
+      .pdf-wrapper {
+        order: 3;
+        flex-shrink: 0;
+      }
+      .grid {
+        gap: 12px;
+      }
+      .card {
+        min-height: auto;
+        padding: 16px;
+        gap: 12px;
+        border-radius: 16px;
+      }
+      .thumb {
+        aspect-ratio: 1 / 1;
+        border-radius: 12px;
+      }
+      .name {
+        font-size: 18px;
+        line-height: 1.3;
+      }
+      .meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .price {
+        font-size: 20px;
+        align-self: flex-start;
+      }
+      .muted {
+        font-size: 14px;
+        align-self: flex-start;
+      }
+      .wrap {
+        padding: 0 16px;
+        margin: 20px auto;
+      }
+      header {
+        padding: 20px 0;
+      }
+      .brand {
+        flex-direction: column;
+        gap: 12px;
+        padding: 0 16px;
+      }
+      .subtitle {
+        font-size: 16px !important;
+      }
+      .cat-toggle {
+        padding: 12px 16px;
+        font-size: 14px;
+        min-width: auto;
+      }
+      .topbar {
+        margin-bottom: 20px;
+      }
+      .search input {
+        padding: 14px 16px;
+        font-size: 16px;
+      }
+      #colsMenu {
+        left: 0;
+        right: auto;
+      }
+    }
+    @media (max-width: 400px) {
+      .name {
+        font-size: 16px;
+      }
+      .price {
+        font-size: 18px;
+      }
+      .muted {
+        font-size: 13px;
+      }
+      .card {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand" style="justify-content:center;width:100%; flex-direction: column; align-items: center;">
+      <div class="logo logo-wide">
+        <img id="logoImg" src="" alt="Logo">
+      </div>
+     <div class="subtitle" style="margin-top:10px; text-align:center; font-size:14px; color:#6b6b6b;">
+        Ubicacion: Cristobal Colon 1740. 
+      </div>
+
+    </div>
+  </header>
+  <main class="wrap">
+    <!-- TOPBAR: buscador + dropdown de categorias -->
+    <div class="topbar">
+      <div class="search">
+        <input id="search" placeholder="Buscar producto..." />
+      </div>
+      <div class="cols-wrapper" style="position:relative; flex-shrink: 0;">
+        <button id="colsToggle" class="cat-toggle" aria-expanded="false" aria-haspopup="true">
+          Columnas: 3 ▾
+        </button>
+        <ul id="colsMenu" class="cat-menu" hidden role="menu" aria-labelledby="colsToggle"></ul>
+      </div>
+      <div class="cat-wrapper" style="position:relative; flex-shrink: 0;">
+        <div class="dropdown">
+          <button id="catToggle" class="cat-toggle" aria-expanded="false" aria-haspopup="true">
+            Categorías ▾
+          </button>
+          <ul id="categoriesMenu" class="cat-menu" hidden role="menu" aria-labelledby="catToggle"></ul>
+        </div>
+      </div>
+      <div class="pdf-wrapper" style="flex-shrink:0; display: none;">
+        <button id="pdfBtn" class="cat-toggle">PDF</button>
+      </div>
+    </div>
+    <section id="productsArea">
+      <div id="grid" class="grid"></div>
+      <div id="empty" class="empty" style="display:none;margin-top:18px">
+        No se encontraron productos.
+      </div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    // --- CONFIG --------------------------------------------------------------
+    const supa = createClient(
+      'https://slroycxifwezthdomkny.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'
+    );
+    const FIXED_CATEGORIES = [
+      "Todas", "OFERTAS", "ALIMENTOS", "ANALGESICOS", "ENCENDEDORES", "CREMAS",
+      "DESODORANTES", "GALLETAS Y GOLOSINAS", "JUGOS", "LIMPIEZA",
+      "PAPELES Y BOLSAS", "PEGAMENTOS", "PERFUMERIA", "REPELENTES", "ACCESORIOS",
+      "SHAMPO Y ENJUAGUE", "TINTURAS NANTYR"
+    ];
+    const COL_OPTIONS = [1,2,3,4];
+    let PRODUCTS = [];
+    let currentCategory = 'Todas';
+    let currentCols = 2;
+    const empty = document.getElementById('empty');
+    const grid = document.getElementById('grid');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const catToggle = document.getElementById('catToggle');
+    const colsMenu = document.getElementById('colsMenu');
+    const colsToggle = document.getElementById('colsToggle');
+    const searchInput = document.getElementById('search');
+    const pdfBtn = document.getElementById('pdfBtn');
+    // --- HELPERS -------------------------------------------------------------
+    function parsePrice(v){
+      if (v === null || v === undefined) return 0;
+      if (typeof v === 'number') return v;
+      const s = String(v).trim().replace(/\./g,'').replace(',', '.');
+      const n = parseFloat(s);
+      return isNaN(n) ? 0 : n;
+    }
+    function formatMoney(n){
+      return new Intl.NumberFormat('es-AR', {
+        style:'currency',
+        currency:'ARS'
+      }).format(n);
+    }
+    function normalizeCategory(c){
+      if(!c) return 'Otros';
+      const s = String(c).trim();
+      return FIXED_CATEGORIES.includes(s) ? s : 'Otros';
+    }
+    function getImageUrl(fileName) {
+      if (!fileName) return '';
+      const cleanFileName = fileName.trim().replace(/^imagenes\//, '');
+      const { data } = supa.storage.from('imagenes').getPublicUrl(cleanFileName);
+      return data.publicUrl || '';
+    }
+    function getBase64(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => {
+          try {
+            const maxSize = 300; // Aumentado para mejor calidad
+            let width = img.width;
+            let height = img.height;
+            if (width > height) {
+              if (width > maxSize) {
+                height *= maxSize / width;
+                width = maxSize;
+              }
+            } else {
+              if (height > maxSize) {
+                width *= maxSize / height;
+                height = maxSize;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const data = canvas.toDataURL('image/png');
+            resolve({ data, width, height });
+          } catch (e) {
+            console.error('Error processing image:', e);
+            resolve({ data: null, width: 0, height: 0 });
+          }
+        };
+        img.onerror = () => {
+          console.error('Error loading image:', url);
+          resolve({ data: null, width: 0, height: 0 });
+        };
+        img.src = url;
+      });
+    }
+    // --- BUILD dropdown menu -----------------------------------------------
+    function buildCategoryMenu(){
+      categoriesMenu.innerHTML = '';
+      FIXED_CATEGORIES.forEach(cat => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = cat;
+        btn.className = (cat === currentCategory ? 'active' : '');
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          currentCategory = cat;
+          // actualizar clases
+          categoriesMenu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          applyFilters();
+          closeCatMenu();
+        };
+        li.appendChild(btn);
+        categoriesMenu.appendChild(li);
+      });
+    }
+    function openCatMenu(){
+      categoriesMenu.hidden = false;
+      catToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeCatMenu(){
+      categoriesMenu.hidden = true;
+      catToggle.setAttribute('aria-expanded', 'false');
+    }
+    catToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (categoriesMenu.hidden) {
+        buildCategoryMenu();
+        openCatMenu();
+      } else {
+        closeCatMenu();
+      }
+    });
+    // --- BUILD cols menu ---------------------------------------------------
+    function buildColsMenu(){
+      colsMenu.innerHTML = '';
+      COL_OPTIONS.forEach(n => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = n;
+        btn.className = (n === currentCols ? 'active' : '');
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          currentCols = n;
+          colsMenu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          grid.className = `grid cols-${n}`;
+          updateColsToggle();
+          closeColsMenu();
+        };
+        li.appendChild(btn);
+        colsMenu.appendChild(li);
+      });
+    }
+    function updateColsToggle(){
+      colsToggle.textContent = `Columnas: ${currentCols} ▾`;
+    }
+    function openColsMenu(){
+      colsMenu.hidden = false;
+      colsToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeColsMenu(){
+      colsMenu.hidden = true;
+      colsToggle.setAttribute('aria-expanded', 'false');
+    }
+    colsToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (colsMenu.hidden) {
+        buildColsMenu();
+        openColsMenu();
+      } else {
+        closeColsMenu();
+      }
+    });
+    // cerrar menus al click fuera
+    document.addEventListener('click', (ev) => {
+      const outsideCat = !ev.composedPath().includes(categoriesMenu) && !ev.composedPath().includes(catToggle);
+      if (outsideCat) closeCatMenu();
+      const outsideCols = !ev.composedPath().includes(colsMenu) && !ev.composedPath().includes(colsToggle);
+      if (outsideCols) closeColsMenu();
+    });
+    // cerrar con esc
+    document.addEventListener('keydown', (ev) => { 
+      if (ev.key === 'Escape') {
+        closeCatMenu();
+        closeColsMenu();
+      }
+    });
+    // --- CARD & RENDER -------------------------------------------------------
+    function createCard(p) {
+      const card = document.createElement('article');
+      card.className = 'card';
+      const displayedPrice = formatMoney(((parsePrice(p.precio) * 1.10) *0.97) * 1.10);
+      // Imagen placeholder por defecto
+      const img = document.createElement('img');
+      img.src = getImageUrl('placeholder.png');
+      img.alt = p.nombre || 'Producto';
+      // Determinar URL real de la imagen
+      if (p.imagen) {
+        const imgPath = p.imagen.trim();
+        const publicUrl = getImageUrl(imgPath);
+        if (publicUrl) {
+          const realImg = new Image();
+          realImg.src = publicUrl;
+          realImg.onload = () => { img.src = publicUrl; };
+          realImg.onerror = () => { img.src = getImageUrl('placeholder.png'); };
+        }
+      }
+      card.innerHTML = `
+        <div class="thumb"></div>
+        <div class="name">${p.nombre || 'Sin nombre'}</div>
+        <div class="meta">
+          <div class="price">${displayedPrice}</div>
+          <div class="muted">${p.categoria ? normalizeCategory(p.categoria) : ''}</div>
+        </div>
+      `;
+      card.querySelector('.thumb').appendChild(img);
+      return card;
+    }
+    function renderProducts(list){
+      grid.innerHTML = '';
+      if(!list || list.length === 0){
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+      list.forEach(p => grid.appendChild(createCard(p)));
+    }
+    // --- FILTERS -------------------------------------------------------------
+    function applyFilters(){
+      const q = searchInput.value.trim().toLowerCase();
+      let list = PRODUCTS.slice();
+      if(currentCategory && currentCategory !== 'Todas'){
+        list = list.filter(p =>
+          (p.categoria || '').toLowerCase().includes(currentCategory.toLowerCase())
+        );
+      }
+      if(q){
+        list = list.filter(p =>
+          (p.nombre || '').toLowerCase().includes(q)
+        );
+      }
+      renderProducts(list);
+    }
+    searchInput.addEventListener('input', applyFilters);
+    // --- PDF GENERATION ------------------------------------------------------
+    async function generatePDF() {
+      try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: 'portrait', unit: 'mm' });
+        const pageWidth = 210;
+        const pageHeight = 297;
+        const margin = 10;
+        const headerHeight = 15;
+        const usableWidth = pageWidth - 2 * margin;
+        const usableHeight = pageHeight - 2 * margin - headerHeight;
+        const cols = 5; // Reducido para celdas más grandes
+        const rows = 6; // Reducido para celdas más grandes
+        const productsPerPage = cols * rows;
+        const cellW = usableWidth / cols;
+        const cellH = usableHeight / rows;
+        const productList = PRODUCTS.map(p => ({
+          name: p.nombre || 'Sin nombre',
+          price: formatMoney(((parsePrice(p.precio) * 1.10) * 0.97) * 1.10),
+          category: normalizeCategory(p.categoria),
+          imageUrl: getImageUrl(p.imagen)
+        }));
+        const pagesPerBatch = 5;
+        const productsPerBatch = pagesPerBatch * productsPerPage;
+        let currentPage = 0;
+        for (let batchStart = 0; batchStart < productList.length; batchStart += productsPerBatch) {
+          const batchEnd = Math.min(batchStart + productsPerBatch, productList.length);
+          const batch = productList.slice(batchStart, batchEnd);
+          const base64List = [];
+          for (let p of batch) {
+            base64List.push(await getBase64(p.imageUrl));
+          }
+          batch.forEach((p, i) => { p.base64Data = base64List[i]; });
+          for (let chunkStart = 0; chunkStart < batch.length; chunkStart += productsPerPage) {
+            if (currentPage > 0) doc.addPage();
+            currentPage++;
+            // Agregar encabezado
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(14);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Lista de Productos - Distribuidora Funaz', pageWidth / 2, margin + 5, { align: 'center' });
+            doc.setFontSize(8);
+            doc.text('Ubicación: Cristobal Colon 1740', pageWidth / 2, margin + 12, { align: 'center' });
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(10);
+            // Línea separadora
+            doc.setDrawColor(200, 200, 200);
+            doc.setLineWidth(0.5);
+            doc.line(margin, margin + headerHeight - 2, pageWidth - margin, margin + headerHeight - 2);
+            const chunk = batch.slice(chunkStart, chunkStart + productsPerPage);
+            for (let idx = 0; idx < chunk.length; idx++) {
+              const row = Math.floor(idx / cols);
+              const col = idx % cols;
+              const x = margin + col * cellW;
+              const y = margin + headerHeight + row * cellH;
+              // Dibujar borde de celda
+              doc.setDrawColor(220, 220, 220);
+              doc.setLineWidth(0.2);
+              doc.rect(x, y, cellW, cellH);
+              const imgData = chunk[idx].base64Data;
+              let textY;
+              if (imgData.data) {
+                try {
+                  let imgW = cellW - 8;
+                  let imgH = (imgData.height / imgData.width) * imgW;
+                  const maxImgH = cellH - 25; // Más espacio para texto
+                  if (imgH > maxImgH) {
+                    imgH = maxImgH;
+                    imgW = (imgData.width / imgData.height) * imgH;
+                  }
+                  const imgX = x + (cellW - imgW) / 2;
+                  const imgY = y + 4;
+                  doc.addImage(imgData.data, 'PNG', imgX, imgY, imgW, imgH);
+                  textY = imgY + imgH + 6;
+                } catch (e) {
+                  console.error('Failed to add image to PDF:', e);
+                  textY = y + (cellH / 2) - 15; // Centrado vertical si no hay imagen
+                }
+              } else {
+                textY = y + (cellH / 2) - 15; // Centrado vertical si no hay imagen
+              }
+              // Nombre del producto
+              doc.setFont('helvetica', 'bold');
+              doc.setFontSize(9);
+              doc.setTextColor(0, 0, 0);
+              const nameLines = doc.splitTextToSize(chunk[idx].name, cellW - 8);
+              doc.text(nameLines, x + cellW / 2, textY, { align: 'center' });
+              textY += (nameLines.length * 4) + 2; // Ajuste dinámico
+              // Precio
+              doc.setFont('helvetica', 'bold');
+              doc.setFontSize(10);
+              doc.setTextColor(0, 128, 0); // Verde para precio
+              doc.text(chunk[idx].price, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 8 });
+              textY += 6;
+              // Categoría
+              doc.setFont('helvetica', 'italic');
+              doc.setFontSize(7);
+              doc.setTextColor(100, 100, 100); // Gris para categoría
+              doc.text(chunk[idx].category, x + cellW / 2, textY, { align: 'center', maxWidth: cellW - 8 });
+              // Reset
+              doc.setFont('helvetica', 'normal');
+              doc.setFontSize(10);
+              doc.setTextColor(0, 0, 0);
+            }
+            // Número de página
+            doc.setFontSize(8);
+            doc.setTextColor(150, 150, 150);
+            doc.text(`Página ${currentPage}`, pageWidth - margin - 10, pageHeight - margin + 5, { align: 'right' });
+          }
+        }
+        doc.save('productos.pdf');
+      } catch (e) {
+        console.error('Error generating PDF:', e);
+        alert('Hubo un error al generar el PDF. Intenta nuevamente.');
+      }
+    }
+    pdfBtn.addEventListener('click', async () => {
+      if (confirm('¿Desea descargar el PDF con todos los productos? Esto puede tomar tiempo si hay muchas imágenes.')) {
+        await generatePDF();
+      }
+    });
+    // --- LOAD DATA -----------------------------------------------------------
+    async function load(){
+      try {
+        const { data, error } = await supa
           .from('productos')
           .select('*')
-          .eq('id', prodId)
-          .single();
-
-        if (prod) {
-          const newStock = (Number(prod.stock) || 0) + (Number(it.cantidad) || 0);
-          await supabase.from('productos').update({ stock: newStock }).eq('id', prodId);
+          .order('id', { ascending: true });
+        if (error) {
+          console.error('❌ Supabase error:', error);
+          empty.style.display = 'block';
+          return;
         }
+        PRODUCTS = (Array.isArray(data) ? data : []).map(p => ({
+          id: p.id ?? null,
+          nombre: p.nombre ?? '',
+          precio: parsePrice(p.precio),
+          categoria: p.categoria ?? '',
+          stock: p.stock ?? 0,
+          imagen: p.imagen ?? ''
+        }));
+        // Ordenar por por categoría y luego por nombre para mejor organización
+        PRODUCTS.sort((a, b) => {
+          const catA = normalizeCategory(a.categoria);
+          const catB = normalizeCategory(b.categoria);
+          return catA.localeCompare(catB) || a.nombre.localeCompare(b.nombre);
+        });
+        if (window.innerWidth <= 600) {
+          currentCols = 2;
+        }
+        grid.className = `grid cols-${currentCols}`;
+        buildCategoryMenu(); // construimos el menú (con la categoría inicial)
+        buildColsMenu();
+        updateColsToggle();
+        applyFilters();
+
+        // Cargar logo desde storage
+        const logoImg = document.getElementById('logoImg');
+        const logoUrl = getImageUrl('logo.png');
+        logoImg.src = logoUrl || getImageUrl('placeholder.png');
+
+      } catch (e) {
+        console.error('❌ Error al cargar productos:', e);
+        empty.style.display = 'block';
       }
     }
-
-    await supabase.from('pedidos').delete().eq('id', id);
-
-    const { error: delErr } = await supabase.storage
-      .from('pedidos-pdf')
-      .remove([`pedido_${id}.pdf`]);
-
-    if (delErr) console.warn('⚠️ Error borrando PDF:', delErr);
-    else console.log(`🗑️ PDF pedido_${id}.pdf eliminado`);
-
-    res.json({ ok: true, mensaje: 'Pedido eliminado y stock restaurado', pedidoId: id });
-  } catch (err) {
-    console.error('❌ Exception en eliminar-pedido:', err);
-    res.status(500).json({ error: 'Error interno' });
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server escuchando en http://localhost:${PORT}`);
-});
+    load();
+  </script>
+</body>
+</html>
