@@ -321,9 +321,8 @@
         <img id="logoImg" src="" alt="Logo">
       </div>
      <div class="subtitle" style="margin-top:10px; text-align:center; font-size:14px; color:#6b6b6b;">
-        Ubicacion: Cristobal Colon 1740. 
+        Ubicacion: Cristobal Colon 1740.
       </div>
-
     </div>
   </header>
   <main class="wrap">
@@ -537,7 +536,7 @@
       if (outsideCols) closeColsMenu();
     });
     // cerrar con esc
-    document.addEventListener('keydown', (ev) => { 
+    document.addEventListener('keydown', (ev) => {
       if (ev.key === 'Escape') {
         closeCatMenu();
         closeColsMenu();
@@ -550,18 +549,32 @@
       const displayedPrice = formatMoney(((parsePrice(p.precio) * 1.10) *0.97) * 1.10);
       // Imagen placeholder por defecto
       const img = document.createElement('img');
-      img.src = getImageUrl('placeholder.png');
+      const placeholderUrl = getImageUrl('placeholder.png');
+      console.log('Placeholder URL:', placeholderUrl);
+      img.src = placeholderUrl;
       img.alt = p.nombre || 'Producto';
       // Determinar URL real de la imagen
       if (p.imagen) {
+        console.log('Attempting to load image for product:', p.nombre, 'with filename:', p.imagen);
         const imgPath = p.imagen.trim();
         const publicUrl = getImageUrl(imgPath);
+        console.log('Generated public URL for', p.nombre, ':', publicUrl);
         if (publicUrl) {
           const realImg = new Image();
           realImg.src = publicUrl;
-          realImg.onload = () => { img.src = publicUrl; };
-          realImg.onerror = () => { img.src = getImageUrl('placeholder.png'); };
+          realImg.onload = () => {
+            console.log('Successfully loaded image for', p.nombre, 'from URL:', publicUrl);
+            img.src = publicUrl;
+          };
+          realImg.onerror = (err) => {
+            console.error('Failed to load image for', p.nombre, 'from URL:', publicUrl, 'Error:', err);
+            img.src = placeholderUrl;
+          };
+        } else {
+          console.warn('No public URL generated for', p.nombre);
         }
+      } else {
+        console.log('No image filename provided for product:', p.nombre);
       }
       card.innerHTML = `
         <div class="thumb"></div>
@@ -722,52 +735,81 @@
       }
     });
     // --- LOAD DATA -----------------------------------------------------------
-    async function load(){
-      try {
-        const { data, error } = await supa
-          .from('productos')
-          .select('*')
-          .order('id', { ascending: true });
-        if (error) {
-          console.error('❌ Supabase error:', error);
-          empty.style.display = 'block';
-          return;
-        }
-        PRODUCTS = (Array.isArray(data) ? data : []).map(p => ({
-          id: p.id ?? null,
-          nombre: p.nombre ?? '',
-          precio: parsePrice(p.precio),
-          categoria: p.categoria ?? '',
-          stock: p.stock ?? 0,
-          imagen: p.imagen ?? ''
-        }));
-        // Ordenar por por categoría y luego por nombre para mejor organización
-        PRODUCTS.sort((a, b) => {
-          const catA = normalizeCategory(a.categoria);
-          const catB = normalizeCategory(b.categoria);
-          return catA.localeCompare(catB) || a.nombre.localeCompare(b.nombre);
-        });
-        if (window.innerWidth <= 600) {
-          currentCols = 2;
-        }
-        grid.className = `grid cols-${currentCols}`;
-        buildCategoryMenu(); // construimos el menú (con la categoría inicial)
-        buildColsMenu();
-        updateColsToggle();
-        applyFilters();
-
-        // Cargar logo desde storage
-        const logoImg = document.getElementById('logoImg');
-        const logoUrl = getImageUrl('logo.png');
-        logoImg.src = logoUrl || getImageUrl('placeholder.png');
-
-      } catch (e) {
-        console.error('❌ Error al cargar productos:', e);
-        empty.style.display = 'block';
+   async function load() {
+  try {
+    const step = 1000;
+    let from = 0;
+    let all = [];
+    let done = false;
+    while (!done) {
+      const { data, error } = await supa
+        .from('productos')
+        .select('*')
+        .order('id', { ascending: true })
+        .range(from, from + step - 1);
+      if (error) throw error;
+      if (!data.length) done = true;
+      else {
+        all = all.concat(data);
+        from += step;
       }
     }
+    PRODUCTS = all.map(p => ({
+      id: p.id ?? null,
+      nombre: p.nombre ?? '',
+      precio: parsePrice(p.precio),
+      categoria: p.categoria ?? '',
+      stock: p.stock ?? 0,
+      imagen: p.imagen ?? ''
+    }));
+    console.log('Loaded products count:', PRODUCTS.length);
+    if (PRODUCTS.length > 0) {
+      console.log('Sample product:', PRODUCTS[0]);
+      console.log('Sample imagen values:', PRODUCTS.slice(0, 5).map(p => p.imagen));
+    }
+    // Ordenar por por categoría y luego por nombre para mejor organización
+    PRODUCTS.sort((a, b) => {
+      const catA = normalizeCategory(a.categoria);
+      const catB = normalizeCategory(b.categoria);
+      return catA.localeCompare(catB) || a.nombre.localeCompare(b.nombre);
+    });
+    // Set initial columns based on screen size
+    if (window.innerWidth <= 600) {
+      currentCols = 2;
+    }
+    grid.className = `grid cols-${currentCols}`;
+    buildCategoryMenu();
+    buildColsMenu();
+    updateColsToggle();
+    applyFilters();
+    // Listen for orientation changes
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        if (window.innerWidth <= 600) {
+          currentCols = 2;
+          grid.className = `grid cols-${currentCols}`;
+          updateColsToggle();
+        }
+      }, 300); // Delay to allow orientation to settle
+    });
+    // Cargar logo desde storage
+    const logoImg = document.getElementById('logoImg');
+    const logoUrl = getImageUrl('logo.png');
+    console.log('Logo URL:', logoUrl);
+    const placeholderUrl = getImageUrl('placeholder.png');
+    console.log('Placeholder URL for logo fallback:', placeholderUrl);
+    logoImg.src = logoUrl || placeholderUrl;
+    logoImg.onload = () => console.log('Logo loaded successfully from:', logoImg.src);
+    logoImg.onerror = (err) => {
+      console.error('Failed to load logo from:', logoUrl, 'Error:', err);
+      logoImg.src = placeholderUrl;
+    };
+  } catch (e) {
+    console.error('❌ Error al cargar productos:', e);
+    empty.style.display = 'block';
+  }
+}
     load();
   </script>
 </body>
 </html>
-
