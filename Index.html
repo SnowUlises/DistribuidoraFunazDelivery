@@ -20,7 +20,6 @@
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
     * { box-sizing: border-box; outline: none; }
- 
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       margin: 0;
@@ -34,8 +33,6 @@
       backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
       padding: 20px 0;
-      position: fixed;
-      top: 0;
       width: 100%;
       z-index: 50;
     }
@@ -115,7 +112,6 @@
       background: var(--bg);
       border-color: var(--text-muted);
     }
- 
     .btn-action.active {
         background: var(--primary-light);
         color: var(--primary);
@@ -137,10 +133,8 @@
       overflow-y: auto;
       display: none;
     }
- 
     .dropdown-menu.show { display: block; }
     .dropdown-menu li { list-style: none; }
- 
     .dropdown-menu button {
       width: 100%;
       text-align: left;
@@ -269,10 +263,10 @@
       .search { order: 1; }
       .actions-row { display: flex; gap: 8px; order: 2; overflow-x: auto; padding-bottom: 4px; }
       .btn-action { white-space: nowrap; flex: 1; justify-content: center; }
-   
+  
       .brand { padding: 0 10px; }
       .wrap { padding: 16px; margin: 0; }
-   
+  
       /* Forzar 2 columnas en movil si no es muy pequeño */
       .grid { gap: 12px; }
       .card { padding: 10px; gap: 8px; }
@@ -343,12 +337,10 @@
       "PAPELES Y BOLSAS", "PEGAMENTOS", "PERFUMERIA", "REPELENTES", "ACCESORIOS",
       "SHAMPO Y ENJUAGUE", "TINTURAS NANTYR"
     ];
- 
     // --- ESTADO GLOBAL ---
     let PRODUCTS = [];
     let currentCategory = 'Todas';
     let currentCols = window.innerWidth <= 640 ? 2 : 4; // Auto-ajuste inicial
- 
     // --- DOM ---
     const grid = document.getElementById('grid');
     const emptyMsg = document.getElementById('empty');
@@ -373,7 +365,6 @@
       const { data } = supa.storage.from('imagenes').getPublicUrl(clean);
       return data.publicUrl;
     };
- 
     // Placeholder para carga lazy
     const PLACEHOLDER_IMG = "placeholder.png";
     // --- RENDERIZADO OPTIMIZADO ---
@@ -389,7 +380,7 @@
       list.forEach(p => {
         const article = document.createElement('article');
         article.className = 'card';
-     
+    
         // Calculo precio
         const finalPrice = ((parsePrice(p.precio) * 1.10) * 0.97) * 1.10;
         const imgUrl = getImageUrl(p.imagen);
@@ -432,7 +423,7 @@
     async function loadData() {
       try {
         loadingMsg.style.display = 'block';
-     
+    
         // 1. OPTIMIZACIÓN: Fetch recursivo pero solo columnas necesarias
         let allProducts = [];
         let from = 0;
@@ -488,7 +479,6 @@
       }
     }
     // --- INTERFAZ / EVENTOS ---
- 
     // Búsqueda con Debounce (para no filtrar en cada tecla si escribe rapido)
     let timeoutSearch;
     searchInput.addEventListener('input', () => {
@@ -499,7 +489,7 @@
     const setupDropdown = (btnId, menuId, buildFn) => {
       const btn = document.getElementById(btnId);
       const menu = document.getElementById(menuId);
-   
+  
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const isOpen = menu.classList.contains('show');
@@ -567,11 +557,11 @@
     }
     document.getElementById('pdfBtn').addEventListener('click', async () => {
         if(!confirm("Generar PDF puede tardar unos segundos. ¿Continuar?")) return;
-     
+    
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         let y = 10;
-     
+    
         doc.setFontSize(16);
         doc.text("Lista de Precios - Distribuidora Funaz", 10, y);
         y += 10;
@@ -583,7 +573,7 @@
         if(currentCategory !== 'Todas') items = items.filter(p => (p.categoria || '').toUpperCase().includes(currentCategory));
         // Tabla simple
         let pageHeight = doc.internal.pageSize.height;
-     
+    
         items.forEach((p, i) => {
             if (y > pageHeight - 10) {
                 doc.addPage();
@@ -591,7 +581,7 @@
             }
             const precio = formatMoney(((parsePrice(p.precio) * 1.10) * 0.97) * 1.10);
             const nombre = (p.nombre || 'Sin nombre').substring(0, 60);
-         
+        
             doc.text(nombre, 10, y);
             doc.text(precio, 160, y);
             y += 7;
@@ -601,9 +591,8 @@
     // --- STICKY SETUP ---
     function setSticky() {
       const headerHeight = headerEl.offsetHeight;
-      document.body.style.paddingTop = `${headerHeight}px`;
       categoriesRow.style.position = 'sticky';
-      categoriesRow.style.top = `${headerHeight}px`;
+      categoriesRow.style.top = '0px';
       categoriesRow.style.zIndex = '40';
       categoriesRow.style.backgroundColor = 'var(--bg)';
     }
