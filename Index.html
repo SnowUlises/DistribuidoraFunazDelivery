@@ -19,9 +19,8 @@
       --radius: 16px;
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
-
     * { box-sizing: border-box; outline: none; }
-    
+   
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       margin: 0;
@@ -29,7 +28,6 @@
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
     }
-
     /* HEADER */
     header {
       background: rgba(255, 255, 255, 0.9);
@@ -40,27 +38,23 @@
       top: 0;
       z-index: 50;
     }
-
     .brand {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
     }
-
     .logo {
       width: 100%;
       max-width: 320px;
       height: auto;
     }
-
     .logo img {
       width: 100%;
       height: auto;
       object-fit: contain;
       display: block;
     }
-
     .subtitle {
       font-size: 13px;
       color: var(--text-muted);
@@ -69,13 +63,11 @@
       align-items: center;
       gap: 6px;
     }
-
     .wrap {
       max-width: 1200px;
       margin: 0 auto;
       padding: 24px 20px;
     }
-
     /* BARRA SUPERIOR */
     .topbar {
       display: flex;
@@ -84,12 +76,10 @@
       flex-wrap: wrap;
       align-items: center;
     }
-
     .search {
       flex: 1;
       position: relative;
     }
-
     .search input {
       width: 100%;
       padding: 12px 18px;
@@ -100,12 +90,10 @@
       transition: all 0.2s;
       box-shadow: var(--shadow);
     }
-
     .search input:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 3px var(--primary-light);
     }
-
     /* BOTONES Y DROPDOWNS */
     .btn-action {
       background: white;
@@ -122,20 +110,17 @@
       box-shadow: var(--shadow);
       transition: all 0.2s;
     }
-
     .btn-action:hover {
       background: var(--bg);
       border-color: var(--text-muted);
     }
-    
+   
     .btn-action.active {
         background: var(--primary-light);
         color: var(--primary);
         border-color: var(--primary);
     }
-
     .relative { position: relative; }
-
     .dropdown-menu {
       position: absolute;
       right: 0;
@@ -151,11 +136,10 @@
       overflow-y: auto;
       display: none;
     }
-    
+   
     .dropdown-menu.show { display: block; }
-
     .dropdown-menu li { list-style: none; }
-    
+   
     .dropdown-menu button {
       width: 100%;
       text-align: left;
@@ -168,14 +152,12 @@
       cursor: pointer;
       transition: background 0.1s;
     }
-
     .dropdown-menu button:hover { background: var(--bg); }
-    .dropdown-menu button.active { 
-      background: var(--primary-light); 
-      color: var(--primary); 
+    .dropdown-menu button.active {
+      background: var(--primary-light);
+      color: var(--primary);
       font-weight: 600;
     }
-
     /* GRID DE PRODUCTOS */
     .grid {
       display: grid;
@@ -185,7 +167,6 @@
     .cols-2 { grid-template-columns: repeat(2, 1fr); }
     .cols-3 { grid-template-columns: repeat(3, 1fr); }
     .cols-4 { grid-template-columns: repeat(4, 1fr); }
-
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
@@ -197,13 +178,11 @@
       gap: 12px;
       transition: transform 0.2s, box-shadow 0.2s;
     }
-
     .card:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
       border-color: #cbd5e1;
     }
-
     .thumb {
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -215,7 +194,6 @@
       justify-content: center;
       position: relative;
     }
-
     .thumb img {
       width: 100%;
       height: 100%;
@@ -223,19 +201,16 @@
       transition: opacity 0.3s;
       mix-blend-mode: multiply; /* Truco para que fondos blancos de jpg se mezclen */
     }
-
     .info {
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
-
     .price {
       font-size: 18px;
       font-weight: 700;
       color: var(--primary);
     }
-
     .name {
       font-size: 14px;
       font-weight: 500;
@@ -247,7 +222,6 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-
     .tag {
       font-size: 11px;
       color: var(--text-muted);
@@ -259,7 +233,6 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-
     .empty {
       text-align: center;
       padding: 60px 20px;
@@ -268,17 +241,16 @@
       border-radius: var(--radius);
       border: 1px dashed var(--border);
     }
-
     /* RESPONSIVE */
     @media (max-width: 640px) {
       .topbar { flex-direction: column; align-items: stretch; gap: 12px; }
       .search { order: 1; }
       .actions-row { display: flex; gap: 8px; order: 2; overflow-x: auto; padding-bottom: 4px; }
       .btn-action { white-space: nowrap; flex: 1; justify-content: center; }
-      
+     
       .brand { padding: 0 10px; }
       .wrap { padding: 16px; margin: 0; }
-      
+     
       /* Forzar 2 columnas en movil si no es muy pequeño */
       .grid { gap: 12px; }
       .card { padding: 10px; gap: 8px; }
@@ -288,12 +260,11 @@
   </style>
 </head>
 <body>
-
   <header>
     <div class="wrap" style="padding-top:0; padding-bottom:0;">
       <div class="brand">
         <div class="logo">
-          <img id="logoImg" src="" alt="Funaz Logo" style="display:none"> 
+          <img id="logoImg" src="" alt="Funaz Logo" style="display:none">
         </div>
         <div class="subtitle">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
@@ -302,13 +273,11 @@
       </div>
     </div>
   </header>
-
   <main class="wrap">
     <div class="topbar">
       <div class="search">
         <input id="search" type="search" placeholder="Buscar producto (ej: Galletas, Lavandina)..." autocomplete="off" />
       </div>
-
       <div class="actions-row">
         <div class="relative">
           <button id="colsToggle" class="btn-action">
@@ -317,7 +286,6 @@
           </button>
           <ul id="colsMenu" class="dropdown-menu"></ul>
         </div>
-
         <div class="relative">
           <button id="catToggle" class="btn-action">
             Categorías
@@ -325,14 +293,12 @@
           </button>
           <ul id="categoriesMenu" class="dropdown-menu"></ul>
         </div>
-
         <button id="pdfBtn" class="btn-action" style="color: #ef4444; border-color: #fecaca; background: #fef2f2;">
           PDF
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
         </button>
       </div>
     </div>
-
     <section id="productsArea">
       <div id="grid" class="grid cols-3"></div>
       <div id="empty" class="empty" style="display:none;">
@@ -344,53 +310,45 @@
       </div>
     </section>
   </main>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
     // --- CONFIGURACIÓN ---
     const supa = createClient(
       'https://slroycxifwezthdomkny.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'
     );
-
     const FIXED_CATEGORIES = [
       "Todas", "OFERTAS", "ALIMENTOS", "BEBIDAS", "ANALGESICOS", "ENCENDEDORES", "CREMAS",
       "DESODORANTES", "GALLETAS Y GOLOSINAS", "JUGOS", "LIMPIEZA",
       "PAPELES Y BOLSAS", "PEGAMENTOS", "PERFUMERIA", "REPELENTES", "ACCESORIOS",
       "SHAMPO Y ENJUAGUE", "TINTURAS NANTYR"
     ];
-    
+   
     // --- ESTADO GLOBAL ---
     let PRODUCTS = [];
     let currentCategory = 'Todas';
     let currentCols = window.innerWidth <= 640 ? 2 : 4; // Auto-ajuste inicial
-    
+   
     // --- DOM ---
     const grid = document.getElementById('grid');
     const emptyMsg = document.getElementById('empty');
     const loadingMsg = document.getElementById('loading');
     const searchInput = document.getElementById('search');
-
     // --- UTILS ---
     const parsePrice = (v) => {
       if (!v) return 0;
       if (typeof v === 'number') return v;
       return parseFloat(String(v).replace(/\./g,'').replace(',', '.')) || 0;
     };
-
     const formatMoney = (n) => {
       return new Intl.NumberFormat('es-AR', { style:'currency', currency:'ARS', maximumFractionDigits: 0 }).format(n);
     };
-
     const normalizeCategory = (c) => {
       const s = (c || '').trim();
       return FIXED_CATEGORIES.includes(s) ? s : 'Otros';
     };
-
     const getImageUrl = (path) => {
       if (!path) return '';
       // Si la ruta ya es una URL completa, devolverla
@@ -399,10 +357,9 @@
       const { data } = supa.storage.from('imagenes').getPublicUrl(clean);
       return data.publicUrl;
     };
-    
+   
     // Placeholder para carga lazy
-    const PLACEHOLDER_IMG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300' fill='%23f1f5f9'%3E%3Crect width='300' height='300' /%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='%23cbd5e1'%3ESin Imagen%3C/text%3E%3C/svg%3E";
-
+    const PLACEHOLDER_IMG = "placeholder.png";
     // --- RENDERIZADO OPTIMIZADO ---
     function renderProducts(list) {
       if (!list || list.length === 0) {
@@ -411,24 +368,21 @@
         return;
       }
       emptyMsg.style.display = 'none';
-
       // Usamos fragment para pintar todo de una sola vez (mejora performance DOM)
       const fragment = document.createDocumentFragment();
-
       list.forEach(p => {
         const article = document.createElement('article');
         article.className = 'card';
-        
+       
         // Calculo precio
         const finalPrice = ((parsePrice(p.precio) * 1.10) * 0.97) * 1.10;
         const imgUrl = getImageUrl(p.imagen);
-
         article.innerHTML = `
           <div class="thumb">
-            <img 
-              src="${imgUrl || PLACEHOLDER_IMG}" 
-              alt="${p.nombre}" 
-              loading="lazy" 
+            <img
+              src="${imgUrl || PLACEHOLDER_IMG}"
+              alt="${p.nombre}"
+              loading="lazy"
               onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}';"
             />
           </div>
@@ -440,47 +394,39 @@
         `;
         fragment.appendChild(article);
       });
-
       grid.innerHTML = '';
       grid.appendChild(fragment);
     }
-
     // --- LOGICA DE FILTRO (SEARCH) ---
     function applyFilters() {
       const q = searchInput.value.trim().toLowerCase();
       let filtered = PRODUCTS;
-
       // 1. Filtro Categoría
       if (currentCategory !== 'Todas') {
         filtered = filtered.filter(p => normalizeCategory(p.categoria) === currentCategory);
       }
-
       // 2. Filtro Texto
       if (q) {
         filtered = filtered.filter(p => (p.nombre || '').toLowerCase().includes(q));
       }
-
       renderProducts(filtered);
     }
-
     // --- CARGA DE DATOS ---
     async function loadData() {
       try {
         loadingMsg.style.display = 'block';
-        
+       
         // 1. OPTIMIZACIÓN: Fetch recursivo pero solo columnas necesarias
         let allProducts = [];
         let from = 0;
         const step = 1000;
         let done = false;
-
         // Pedimos SOLO lo que usamos para que la respuesta sea ligera
         while (!done) {
           const { data, error } = await supa
             .from('productos')
             .select('id, nombre, precio, stock, stock_leo, categoria, imagen')
             .range(from, from + step - 1);
-
           if (error) throw error;
           if (!data || data.length === 0) {
             done = true;
@@ -490,22 +436,18 @@
             if (data.length < step) done = true;
           }
         }
-
         // 2. LÓGICA DE STOCK (Requerimiento Usuario)
         // Regla: Si stock_leo es null -> MOSTRAR.
         // Si no -> (stock + stock_leo) >= 10.
         PRODUCTS = allProducts.filter(p => {
           const s = p.stock || 0;
-          const sl = p.stock_leo; 
-
+          const sl = p.stock_leo;
           // Si es null, undefined o string vacio => Pasa siempre
           if (sl === null || sl === undefined || sl === '') return true;
-
           // Si tiene valor numerico, validamos la suma
           const total = s + Number(sl);
           return total >= 10;
         });
-
         // Ordenamiento por defecto: Categoría -> Nombre
         PRODUCTS.sort((a, b) => {
           const cA = normalizeCategory(a.categoria);
@@ -513,10 +455,8 @@
           if (cA !== cB) return cA.localeCompare(cB);
           return (a.nombre || '').localeCompare(b.nombre || '');
         });
-
         loadingMsg.style.display = 'none';
         applyFilters(); // Render inicial
-
         // Cargar Logo (Lazy)
         const logoImg = document.getElementById('logoImg');
         const logoUrl = getImageUrl('logo.png');
@@ -524,27 +464,24 @@
             logoImg.src = logoUrl;
             logoImg.style.display = 'block';
         }
-
       } catch (err) {
         console.error("Error cargando productos:", err);
         loadingMsg.innerText = "Hubo un error al cargar los productos.";
       }
     }
-
     // --- INTERFAZ / EVENTOS ---
-    
+   
     // Búsqueda con Debounce (para no filtrar en cada tecla si escribe rapido)
     let timeoutSearch;
     searchInput.addEventListener('input', () => {
       clearTimeout(timeoutSearch);
       timeoutSearch = setTimeout(applyFilters, 300);
     });
-
     // Toggle Dropdowns
     const setupDropdown = (btnId, menuId, buildFn) => {
       const btn = document.getElementById(btnId);
       const menu = document.getElementById(menuId);
-      
+     
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const isOpen = menu.classList.contains('show');
@@ -555,7 +492,6 @@
         }
       });
     };
-
     // Categorias Menu
     setupDropdown('catToggle', 'categoriesMenu', () => {
       const menu = document.getElementById('categoriesMenu');
@@ -574,7 +510,6 @@
         menu.appendChild(li);
       });
     });
-
     // Columnas Menu
     setupDropdown('colsToggle', 'colsMenu', () => {
       const menu = document.getElementById('colsMenu');
@@ -592,15 +527,12 @@
         menu.appendChild(li);
       });
     });
-
     // Cerrar click fuera
     window.addEventListener('click', () => {
       document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
     });
-
     // Setear columnas iniciales
     grid.className = `grid cols-${currentCols}`;
-
     // --- PDF (Sin cambios mayores, solo integración) ---
     async function getBase64ImageFromUrl(imageUrl) {
         var res = await fetch(imageUrl);
@@ -616,28 +548,25 @@
             reader.readAsDataURL(blob);
         });
     }
-
     document.getElementById('pdfBtn').addEventListener('click', async () => {
         if(!confirm("Generar PDF puede tardar unos segundos. ¿Continuar?")) return;
-        
+       
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         let y = 10;
-        
+       
         doc.setFontSize(16);
         doc.text("Lista de Precios - Distribuidora Funaz", 10, y);
         y += 10;
         doc.setFontSize(10);
         doc.text("Generado el: " + new Date().toLocaleDateString(), 10, y);
         y += 10;
-
         // Renderizado simplificado tipo lista para el PDF por rapidez
         let items = PRODUCTS; // Usar todos o los filtrados segun preferencia (aquí todos los disponibles)
         if(currentCategory !== 'Todas') items = items.filter(p => normalizeCategory(p.categoria) === currentCategory);
-
         // Tabla simple
         let pageHeight = doc.internal.pageSize.height;
-        
+       
         items.forEach((p, i) => {
             if (y > pageHeight - 10) {
                 doc.addPage();
@@ -645,19 +574,15 @@
             }
             const precio = formatMoney(((parsePrice(p.precio) * 1.10) * 0.97) * 1.10);
             const nombre = (p.nombre || 'Sin nombre').substring(0, 60);
-            
+           
             doc.text(nombre, 10, y);
             doc.text(precio, 160, y);
             y += 7;
         });
-
         doc.save("Catalogo_Funaz.pdf");
     });
-
     // INICIAR
     loadData();
-
   </script>
 </body>
 </html>
-
