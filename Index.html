@@ -20,7 +20,7 @@
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
     * { box-sizing: border-box; outline: none; }
-   
+  
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       margin: 0;
@@ -114,7 +114,7 @@
       background: var(--bg);
       border-color: var(--text-muted);
     }
-   
+  
     .btn-action.active {
         background: var(--primary-light);
         color: var(--primary);
@@ -136,10 +136,10 @@
       overflow-y: auto;
       display: none;
     }
-   
+  
     .dropdown-menu.show { display: block; }
     .dropdown-menu li { list-style: none; }
-   
+  
     .dropdown-menu button {
       width: 100%;
       text-align: left;
@@ -241,21 +241,44 @@
       border-radius: var(--radius);
       border: 1px dashed var(--border);
     }
+    /* CATEGORIES ROW */
+    .categories-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin: 16px 0;
+      flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+    .categories-row::-webkit-scrollbar {
+      height: 4px;
+    }
+    .categories-row::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
+    .categories-row button {
+      flex: none;
+      white-space: nowrap;
+    }
     /* RESPONSIVE */
     @media (max-width: 640px) {
       .topbar { flex-direction: column; align-items: stretch; gap: 12px; }
       .search { order: 1; }
       .actions-row { display: flex; gap: 8px; order: 2; overflow-x: auto; padding-bottom: 4px; }
       .btn-action { white-space: nowrap; flex: 1; justify-content: center; }
-     
+    
       .brand { padding: 0 10px; }
       .wrap { padding: 16px; margin: 0; }
-     
+    
       /* Forzar 2 columnas en movil si no es muy pequeño */
       .grid { gap: 12px; }
       .card { padding: 10px; gap: 8px; }
       .price { font-size: 16px; }
       .name { font-size: 13px; }
+      .categories-row { margin: 0; }
+      .categories-row .btn-action { flex: none; padding: 8px 14px; font-size: 13px; }
     }
   </style>
 </head>
@@ -286,19 +309,13 @@
           </button>
           <ul id="colsMenu" class="dropdown-menu"></ul>
         </div>
-        <div class="relative">
-          <button id="catToggle" class="btn-action">
-            Categorías
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-          <ul id="categoriesMenu" class="dropdown-menu"></ul>
-        </div>
         <button id="pdfBtn" class="btn-action" style="color: #ef4444; border-color: #fecaca; background: #fef2f2;">
           PDF
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
         </button>
       </div>
     </div>
+    <div id="categoriesRow" class="categories-row"></div>
     <section id="productsArea">
       <div id="grid" class="grid cols-3"></div>
       <div id="empty" class="empty" style="display:none;">
@@ -325,12 +342,12 @@
       "PAPELES Y BOLSAS", "PEGAMENTOS", "PERFUMERIA", "REPELENTES", "ACCESORIOS",
       "SHAMPO Y ENJUAGUE", "TINTURAS NANTYR"
     ];
-   
+  
     // --- ESTADO GLOBAL ---
     let PRODUCTS = [];
     let currentCategory = 'Todas';
     let currentCols = window.innerWidth <= 640 ? 2 : 4; // Auto-ajuste inicial
-   
+  
     // --- DOM ---
     const grid = document.getElementById('grid');
     const emptyMsg = document.getElementById('empty');
@@ -357,7 +374,7 @@
       const { data } = supa.storage.from('imagenes').getPublicUrl(clean);
       return data.publicUrl;
     };
-   
+  
     // Placeholder para carga lazy
     const PLACEHOLDER_IMG = "placeholder.png";
     // --- RENDERIZADO OPTIMIZADO ---
@@ -373,7 +390,7 @@
       list.forEach(p => {
         const article = document.createElement('article');
         article.className = 'card';
-       
+      
         // Calculo precio
         const finalPrice = ((parsePrice(p.precio) * 1.10) * 0.97) * 1.10;
         const imgUrl = getImageUrl(p.imagen);
@@ -415,7 +432,7 @@
     async function loadData() {
       try {
         loadingMsg.style.display = 'block';
-       
+      
         // 1. OPTIMIZACIÓN: Fetch recursivo pero solo columnas necesarias
         let allProducts = [];
         let from = 0;
@@ -470,7 +487,7 @@
       }
     }
     // --- INTERFAZ / EVENTOS ---
-   
+  
     // Búsqueda con Debounce (para no filtrar en cada tecla si escribe rapido)
     let timeoutSearch;
     searchInput.addEventListener('input', () => {
@@ -481,7 +498,7 @@
     const setupDropdown = (btnId, menuId, buildFn) => {
       const btn = document.getElementById(btnId);
       const menu = document.getElementById(menuId);
-     
+    
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const isOpen = menu.classList.contains('show');
@@ -492,24 +509,6 @@
         }
       });
     };
-    // Categorias Menu
-    setupDropdown('catToggle', 'categoriesMenu', () => {
-      const menu = document.getElementById('categoriesMenu');
-      menu.innerHTML = '';
-      FIXED_CATEGORIES.forEach(cat => {
-        const li = document.createElement('li');
-        const b = document.createElement('button');
-        b.textContent = cat;
-        if(cat === currentCategory) b.classList.add('active');
-        b.onclick = () => {
-          currentCategory = cat;
-          document.getElementById('catToggle').innerHTML = `Categoría: ${cat.substring(0,10)}${cat.length>10?'...':''} ▾`;
-          applyFilters();
-        };
-        li.appendChild(b);
-        menu.appendChild(li);
-      });
-    });
     // Columnas Menu
     setupDropdown('colsToggle', 'colsMenu', () => {
       const menu = document.getElementById('colsMenu');
@@ -533,6 +532,23 @@
     });
     // Setear columnas iniciales
     grid.className = `grid cols-${currentCols}`;
+    // --- POBLAR CATEGORIAS ROW ---
+    function populateCategories() {
+      const categoriesRow = document.getElementById('categoriesRow');
+      FIXED_CATEGORIES.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.classList.add('btn-action');
+        btn.textContent = cat;
+        if (cat === currentCategory) btn.classList.add('active');
+        btn.onclick = () => {
+          document.querySelectorAll('.categories-row .btn-action').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCategory = cat;
+          applyFilters();
+        };
+        categoriesRow.appendChild(btn);
+      });
+    }
     // --- PDF (Sin cambios mayores, solo integración) ---
     async function getBase64ImageFromUrl(imageUrl) {
         var res = await fetch(imageUrl);
@@ -550,11 +566,11 @@
     }
     document.getElementById('pdfBtn').addEventListener('click', async () => {
         if(!confirm("Generar PDF puede tardar unos segundos. ¿Continuar?")) return;
-       
+      
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         let y = 10;
-       
+      
         doc.setFontSize(16);
         doc.text("Lista de Precios - Distribuidora Funaz", 10, y);
         y += 10;
@@ -566,7 +582,7 @@
         if(currentCategory !== 'Todas') items = items.filter(p => normalizeCategory(p.categoria) === currentCategory);
         // Tabla simple
         let pageHeight = doc.internal.pageSize.height;
-       
+      
         items.forEach((p, i) => {
             if (y > pageHeight - 10) {
                 doc.addPage();
@@ -574,7 +590,7 @@
             }
             const precio = formatMoney(((parsePrice(p.precio) * 1.10) * 0.97) * 1.10);
             const nombre = (p.nombre || 'Sin nombre').substring(0, 60);
-           
+          
             doc.text(nombre, 10, y);
             doc.text(precio, 160, y);
             y += 7;
@@ -582,6 +598,7 @@
         doc.save("Catalogo_Funaz.pdf");
     });
     // INICIAR
+    populateCategories();
     loadData();
   </script>
 </body>
