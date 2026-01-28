@@ -382,7 +382,7 @@
         article.className = 'card';
     
         // Calculo precio
-        const finalPrice = ((parsePrice(p.precio) * 1.10) * 0.97) * 1.10;
+        const finalPrice = ((parsePrice(p.precio) * 1.1222) * 1.05);
         const imgUrl = getImageUrl(p.imagen);
         const catTag = (p.categoria || '').trim().toUpperCase() || 'SIN CATEGORÍA';
         article.innerHTML = `
@@ -603,3 +603,4 @@
   </script>
 </body>
 </html>
+
