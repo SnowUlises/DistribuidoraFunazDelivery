@@ -20,6 +20,7 @@
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
     * { box-sizing: border-box; outline: none; }
+
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       margin: 0;
@@ -33,7 +34,8 @@
       backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
       padding: 20px 0;
-      width: 100%;
+      position: relative;
+      top: 0;
       z-index: 50;
     }
     .brand {
@@ -61,6 +63,20 @@
       align-items: center;
       gap: 6px;
     }
+    /* ESTILO PARA EL LINK DE PEDIDOS */
+    .order-link {
+        color: var(--primary);
+        font-weight: 700;
+        text-decoration: underline;
+        font-size: 15px;
+        margin-top: 4px;
+        transition: color 0.2s;
+    }
+    .order-link:hover {
+        color: #14532d; /* Verde más oscuro al pasar el mouse */
+        text-decoration: none;
+    }
+
     .wrap {
       max-width: 1200px;
       margin: 0 auto;
@@ -112,6 +128,7 @@
       background: var(--bg);
       border-color: var(--text-muted);
     }
+
     .btn-action.active {
         background: var(--primary-light);
         color: var(--primary);
@@ -133,8 +150,10 @@
       overflow-y: auto;
       display: none;
     }
+
     .dropdown-menu.show { display: block; }
     .dropdown-menu li { list-style: none; }
+
     .dropdown-menu button {
       width: 100%;
       text-align: left;
@@ -245,6 +264,10 @@
       margin: 16px 0;
       flex-wrap: nowrap;
       -webkit-overflow-scrolling: touch;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--bg);
     }
     .categories-row::-webkit-scrollbar {
       height: 4px;
@@ -263,10 +286,10 @@
       .search { order: 1; }
       .actions-row { display: flex; gap: 8px; order: 2; overflow-x: auto; padding-bottom: 4px; }
       .btn-action { white-space: nowrap; flex: 1; justify-content: center; }
-  
+
       .brand { padding: 0 10px; }
       .wrap { padding: 16px; margin: 0; }
-  
+
       /* Forzar 2 columnas en movil si no es muy pequeño */
       .grid { gap: 12px; }
       .card { padding: 10px; gap: 8px; }
@@ -288,6 +311,9 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
           Cristobal Colon 1740, San Juan
         </div>
+        <a href="https://distribuidorapedidos.onrender.com/index.html" class="order-link">
+            Haz tu pedido aquí
+        </a>
       </div>
     </div>
   </header>
@@ -322,52 +348,69 @@
       </div>
     </section>
   </main>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
     // --- CONFIGURACIÓN ---
     const supa = createClient(
       'https://slroycxifwezthdomkny.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNscm95Y3hpZndlenRoZG9ta255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNzIzNDIsImV4cCI6MjA3MTg0ODM0Mn0.OhgCTvtvdvOejXS9iXPX8rkg3Dh_jBkWObwhL-HnDB8'
     );
+
     const FIXED_CATEGORIES = [
       "Todas", "OFERTAS", "ALIMENTOS", "BEBIDAS", "ANALGESICOS", "ENCENDEDORES", "CREMAS",
       "DESODORANTES", "GALLETAS Y GOLOSINAS", "JUGOS", "LIMPIEZA",
       "PAPELES Y BOLSAS", "PEGAMENTOS", "PERFUMERIA", "REPELENTES", "ACCESORIOS",
       "SHAMPO Y ENJUAGUE", "TINTURAS NANTYR"
     ];
+
     // --- ESTADO GLOBAL ---
     let PRODUCTS = [];
     let currentCategory = 'Todas';
-    let currentCols = window.innerWidth <= 640 ? 2 : 4; // Auto-ajuste inicial
+    let currentCols = window.innerWidth <= 640 ? 2 : 4;
+
     // --- DOM ---
     const grid = document.getElementById('grid');
     const emptyMsg = document.getElementById('empty');
     const loadingMsg = document.getElementById('loading');
     const searchInput = document.getElementById('search');
-    const headerEl = document.querySelector('header');
-    const categoriesRow = document.getElementById('categoriesRow');
+    const pdfBtn = document.getElementById('pdfBtn');
+
     // --- UTILS ---
     const parsePrice = (v) => {
       if (!v) return 0;
       if (typeof v === 'number') return v;
       return parseFloat(String(v).replace(/\./g,'').replace(',', '.')) || 0;
     };
+
+    // FÓRMULA DE PRECIO UNIFICADA
+    const calculateFinalPrice = (p) => {
+        return (parsePrice(p.precio) * 1.1781;
+    };
+
     const formatMoney = (n) => {
       return new Intl.NumberFormat('es-AR', { style:'currency', currency:'ARS', maximumFractionDigits: 0 }).format(n);
     };
+
+    const normalizeCategory = (c) => {
+      return (c || '').trim().toUpperCase() || 'SIN CATEGORÍA';
+    };
+
     const getImageUrl = (path) => {
-      if (!path) return '';
-      // Si la ruta ya es una URL completa, devolverla
+      if (!path) return null;
       if (path.startsWith('http')) return path;
       const clean = path.replace(/^imagenes\//, '');
       const { data } = supa.storage.from('imagenes').getPublicUrl(clean);
       return data.publicUrl;
     };
-    // Placeholder para carga lazy
-    const PLACEHOLDER_IMG = "placeholder.png";
-    // --- RENDERIZADO OPTIMIZADO ---
+
+    const PLACEHOLDER_IMG = "placeholder.png"; 
+
+    // --- RENDERIZADO WEB ---
     function renderProducts(list) {
       if (!list || list.length === 0) {
         grid.innerHTML = '';
@@ -375,21 +418,20 @@
         return;
       }
       emptyMsg.style.display = 'none';
-      // Usamos fragment para pintar todo de una sola vez (mejora performance DOM)
       const fragment = document.createDocumentFragment();
+      
       list.forEach(p => {
         const article = document.createElement('article');
         article.className = 'card';
-    
-        // Calculo precio
-        const finalPrice = ((parsePrice(p.precio) * 1.1222) * 1.05);
+        
+        const finalPrice = calculateFinalPrice(p);
         const imgUrl = getImageUrl(p.imagen);
-        const catTag = (p.categoria || '').trim().toUpperCase() || 'SIN CATEGORÍA';
+
         article.innerHTML = `
           <div class="thumb">
-            <img
-              src="${imgUrl || PLACEHOLDER_IMG}"
-              alt="${p.nombre}"
+            <img 
+              src="${imgUrl || PLACEHOLDER_IMG}" 
+              alt="${p.nombre}" 
               loading="lazy"
               onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}';"
             />
@@ -397,7 +439,7 @@
           <div class="info">
             <div class="price">${formatMoney(finalPrice)}</div>
             <div class="name" title="${p.nombre}">${p.nombre}</div>
-            <div class="tag">${catTag}</div>
+            <div class="tag">${normalizeCategory(p.categoria)}</div>
           </div>
         `;
         fragment.appendChild(article);
@@ -405,36 +447,39 @@
       grid.innerHTML = '';
       grid.appendChild(fragment);
     }
-    // --- LOGICA DE FILTRO (SEARCH) ---
+
+    // --- FILTROS ---
     function applyFilters() {
       const q = searchInput.value.trim().toLowerCase();
       let filtered = PRODUCTS;
-      // 1. Filtro Categoría
+      
       if (currentCategory !== 'Todas') {
-        filtered = filtered.filter(p => (p.categoria || '').toUpperCase().includes(currentCategory));
+        filtered = filtered.filter(p => (p.categoria || '').toUpperCase().includes(currentCategory.toUpperCase()));
       }
-      // 2. Filtro Texto
+      
       if (q) {
         filtered = filtered.filter(p => (p.nombre || '').toLowerCase().includes(q));
       }
       renderProducts(filtered);
+      return filtered; // Retornamos para uso del PDF
     }
+
     // --- CARGA DE DATOS ---
     async function loadData() {
       try {
         loadingMsg.style.display = 'block';
-    
-        // 1. OPTIMIZACIÓN: Fetch recursivo pero solo columnas necesarias
         let allProducts = [];
         let from = 0;
         const step = 1000;
         let done = false;
-        // Pedimos SOLO lo que usamos para que la respuesta sea ligera
+
+        // Fetch recursivo
         while (!done) {
           const { data, error } = await supa
             .from('productos')
             .select('id, nombre, precio, stock, stock_leo, categoria, imagen')
             .range(from, from + step - 1);
+
           if (error) throw error;
           if (!data || data.length === 0) {
             done = true;
@@ -444,63 +489,62 @@
             if (data.length < step) done = true;
           }
         }
-        // 2. LÓGICA DE STOCK (Requerimiento Usuario)
-        // Regla: Si stock_leo es null -> MOSTRAR.
-        // Si no -> (stock + stock_leo) >= 10.
+
+        // Reglas de Stock
         PRODUCTS = allProducts.filter(p => {
           const s = p.stock || 0;
           const sl = p.stock_leo;
-          // Si es null, undefined o string vacio => Pasa siempre
           if (sl === null || sl === undefined || sl === '') return true;
-          // Si tiene valor numerico, validamos la suma
           const total = s + Number(sl);
           return total >= 10;
         });
-        // Ordenamiento por defecto: Categoría -> Nombre
+
+        // Ordenar
         PRODUCTS.sort((a, b) => {
-          const cA = (a.categoria || '').trim();
-          const cB = (b.categoria || '').trim();
+          const cA = normalizeCategory(a.categoria);
+          const cB = normalizeCategory(b.categoria);
           if (cA !== cB) return cA.localeCompare(cB);
           return (a.nombre || '').localeCompare(b.nombre || '');
         });
+
         loadingMsg.style.display = 'none';
-        applyFilters(); // Render inicial
-        // Cargar Logo (Lazy)
+        applyFilters();
+
+        // Cargar Logo lazy
         const logoImg = document.getElementById('logoImg');
         const logoUrl = getImageUrl('logo.png');
         if(logoUrl) {
             logoImg.src = logoUrl;
             logoImg.style.display = 'block';
-            logoImg.onload = () => { setSticky(); };
         }
+
       } catch (err) {
         console.error("Error cargando productos:", err);
-        loadingMsg.innerText = "Hubo un error al cargar los productos.";
+        loadingMsg.innerText = "Error al cargar los productos.";
       }
     }
-    // --- INTERFAZ / EVENTOS ---
-    // Búsqueda con Debounce (para no filtrar en cada tecla si escribe rapido)
+
+    // --- EVENTOS UI ---
     let timeoutSearch;
     searchInput.addEventListener('input', () => {
       clearTimeout(timeoutSearch);
       timeoutSearch = setTimeout(applyFilters, 300);
     });
-    // Toggle Dropdowns
+
     const setupDropdown = (btnId, menuId, buildFn) => {
       const btn = document.getElementById(btnId);
       const menu = document.getElementById(menuId);
-  
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const isOpen = menu.classList.contains('show');
-        document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show')); // cerrar otros
+        document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
         if (!isOpen) {
           buildFn();
           menu.classList.add('show');
         }
       });
     };
-    // Columnas Menu
+
     setupDropdown('colsToggle', 'colsMenu', () => {
       const menu = document.getElementById('colsMenu');
       menu.innerHTML = '';
@@ -517,13 +561,13 @@
         menu.appendChild(li);
       });
     });
-    // Cerrar click fuera
+
     window.addEventListener('click', () => {
       document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
     });
-    // Setear columnas iniciales
+
     grid.className = `grid cols-${currentCols}`;
-    // --- POBLAR CATEGORIAS ROW ---
+
     function populateCategories() {
       const categoriesRow = document.getElementById('categoriesRow');
       FIXED_CATEGORIES.forEach(cat => {
@@ -540,67 +584,160 @@
         categoriesRow.appendChild(btn);
       });
     }
-    // --- PDF (Sin cambios mayores, solo integración) ---
-    async function getBase64ImageFromUrl(imageUrl) {
-        var res = await fetch(imageUrl);
-        var blob = await res.blob();
-        return new Promise((resolve, reject) => {
-            var reader = new FileReader();
-            reader.addEventListener("load", function () {
-                resolve(reader.result);
-            }, false);
-            reader.onerror = () => {
-                return resolve(null);
-            };
-            reader.readAsDataURL(blob);
-        });
+
+    
+    // Función auxiliar para descargar la imagen como Base64 (evita taint canvas)
+    async function getBase64Image(url) {
+        if (!url) return null;
+        try {
+            // fetch con mode cors
+            const res = await fetch(url, { mode: 'cors' });
+            if (!res.ok) throw new Error('Network response was not ok');
+            const blob = await res.blob();
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = () => resolve(null);
+                reader.readAsDataURL(blob);
+            });
+        } catch (e) {
+            console.warn("No se pudo cargar imagen para PDF:", url);
+            return null;
+        }
     }
-    document.getElementById('pdfBtn').addEventListener('click', async () => {
-        if(!confirm("Generar PDF puede tardar unos segundos. ¿Continuar?")) return;
-    
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        let y = 10;
-    
-        doc.setFontSize(16);
-        doc.text("Lista de Precios - Distribuidora Funaz", 10, y);
-        y += 10;
-        doc.setFontSize(10);
-        doc.text("Generado el: " + new Date().toLocaleDateString(), 10, y);
-        y += 10;
-        // Renderizado simplificado tipo lista para el PDF por rapidez
-        let items = PRODUCTS; // Usar todos o los filtrados segun preferencia (aquí todos los disponibles)
-        if(currentCategory !== 'Todas') items = items.filter(p => (p.categoria || '').toUpperCase().includes(currentCategory));
-        // Tabla simple
-        let pageHeight = doc.internal.pageSize.height;
-    
-        items.forEach((p, i) => {
-            if (y > pageHeight - 10) {
-                doc.addPage();
-                y = 15;
-            }
-            const precio = formatMoney(((parsePrice(p.precio) * 1.10) * 0.97) * 1.10);
-            const nombre = (p.nombre || 'Sin nombre').substring(0, 60);
+
+    pdfBtn.addEventListener('click', async () => {
+        const productsToPrint = applyFilters(); // Obtener lista actual filtrada
         
-            doc.text(nombre, 10, y);
-            doc.text(precio, 160, y);
-            y += 7;
-        });
-        doc.save("Catalogo_Funaz.pdf");
+        if (productsToPrint.length === 0) {
+            alert("No hay productos para generar PDF");
+            return;
+        }
+
+        const confirmMsg = `Se generará un catálogo con ${productsToPrint.length} productos.\n` + 
+                           `Para evitar que la página se cierre, se descargará en varias partes (aprox 160 productos por archivo).\n` +
+                           `Esto puede tomar unos minutos dependiendo de tu internet. ¿Continuar?`;
+        
+        if (!confirm(confirmMsg)) return;
+
+        // --- CONFIGURACIÓN GRILLA ---
+        const { jsPDF } = window.jspdf;
+        const cols = 4;
+        const rows = 4;
+        const itemsPerPage = cols * rows; // 16
+        const pagesPerFile = 10; 
+        const itemsPerFile = itemsPerPage * pagesPerFile; // 160 productos por archivo PDF
+
+        // Medidas A4 (mm)
+        const pageWidth = 210;
+        const pageHeight = 297;
+        const marginX = 10;
+        const marginY = 10;
+        
+        const usableWidth = pageWidth - (marginX * 2);
+        const usableHeight = pageHeight - (marginY * 2);
+        
+        const cellWidth = usableWidth / cols; // ~47.5mm
+        const cellHeight = usableHeight / rows; // ~69.25mm
+
+        const oldBtnText = pdfBtn.innerHTML;
+        
+        // --- PROCESO POR LOTES ---
+        const totalFiles = Math.ceil(productsToPrint.length / itemsPerFile);
+
+        for (let fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
+            
+            // Crear nuevo documento para esta parte (Limpia memoria)
+            const doc = new jsPDF();
+            const startIdx = fileIndex * itemsPerFile;
+            const endIdx = Math.min(startIdx + itemsPerFile, productsToPrint.length);
+            const chunkProducts = productsToPrint.slice(startIdx, endIdx);
+
+            let currentPage = 0; // Pagina local del archivo actual
+
+            // Iterar productos de este archivo
+            for (let i = 0; i < chunkProducts.length; i++) {
+                const p = chunkProducts[i];
+                const localIndex = i % itemsPerPage; // 0 a 15 (posición en la hoja)
+                
+                // Actualizar UI
+                pdfBtn.innerHTML = `Parte ${fileIndex + 1}/${totalFiles} (${Math.round((i/chunkProducts.length)*100)}%)`;
+                
+                // Nueva página si completamos la grilla (excepto el primer item)
+                if (i > 0 && localIndex === 0) {
+                    doc.addPage();
+                    currentPage++;
+                }
+
+                const col = i % cols; // 0, 1, 2, 3
+                const rowInPage = Math.floor(localIndex / cols); // 0, 1, 2, 3
+                
+                const xPos = marginX + (col * cellWidth);
+                const yPos = marginY + (rowInPage * cellHeight);
+                
+                const imgUrl = getImageUrl(p.imagen);
+                if (imgUrl) {
+                    const base64 = await getBase64Image(imgUrl);
+                    if (base64) {
+                        // Padding interno para que no toque bordes
+                        const padding = 2;
+                        const imgSize = cellWidth - (padding * 2); 
+                        const xImg = xPos + padding;
+                        const yImg = yPos + padding;
+                        
+                        const maxImgHeight = cellHeight - 20; 
+
+                        try {
+                            doc.addImage(base64, 'JPEG', xImg, yImg, imgSize, maxImgHeight, null, 'FAST', 0);
+                        } catch (e) {
+                           // Fallback silencioso
+                        }
+                    }
+                }
+
+                const contentYStart = yPos + cellHeight - 14; 
+                
+                // Nombre
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(8);
+                doc.setTextColor(40);
+                
+                // Recortar nombre si es muy largo
+                let cleanName = (p.nombre || "").trim();
+                if(cleanName.length > 35) cleanName = cleanName.substring(0, 32) + "...";
+                
+                doc.text(cleanName, xPos + (cellWidth/2), contentYStart, { align: 'center' });
+
+                // Precio
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(12);
+                doc.setTextColor(21, 128, 61); // Verde Funaz
+                const finalPrice = calculateFinalPrice(p);
+                doc.text(formatMoney(finalPrice), xPos + (cellWidth/2), contentYStart + 5, { align: 'center' });
+
+                // Pequeña pausa para que el navegador respire y actualice el botón
+                if (i % 5 === 0) await new Promise(r => setTimeout(r, 0));
+            }
+
+            // Guardar Parte
+            const fileName = totalFiles > 1 
+                ? `Catalogo_Funaz_Parte_${fileIndex + 1}.pdf`
+                : `Catalogo_Funaz.pdf`;
+            
+            doc.save(fileName);
+            
+            // Pausa entre archivos para asegurar descarga
+            await new Promise(r => setTimeout(r, 1500));
+        }
+
+        // Restaurar botón
+        pdfBtn.innerHTML = oldBtnText;
+        alert("¡Todos los PDFs han sido generados!");
     });
-    // --- STICKY SETUP ---
-    function setSticky() {
-      const headerHeight = headerEl.offsetHeight;
-      categoriesRow.style.position = 'sticky';
-      categoriesRow.style.top = '0px';
-      categoriesRow.style.zIndex = '40';
-      categoriesRow.style.backgroundColor = 'var(--bg)';
-    }
+
     // INICIAR
     populateCategories();
-    setSticky();
     loadData();
   </script>
 </body>
 </html>
-
